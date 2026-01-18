@@ -1,47 +1,66 @@
 @media only screen and (max-width: 600px) {
-                  body {
-                  margin: -10px;
-                  color: #000;
-                  font-weight: normal;
-                  font-size: 14px;
-                  font-family: "Roboto", sans-serif;
-                  background-color: #fff;
-                  height: 100%;
-                  -webkit-overflow-scrolling: touch;
-                  -webkit-text-size-adjust: none;
-                  min-width: 320px;
-                }
-                }
-                .text--fz25 {
-                  font-size: 25px;
-                }
-          
-                iframe {
-                  max-width: 100%
-                }
-                .header__inner {
-                  padding: 45px 0;
-                  display: flex;
-                  justify-content: center;
-                }
-                @media only screen and (max-width: 768px){
-                  .header__inner {
-                    padding: 35px 0;
-                  }
-                }
-                .header__services-nav {
-                  display: flex;
-                  justify-content: center;
-                }
-                @media only screen and (max-width: 991px){
-                  .servicesList__wrap {
-                    margin-top: 45px;
-                  }
-                }
-                @media only screen and (max-width: 600px){
-                  .box__card {
-                    padding: 25px 20px;
-                    width: calc((100% / 2) - 20px);
-                    margin: 10px;
-                  }
-                }
+  body {
+    margin: -10px;
+    color: #000;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
+    background-color: #fff;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    -webkit-text-size-adjust: none;
+    min-width: 320px;
+  }
+}
+.text--fz25 {
+  font-size: 25px;
+}
+
+iframe {
+  max-width: 100%;
+}
+.header__inner {
+  padding: 45px 0;
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 768px) {
+  .header__inner {
+    padding: 35px 0;
+  }
+}
+.header__services-nav {
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 991px) {
+  .servicesList__wrap {
+    margin-top: 45px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .box__card {
+    padding: 25px 20px;
+    width: calc((100% / 2) - 20px);
+    margin: 10px;
+  }
+}
+
+.trial__text-cost,
+.trial__count-number,
+.trial__percent,
+.trial__text-cost {
+  color: #f00;
+}
+.trial__buy{
+  background: #f00;
+}
+
+.trial-selected {
+  border: 1.5px solid #f00 !important;
+}
+.trial__cirkul > div {
+  width: 32px;
+  max-height: 32px;
+  height: 100%;
+}
