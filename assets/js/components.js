@@ -159,6 +159,13 @@
     return lang === "en" ? "" : "../";
   }
 
+  // Get prefix for internal page links (stays in same language folder)
+  function getLinkPrefix() {
+    // All internal links should be relative to current folder
+    // No prefix needed - we're already in the correct language folder
+    return "";
+  }
+
   function getActivePage() {
     const path = window.location.pathname.toLowerCase();
     if (path.includes("youtube")) return "youtube";
@@ -215,6 +222,7 @@
 
   function getHeaderHTML() {
     const basePath = getBasePath();
+    const linkPrefix = getLinkPrefix();
     const activePage = getActivePage();
     const activeService = getActiveService();
 
@@ -254,10 +262,10 @@
         <div class="header__services-container">
           <div class="header_flex_block">
             <div class="header_flex_item">
-              <a href="${basePath}index.html" style="text-decoration: none;"><p class="internalHeader__logo">Poprey</p></a>
+              <a href="${linkPrefix}index.html" style="text-decoration: none;"><p class="internalHeader__logo">Poprey</p></a>
             </div>
             <div class="header__services-nav header_flex_item header_item_special">
-              <a class="${instaClass}" href="${basePath}index.html">
+              <a class="${instaClass}" href="${linkPrefix}index.html">
                 <div class="${instaCircleClass}">
                   <div class="header__instagram-img" style="position: relative">
                     <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
@@ -267,7 +275,7 @@
                 </div>
                 <div class="${activePage === "instagram" ? "" : "header__not-active-text"}">Instagram</div>
               </a>
-              <a class="${youtubeClass}" href="${basePath}buy-youtube-views.html">
+              <a class="${youtubeClass}" href="${linkPrefix}buy-youtube-views.html">
                 <div class="${youtubeCircleClass}">
                   <div class="header__color-icons-youtube" style="display: flex; justify-content: center; align-items: center;">
                     <div class="header__other-icons-youtube" style="position: relative">
@@ -279,7 +287,7 @@
                 </div>
                 <div class="${activePage === "youtube" ? "" : "header__not-active-text"}">YouTube</div>
               </a>
-              <a class="${servicesClass}" href="${basePath}services.html">
+              <a class="${servicesClass}" href="${linkPrefix}services.html">
                 <div class="${servicesCircleClass}" style="display: flex;">
                   <div class="header__facebook" style="${activePage === "services" ? "border: 1px solid rgba(255, 255, 255, 0.25); background: #fff;" : ""}">
                     <div class="header__other-icons" style="position: relative">
@@ -320,6 +328,7 @@
 
   function getServicesNavHTML() {
     const basePath = getBasePath();
+    const linkPrefix = getLinkPrefix();
     const activeService = getActiveService();
     const activePage = getActivePage();
 
@@ -351,7 +360,7 @@
     <div class="servicesNav">
       <div class="container">
         <nav class="servicesNav__nav">
-          <a href="${basePath}index.html">
+          <a href="${linkPrefix}index.html">
             <div class="servicesNav__link${activeService === "likes" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon heart-icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
@@ -361,7 +370,7 @@
               <p class="${likesActive}">${t("likes")}</p>
             </div>
           </a>
-          <a href="${basePath}buy-instagram-followers.html">
+          <a href="${linkPrefix}buy-instagram-followers.html">
             <div class="servicesNav__link${activeService === "followers" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
@@ -371,7 +380,7 @@
               <p class="${followersActive}">${t("followers")}</p>
             </div>
           </a>
-          <a href="${basePath}automatic-instagram-likes.html">
+          <a href="${linkPrefix}automatic-instagram-likes.html">
             <div class="servicesNav__link${activeService === "auto-likes" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
@@ -381,7 +390,7 @@
               <p class="${autoLikesActive}">${t("autoLikes")}</p>
             </div>
           </a>
-          <a href="${basePath}buy-instagram-views.html">
+          <a href="${linkPrefix}buy-instagram-views.html">
             <div class="servicesNav__link${activeService === "views" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
@@ -391,7 +400,7 @@
               <p class="${viewsActive}">${t("views")}</p>
             </div>
           </a>
-          <a href="${basePath}buy-instagram-comments.html">
+          <a href="${linkPrefix}buy-instagram-comments.html">
             <div class="servicesNav__link${activeService === "comments" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
@@ -412,6 +421,7 @@
 
   function getFooterHTML() {
     const basePath = getBasePath();
+    const linkPrefix = getLinkPrefix();
     const lang = getCurrentLang();
 
     const langLinks = [
@@ -478,23 +488,23 @@
       <div class="footer__cards">
         <ul class="footer__card us-footer">
           <li><span class="footer__card-title"> ${t("us")} </span></li>
-          <li><a class="footer__card-text first-link-footer" href="${basePath}buy-instagram-followers.html">Buy Instagram Followers</a></li>
-          <li><a class="footer__card-text" href="${basePath}automatic-instagram-likes.html">Buy Instagram Auto-Likes</a></li>
-          <li><a class="footer__card-text" href="${basePath}buy-instagram-views.html">Buy Instagram Views</a></li>
-          <li><a class="footer__card-text" href="${basePath}buy-instagram-comments.html">Buy Instagram Comments</a></li>
-          <li><a class="footer__card-text" href="${basePath}free-instagram-likes.html">Free Trial Instagram Likes</a></li>
-          <li><a class="footer__card-text" href="${basePath}free-ig-followers.html">Free Instagram Followers</a></li>
-          <li><a class="footer__card-text" href="${basePath}free-trial-instagram-views.html">Free Instagram Views</a></li>
-          <li><a class="footer__card-text" href="${basePath}services.html">Services</a></li>
-          <li><a class="footer__card-text" href="${basePath}monitoring.html">Instagram Monitoring</a></li>
+          <li><a class="footer__card-text first-link-footer" href="${linkPrefix}buy-instagram-followers.html">Buy Instagram Followers</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}automatic-instagram-likes.html">Buy Instagram Auto-Likes</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-instagram-views.html">Buy Instagram Views</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-instagram-comments.html">Buy Instagram Comments</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}free-instagram-likes.html">Free Trial Instagram Likes</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}free-ig-followers.html">Free Instagram Followers</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}free-trial-instagram-views.html">Free Instagram Views</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}services.html">Services</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}monitoring.html">Instagram Monitoring</a></li>
         </ul>
       </div>
       <div class="footer__cards">
         <ul class="footer__card us-footer us-second-footer">
-          <li><a class="footer__card-text" href="${basePath}buy-youtube-views.html">Buy YouTube Views</a></li>
-          <li><a class="footer__card-text" href="${basePath}buy-youtube-subscribers.html">Buy YouTube Subscribers</a></li>
-          <li><a class="footer__card-text" href="${basePath}buy-youtube-likes.html">Buy YouTube Likes</a></li>
-          <li><a class="footer__card-text" href="${basePath}buy-youtube-comments.html">Buy YouTube Comments</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-views.html">Buy YouTube Views</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-subscribers.html">Buy YouTube Subscribers</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-likes.html">Buy YouTube Likes</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-comments.html">Buy YouTube Comments</a></li>
         </ul>
       </div>
     </nav>
@@ -512,17 +522,17 @@
         <div class="footer__card">
           <div>
             <div><span class="footer__card-title"> ${t("rules")} </span></div>
-            <div><a class="footer__card-text first-link-footer" href="${basePath}rules.html">${t("termsOfService")}</a></div>
+            <div><a class="footer__card-text first-link-footer" href="${linkPrefix}rules.html">${t("termsOfService")}</a></div>
           </div>
         </div>
       </div>
       <div class="footer__cards">
         <ul class="footer__card help-footer">
           <li><span class="footer__card-title"> ${t("help")} </span></li>
-          <li><a class="footer__card-text first-link-footer" href="${basePath}account.html">${t("account")}</a></li>
-          <li><a class="footer__card-text" href="${basePath}blog.html">${t("blog")}</a></li>
-          <li><a class="footer__card-text" href="${basePath}faq.html">${t("faq")}</a></li>
-          <li><a class="footer__card-text" href="${basePath}contact.html">${t("contact")}</a></li>
+          <li><a class="footer__card-text first-link-footer" href="${linkPrefix}account.html">${t("account")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}blog.html">${t("blog")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}faq.html">${t("faq")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}contact.html">${t("contact")}</a></li>
         </ul>
       </div>
     </div>
