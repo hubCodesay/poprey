@@ -918,6 +918,81 @@
 
 
 
+
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<script>
+window.SERVICES_DATA = {
+  // TikTok Followers
+  "TFOL": [
+    {"qty":100, "price":7.50, "id":"100TFOL"},
+    {"qty":250, "price":16.90, "id":"250TFOL"}
+  ],
+
+  // TikTok Likes
+  "TLIK": [
+    {"qty":250, "price":3.60, "id":"250TLIK"},
+    {"qty":500, "price":5.90, "id":"500TLIK"},
+    {"qty":1000, "price":9.90, "id":"1000TLIK"}
+  ],
+
+  // TikTok Views
+  "TVIE": [
+    {"qty":500, "price":3.60, "id":"500TVIE"},
+    {"qty":1000, "price":5.90, "id":"1000TVIE"},
+    {"qty":2500, "price":12.90, "id":"2500TVIE"}
+  ],
+
+  // TikTok Saves (Post Likes)
+  "TPOST": [
+    {"qty":250, "price":3.60, "id":"250TPOST"},
+    {"qty":500, "price":5.90, "id":"500TPOST"},
+    {"qty":1000, "price":9.90, "id":"1000TPOST"}
+  ],
+
+  // TikTok Shares
+  "TSHR": [
+    {"qty":500, "price":3.60, "id":"500TSHR"},
+    {"qty":1000, "price":5.90, "id":"1000TSHR"}
+  ],
+
+  // Reddit Community Members
+  "REDMEM": [
+    {"qty":250, "price":19.90, "id":"250REDMEM"},
+    {"qty":500, "price":34.90, "id":"500REDMEM"}
+  ],
+
+  // Facebook Post Likes
+  "FBLIK": [
+    {"qty":100, "price":3.60, "id":"100FBLIK"},
+    {"qty":250, "price":7.90, "id":"250FBLIK"}
+  ],
+
+  // Facebook Page Followers
+  "FBFOL": [
+    {"qty":100, "price":7.50, "id":"100FBFOL"},
+    {"qty":250, "price":16.90, "id":"250FBFOL"}
+  ],
+
+  // Instagram Threads Followers
+  "THFOL": [
+    {"qty":100, "price":7.50, "id":"100THFOL"},
+    {"qty":250, "price":16.90, "id":"250THFOL"}
+  ]
+};
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // 1. FILTERING LOGIC
@@ -942,6 +1017,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var listSort = list.getAttribute('data-sort');
         if (sortValue === 'all' || listSort === sortValue) {
           list.style.display = ''; 
+          list.style.visibility = 'visible';
+          list.style.opacity = '1';
         } else {
           list.style.display = 'none';
         }
@@ -950,8 +1027,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // 2. QUANTITY LOGIC
-  var PACKAGES = window.POPREY_PACKAGES;
-  if(!PACKAGES) { console.error('Poprey: Config (window.POPREY_PACKAGES) not found'); return; }
+  var PACKAGES = window.SERVICES_DATA;
+  if(!PACKAGES) { console.error('Poprey: Config (window.SERVICES_DATA) not found'); return; }
 
   var parseQty = function(str) {
     if(!str) return {qty:0, unit:""};
@@ -983,7 +1060,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update State
     var p = pkgList[idx];
     qtyEl.innerText = p.qty + ' ' + current.unit;
-    btn.innerHTML = 'Buy Now (' + p.price.toFixed(2) + ') $';
+    // Keep localization: "Buy Now"
+    var originalText = btn.innerHTML;
+    var currency = originalText.indexOf('zł') !== -1 ? 'zł' : (originalText.indexOf('$') !== -1 ? '$' : '');
+    
+    if (originalText.includes('Buy Now')) {
+        btn.innerHTML = 'Buy Now (' + p.price.toFixed(2) + ') ' + currency;
+    } else {
+        btn.innerHTML = 'Buy Now (' + p.price.toFixed(2) + ') ' + currency;
+    }
+    
     if(p.id) btn.id = p.id;
     
     // Update Buttons
@@ -991,7 +1077,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if(idx <= 0) decBtn.classList.add('quantity__disabled');
         else decBtn.classList.remove('quantity__disabled');
         
-        // Remove hint from minus if any
         var hint = decBtn.querySelector('p:nth-child(2)');
         if(hint) hint.innerText = '';
     }
@@ -999,7 +1084,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if(idx >= pkgList.length - 1) incBtn.classList.add('quantity__disabled');
         else incBtn.classList.remove('quantity__disabled');
 
-        // Update hint
         var hint = incBtn.querySelector('p:nth-child(2)');
         if(hint) {
              if(idx < pkgList.length - 1) hint.innerText = pkgList[idx+1].qty;
@@ -1051,8 +1135,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-    
-  <script src="../assets/js/redirect_config.js" defer></script>
+<script src="../assets/js/redirect_config.js" defer></script>
 <script src="../assets/js/redirect_manager.js" defer></script>
 </body>
 </html>

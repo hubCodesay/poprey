@@ -1529,7 +1529,7 @@
           total += getExtraPrice('Saves', currentExtras.Saves);
           
           if (els.totalCost) {
-            els.totalCost.textContent = `$${formatPrice(total)} Cost`;
+            els.totalCost.textContent = `$${formatPrice(total)} Kosten`;
           }
           if (els.buyBtn) {
             els.buyBtn.disabled = false;
@@ -1545,7 +1545,13 @@
           const mobText = calcEl.querySelector('.trial__count-text-mobile');
           
           if (deskText) deskText.textContent = count.toLocaleString();
-          if (mobText) mobText.textContent = `${count.toLocaleString()} ${type}`;
+          
+          let displayType = type;
+          if (type === 'Reach') displayType = 'Erreichen';
+          if (type === 'Impressions') displayType = 'Impressum';
+          if (type === 'Saves') displayType = 'Speichert';
+          if (mobText) mobText.textContent = `${count.toLocaleString()} ${displayType}`;
+    
         }
 
         function initCalculators() {
@@ -1650,7 +1656,7 @@
                     <p class="box__count">${count.toLocaleString()}</p>
                   </div>
                   <p class="box__service-name"><span>${serviceName}</span></p>
-                  <p class="box__service-name box__service-name-mt">Pentru ${formatPrice(price)}</p>
+                  <p class="box__service-name box__service-name-mt">Für ${formatPrice(price)}</p>
                 </div>
               </div>
             `;
@@ -1713,10 +1719,10 @@
 
         // --- 6. QUALITY BUTTON HANDLERS ---
         const imgs = {
-          crownDefault: "assets/images/crown.164f2d65ae189c29cb6d9eeed7e9ad89.png",
-          crownWhite: "assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png",
-          qualityDefault: "assets/images/quality.921b7b8ec8ed7b3d499e822761d21261.png", // Verify path if needed
-          qualityWhite: "assets/images/quality_white.1d4db15194f1398ec0490844093d10fb.png"
+          crownDefault: "../assets/images/crown.164f2d65ae189c29cb6d9eeed7e9ad89.png",
+          crownWhite: "../assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png",
+          qualityDefault: "../assets/images/quality.921b7b8ec8ed7b3d499e822761d21261.png", // Verify path if needed
+          qualityWhite: "../assets/images/quality_white.1d4db15194f1398ec0490844093d10fb.png"
         };
 
         function updateQualityVisuals() {
