@@ -48,7 +48,7 @@
   <div id="__next">
     <div id="header-container"></div>
 
-    <main>
+    <main class="animate-content">
       <section class="instaServices">
         <div class="instaServicesPage">
           <div class="container servicesInfo"></div>
@@ -1240,6 +1240,8 @@
     <div id="footer-container"></div>
     <script src="assets/js/packages.js"></script>
     <script src="assets/js/components.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/redirect_config.js" defer></script>
     <script src="assets/js/storage.js"></script>
 
   </div>
@@ -1354,10 +1356,14 @@
           }
 
           const countEl = card.querySelector('.box__count');
-          if (countEl) countEl.textContent = pkg.quantity;
+          if (countEl) animateValue(countEl, pkg.quantity);
 
           const priceEl = card.querySelector('.box__service-name');
-          if (priceEl) priceEl.innerHTML = `<span> Views </span> For ${formatPrice(pkg.price)}`;
+          if (priceEl) {
+            // Views page uses <span> Views </span> For 0.00
+            // We'll update the price part specifically
+            animateValue(priceEl, pkg.price, true, 800, "<span> Views </span> For ");
+          }
         });
 
         // Initialize Custom Card Logic
@@ -1395,10 +1401,10 @@
         const savesCount = getExtraCount('Saves', savesIdx);
 
         // Update Info Icons
-        if (els.extras.Views) els.extras.Views.querySelector('.trial__count-number').textContent = currentPackage.quantity;
-        if (els.extras.Reach) els.extras.Reach.querySelector('.trial__count-number').textContent = reachCount;
-        if (els.extras.Impressions) els.extras.Impressions.querySelector('.trial__count-number').textContent = impressionsCount;
-        if (els.extras.Saves) els.extras.Saves.querySelector('.trial__count-number').textContent = savesCount;
+        if (els.extras.Views) animateValue(els.extras.Views.querySelector('.trial__count-number'), currentPackage.quantity);
+        if (els.extras.Reach) animateValue(els.extras.Reach.querySelector('.trial__count-number'), reachCount);
+        if (els.extras.Impressions) animateValue(els.extras.Impressions.querySelector('.trial__count-number'), impressionsCount);
+        if (els.extras.Saves) animateValue(els.extras.Saves.querySelector('.trial__count-number'), savesCount);
 
         // Update Calculator Blocks
         updateCalcBlock(els.calcs.Reach, reachCount, reachIdx, 'Reach');
@@ -1420,9 +1426,9 @@
         const defaultIdx = defaultExtrasState[type];
 
         const num = block.querySelector('.trial__count-text-desktop');
-        if (num) num.textContent = count;
+        if (num) animateValue(num, count);
         const mobileNum = block.querySelector('.trial__count-text-mobile');
-        if (mobileNum) mobileNum.firstChild.textContent = count + " ";
+        if (mobileNum) animateValue(mobileNum.firstChild, count);
 
         const minusBtn = block.querySelector('.trial__cirkul-minus');
         const cirkuls = block.querySelectorAll('.trial__cirkul');
@@ -1460,7 +1466,7 @@
 
         if (total < 0) total = 0; // Safety
 
-        els.totalCost.textContent = "$" + formatPrice(total) + " Cost";
+        animateValue(els.totalCost, total, true);
         els.buyBtn.disabled = false;
       }
 

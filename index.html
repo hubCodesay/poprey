@@ -29,8 +29,8 @@
 <body>
   <div id="__next">
     <div id="header-container"></div>
-    
-    <main>
+
+    <main class="animate-content">
       <section class="instaServices">
         <div class="instaServicesPage">
           <div class="container servicesInfo"></div>
@@ -1455,10 +1455,10 @@
                       </div>
 
                       <script src="assets/js/packages.js"></script>
-    <script src="assets/js/site.js" defer></script>
+                      <script src="assets/js/site.js" defer></script>
 
-<script src="assets/js/redirect_config.js" defer></script>
-<script src="assets/js/redirect_manager.js" defer></script>
+                      <script src="assets/js/redirect_config.js" defer></script>
+                      <script src="assets/js/redirect_manager.js" defer></script>
 </body>
 
 </html>
@@ -1856,11 +1856,11 @@
         </div>
       </div>
       <div class="trial__text">
-          <div class="trial__text-likes">
-            Free Trial
-            25
-            Likes
-          </div>
+        <div class="trial__text-likes">
+          Free Trial
+          25
+          Likes
+        </div>
         <div class="trial__text-cost">
           <!-- -->
           0
@@ -2089,11 +2089,12 @@
 </main>
 <div id="footer-container"></div>
 <script src="assets/js/components.js"></script>
+<script src="assets/js/animations.js"></script>
 <script src="assets/js/storage.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 
 <script src="assets/js/packages.js"></script>
-    <script src="assets/js/site.js" defer></script>
+<script src="assets/js/site.js" defer></script>
 <script>
   // Disable site.js global trial logic to prevent interference with our custom calculators
   window.SKIP_GLOBAL_TRIAL = true;
@@ -2211,7 +2212,7 @@
       var total = currentLikesPrice + currentReachPrice + currentImpressionsPrice + currentSavesPrice;
       var costDisplays = document.querySelectorAll(".trial__text-cost");
       costDisplays.forEach(function (el) {
-        el.textContent = "$" + total.toFixed(2) + " Cost";
+        animateValue(el, total, true);
       });
 
       // Update "Buy Now" button ?
@@ -2231,7 +2232,7 @@
       var totalP = currentLikesPercent;
 
       if (percentEl) {
-        percentEl.textContent = totalP + "%";
+        animateValue(percentEl, totalP);
       }
     }
 
@@ -2246,13 +2247,13 @@
         if (cardDiv) {
           // Update Count
           var countEl = cardDiv.querySelector(".box__count");
-          if (countEl) countEl.textContent = pkg.quantity;
+          if (countEl) animateValue(countEl, pkg.quantity);
 
           // Update Price
           var priceEl = cardDiv.querySelector(".box__service-name");
           if (priceEl) {
             // Keep existing structure: <span> Likes </span> For ... price
-            priceEl.innerHTML = "<span> Likes </span> For $" + pkg.price.toFixed(2);
+            animateValue(priceEl, pkg.price, true, 800, "<span> Likes </span> For ");
           }
 
           // Helper for click event
@@ -2284,7 +2285,7 @@
 
               // Update Summary Likes Icon
               var sumLikes = document.querySelector("#summary-likes");
-              if (sumLikes) sumLikes.textContent = pkg.quantity;
+              if (sumLikes) animateValue(sumLikes, pkg.quantity);
 
               // Update Buy Button Link (if relevant)
               var buyLink = document.querySelector(".trial__text a");
@@ -2326,12 +2327,12 @@
         if (!pkg) return;
 
         // Update visual text
-        if (countDisplay) countDisplay.textContent = pkg.quantity.toLocaleString();
+        if (countDisplay) animateValue(countDisplay, pkg.quantity);
 
         // Update price display in this card
         var priceEl = cardWrapper.querySelector(".box__service-name");
         if (priceEl) {
-          priceEl.innerHTML = "<span> Likes </span> For $" + pkg.price.toFixed(2);
+          animateValue(priceEl, pkg.price, true, 800, "<span> Likes </span> For ");
         }
 
         // Update data attributes for selection logic
@@ -2434,15 +2435,15 @@
         var qty = item ? item.quantity : 0;
         var prc = item ? item.price : 0.00;
 
-        if (countDisplay) countDisplay.textContent = qty;
-        if (countDisplayMobile) countDisplayMobile.textContent = qty + " (mobile)"; // Refine this if needed
+        if (countDisplay) animateValue(countDisplay, qty);
+        if (countDisplayMobile) animateValue(countDisplayMobile, qty);
 
         // Update global price variable for this calc
         priceVarUpdater(prc);
         updateTotalCost();
 
         // Sync Widget
-        if (syncTarget) syncTarget.textContent = qty;
+        if (syncTarget) animateValue(syncTarget, qty);
 
         // Update buttons state
         if (minusBtn) {

@@ -6171,6 +6171,7 @@ button {
   display: block;
   height: 80px;
 }
+
 .servicesList__color-block {
   border-radius: 16px;
   width: 50%;
@@ -20770,7 +20771,35 @@ table td:first-of-type {
   opacity: 0;
 }
 
+
 .lazy-load-image-background.opacity.lazy-load-image-loaded {
   opacity: 1;
   transition: opacity 0.3s;
+}
+
+/* --- Entrance Animations --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-content {
+  opacity: 0;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Base smoothness for all interactive transitions */
+button,
+.btn,
+.box__card,
+.servicesList__color-block,
+.servicesList__white-block {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

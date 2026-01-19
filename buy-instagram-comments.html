@@ -47,7 +47,7 @@
   <div id="__next">
     <div id="header-container"></div>
 
-    <main>
+    <main class="animate-content">
       <section class="instaServices">
         <div class="instaServicesPage">
           <div class="container servicesInfo"></div>
@@ -822,8 +822,8 @@
             <div class="trial">
               <div class="trial__wrapper">
                 <div class="trial__container">
-                  <div class="trial__count-block" id="calc-reach">
-                    <div class="trial__count active-block">
+                  <div class="trial__count-block">
+                    <div class="trial__count active-block" id="calc-reach">
                       <div class="trial__cirkul trial__cirkul-minus trial__cirkul-disabled">
                         <div style="position: relative">
                           <div style="
@@ -1325,6 +1325,7 @@
     </main>
     <div id="footer-container"></div>
     <script src="assets/js/components.js"></script>
+    <script src="assets/js/animations.js"></script>
     <script src="assets/js/storage.js"></script>
 
   </div>
@@ -1413,11 +1414,11 @@
           }
 
           const countEl = card.querySelector('.box__count');
-          if (countEl) countEl.textContent = pkg.quantity;
+          if (countEl) animateValue(countEl, pkg.quantity);
 
-          const priceMt = card.querySelector('.box__service-name-mt');
-          if (priceMt) {
-            priceMt.textContent = `For $${formatPrice(pkg.price)}`;
+          const priceEl = card.querySelector('.box__service-name');
+          if (priceEl) {
+            animateValue(priceEl, pkg.price, true, 800, "<span> Comments </span> For ");
           }
 
           const nameEl = card.querySelector('.box__service-name:not(.box__service-name-mt)');
@@ -1455,9 +1456,9 @@
         const imp = getExtraItem('Impressions', currentExtrasState.Impressions);
         const saves = getExtraItem('Saves', currentExtrasState.Saves);
 
-        if (els.infoReach) els.infoReach.querySelector('.trial__count-number').textContent = reach.quantity;
-        if (els.infoImpressions) els.infoImpressions.querySelector('.trial__count-number').textContent = imp.quantity;
-        if (els.infoSaves) els.infoSaves.querySelector('.trial__count-number').textContent = saves.quantity;
+        if (els.infoReach) animateValue(els.infoReach.querySelector('.trial__count-number'), reach.quantity);
+        if (els.infoImpressions) animateValue(els.infoImpressions.querySelector('.trial__count-number'), imp.quantity);
+        if (els.infoSaves) animateValue(els.infoSaves.querySelector('.trial__count-number'), saves.quantity);
 
         // Sync Discount Text
         if (els.percentText && currentPackage.discount) {
@@ -1486,8 +1487,8 @@
         const numDesktop = block.querySelector('.trial__count-text-desktop:not(:last-child)');
         const numMobile = block.querySelector('.trial__count-text-mobile');
 
-        if (numDesktop) numDesktop.textContent = count;
-        if (numMobile) numMobile.firstChild.textContent = count + " ";
+        if (numDesktop) animateValue(numDesktop, count);
+        if (numMobile) animateValue(numMobile.firstChild, count);
 
         const minusBtn = block.querySelector('.trial__cirkul-minus');
         const plusBtn = block.querySelectorAll('.trial__cirkul')[1]; // assuming 2nd cirkul is plus
@@ -1510,9 +1511,7 @@
         total += getExtraItem('Impressions', currentExtrasState.Impressions).price;
         total += getExtraItem('Saves', currentExtrasState.Saves).price;
 
-        els.totalCost.textContent = `${formatPrice(total)} Cost`; // Missing currency symbol in provided view but user asked for "trial__text-cost і намінал в $" -> wait, user said "in $" implies need $.
-        // Let's add $ sign if missing.
-        els.totalCost.textContent = `$${formatPrice(total)} Cost`;
+        animateValue(els.totalCost, total, true);
         els.buyBtn.disabled = false;
       }
 

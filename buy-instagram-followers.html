@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <link href="buy-instagram-followers.html" hreflang="en" rel="alternate" />
   <link href="buy-instagram-followers.html" hreflang="x-default" rel="alternate" />
@@ -65,7 +66,7 @@
   <div id="__next">
     <div id="header-container"></div>
 
-    <main>
+    <main class="animate-content">
       <section class="instaServices">
         <div class="instaServicesPage">
           <div class="container servicesInfo"></div>
@@ -1385,12 +1386,12 @@
                   </div>
                   <div class="trial__text">
                     <div class="trial__text-likes">
-                        Free Trial
-                        <!-- -->
-                        10
-                        <!-- -->
-                        Followers
-                      </div>
+                      Free Trial
+                      <!-- -->
+                      10
+                      <!-- -->
+                      Followers
+                    </div>
                     <div class="trial__text-cost">
                       $0.00 Cost
                     </div>
@@ -1451,11 +1452,12 @@
   </main>
   <div id="footer-container"></div>
   <script src="assets/js/packages.js"></script>
-    <script src="assets/js/components.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/animations.js"></script>
   <script src="assets/js/storage.js"></script>
 
   </div>
-  
+
   <script>
     // Disable site.js global trial logic
     window.SKIP_GLOBAL_TRIAL = true;
@@ -1474,7 +1476,7 @@
         var total = currentFollowersPrice + currentGuaranteePrice;
         var costDisplays = document.querySelectorAll(".trial__text-cost");
         costDisplays.forEach(function (el) {
-          el.textContent = "$" + total.toFixed(2) + " Cost";
+          animateValue(el, total, true);
         });
 
         var buyBtn = document.querySelector(".trial__buy");
@@ -1482,156 +1484,156 @@
       }
 
       // --- Guarantee Logic ---
-      
-        // --- Guarantee Logic ---
-        function setupGuarantee() {
-            var block30 = document.querySelector("#guarantee-fixed-30");
-            var block60 = document.querySelector("#guarantee-fixed-60");
-            var blockCustom = document.querySelector("#guarantee-custom");
-            var periodText = document.querySelector(".trial__period-text");
-            
-            // Custom Options
-            var customOptions = [90, 180, 360];
-            var customIndex = 2; // Default to 90
 
-            // Reset Selection
-            function resetSelection() {
-                [block30, block60, blockCustom].forEach(el => {
-                    if (el) {
-                        el.classList.remove("trial__count-guarantee-active");
-                        el.style.borderColor = ""; 
-                    }
-                });
+      // --- Guarantee Logic ---
+      function setupGuarantee() {
+        var block30 = document.querySelector("#guarantee-fixed-30");
+        var block60 = document.querySelector("#guarantee-fixed-60");
+        var blockCustom = document.querySelector("#guarantee-custom");
+        var periodText = document.querySelector(".trial__period-text");
+
+        // Custom Options
+        var customOptions = [90, 180, 360];
+        var customIndex = 2; // Default to 90
+
+        // Reset Selection
+        function resetSelection() {
+          [block30, block60, blockCustom].forEach(el => {
+            if (el) {
+              el.classList.remove("trial__count-guarantee-active");
+              el.style.borderColor = "";
             }
-
-            // Check if specific day option exists in current package
-            function getOption(days) {
-                return currentPackageGuaranteeList.find(g => g.days === days);
-            }
-
-            // Update Price & UI Function
-            function selectGuarantee(days, blockElement) {
-                var option = getOption(days);
-                if (option) {
-                    currentGuaranteePrice = option.price;
-                    updateTotalCost();
-                    
-                    resetSelection();
-                    if (blockElement) {
-                        blockElement.classList.add("trial__count-guarantee-active");
-                    }
-                    
-                    // Update Period Text
-                    if (periodText) {
-                        periodText.textContent = "Within " + days + " days period we will refill any number of followers that might leave you";
-                    }
-                    return true;
-                }
-                return false;
-            }
-            
-            // Handler for static blocks
-            function attachHandler(block, days) {
-                if(!block) return;
-                block.addEventListener("click", function() {
-                    selectGuarantee(days, block);
-                });
-            }
-            
-            attachHandler(block30, 30);
-            attachHandler(block60, 60);
-            
-            // Helper to update Custom Block Appearance (Text & Availability)
-            function updateCustomBlockDisplay() {
-                if (!blockCustom) return;
-                var days = customOptions[customIndex];
-                var textDesktop = blockCustom.querySelector(".trial__count-text-desktop");
-                var textMobile = blockCustom.querySelector(".trial__count-text-mobile");
-                
-                if (textDesktop) textDesktop.innerHTML = days + " <!-- --> <!-- --> Days";
-                if (textMobile) textMobile.innerHTML = days + " <!-- --> <!-- --> Days Guarantee";
-                
-                if (blockCustom.classList.contains("trial__count-guarantee-active")) {
-                    selectGuarantee(days, blockCustom);
-                }
-            }
-
-            if (blockCustom) {
-                var circuls = blockCustom.querySelectorAll(".trial__cirkul");
-                var minus = blockCustom.querySelector(".trial__cirkul-minus");
-                var plus = circuls[circuls.length - 1]; 
-
-                blockCustom.addEventListener("click", function(e) {
-                    if (!e.target.closest(".trial__cirkul")) {
-                        var days = customOptions[customIndex];
-                        selectGuarantee(days, blockCustom);
-                    }
-                });
-
-                if (minus) {
-                    minus.addEventListener("click", function(e) {
-                        e.stopPropagation();
-                        if(customIndex > 0) {
-                            customIndex--;
-                            updateCustomBlockDisplay();
-                        }
-                    });
-                }
-                
-                if (plus) {
-                    plus.addEventListener("click", function(e) {
-                        e.stopPropagation();
-                        if (customIndex < customOptions.length - 1) {
-                            customIndex++;
-                            updateCustomBlockDisplay();
-                        }
-                    });
-                }
-            }
-            
-            window.updateGuaranteeAvailability = function(pkg) {
-                currentPackageGuaranteeList = pkg.guarantee || [];
-                currentGuaranteePrice = 0.00;
-                resetSelection();
-                
-                if (periodText) {
-                    periodText.textContent = "Please choose the guarantee to be refilled with any number of followers in case of an Instagram update.";
-                }
-                
-                function toggleBlock(block, days) {
-                    if (!block) return;
-                    var available = currentPackageGuaranteeList.some(g => g.days === days);
-                    if (available) {
-                        block.classList.remove("trial__count-guarantee-disabled");
-                        block.style.opacity = "1";
-                        block.style.pointerEvents = "auto";
-                    } else {
-                        block.classList.add("trial__count-guarantee-disabled");
-                        block.style.opacity = "0.5";
-                        block.style.pointerEvents = "none";
-                    }
-                }
-
-                toggleBlock(block30, 30);
-                toggleBlock(block60, 60);
-                
-                var customAvailable = customOptions.some(d => currentPackageGuaranteeList.some(g => g.days === d));
-                if (blockCustom) {
-                    if (customAvailable) {
-                        blockCustom.classList.remove("trial__count-guarantee-disabled");
-                        blockCustom.style.opacity = "1";
-                        blockCustom.style.pointerEvents = "auto";
-                    } else {
-                        blockCustom.classList.add("trial__count-guarantee-disabled");
-                        blockCustom.style.opacity = "0.5";
-                        blockCustom.style.pointerEvents = "none";
-                    }
-                }
-                updateTotalCost();
-            };
+          });
         }
 
-setupGuarantee();
+        // Check if specific day option exists in current package
+        function getOption(days) {
+          return currentPackageGuaranteeList.find(g => g.days === days);
+        }
+
+        // Update Price & UI Function
+        function selectGuarantee(days, blockElement) {
+          var option = getOption(days);
+          if (option) {
+            currentGuaranteePrice = option.price;
+            updateTotalCost();
+
+            resetSelection();
+            if (blockElement) {
+              blockElement.classList.add("trial__count-guarantee-active");
+            }
+
+            // Update Period Text
+            if (periodText) {
+              periodText.textContent = "Within " + days + " days period we will refill any number of followers that might leave you";
+            }
+            return true;
+          }
+          return false;
+        }
+
+        // Handler for static blocks
+        function attachHandler(block, days) {
+          if (!block) return;
+          block.addEventListener("click", function () {
+            selectGuarantee(days, block);
+          });
+        }
+
+        attachHandler(block30, 30);
+        attachHandler(block60, 60);
+
+        // Helper to update Custom Block Appearance (Text & Availability)
+        function updateCustomBlockDisplay() {
+          if (!blockCustom) return;
+          var days = customOptions[customIndex];
+          var textDesktop = blockCustom.querySelector(".trial__count-text-desktop");
+          var textMobile = blockCustom.querySelector(".trial__count-text-mobile");
+
+          if (textDesktop) textDesktop.innerHTML = days + " <!-- --> <!-- --> Days";
+          if (textMobile) textMobile.innerHTML = days + " <!-- --> <!-- --> Days Guarantee";
+
+          if (blockCustom.classList.contains("trial__count-guarantee-active")) {
+            selectGuarantee(days, blockCustom);
+          }
+        }
+
+        if (blockCustom) {
+          var circuls = blockCustom.querySelectorAll(".trial__cirkul");
+          var minus = blockCustom.querySelector(".trial__cirkul-minus");
+          var plus = circuls[circuls.length - 1];
+
+          blockCustom.addEventListener("click", function (e) {
+            if (!e.target.closest(".trial__cirkul")) {
+              var days = customOptions[customIndex];
+              selectGuarantee(days, blockCustom);
+            }
+          });
+
+          if (minus) {
+            minus.addEventListener("click", function (e) {
+              e.stopPropagation();
+              if (customIndex > 0) {
+                customIndex--;
+                updateCustomBlockDisplay();
+              }
+            });
+          }
+
+          if (plus) {
+            plus.addEventListener("click", function (e) {
+              e.stopPropagation();
+              if (customIndex < customOptions.length - 1) {
+                customIndex++;
+                updateCustomBlockDisplay();
+              }
+            });
+          }
+        }
+
+        window.updateGuaranteeAvailability = function (pkg) {
+          currentPackageGuaranteeList = pkg.guarantee || [];
+          currentGuaranteePrice = 0.00;
+          resetSelection();
+
+          if (periodText) {
+            periodText.textContent = "Please choose the guarantee to be refilled with any number of followers in case of an Instagram update.";
+          }
+
+          function toggleBlock(block, days) {
+            if (!block) return;
+            var available = currentPackageGuaranteeList.some(g => g.days === days);
+            if (available) {
+              block.classList.remove("trial__count-guarantee-disabled");
+              block.style.opacity = "1";
+              block.style.pointerEvents = "auto";
+            } else {
+              block.classList.add("trial__count-guarantee-disabled");
+              block.style.opacity = "0.5";
+              block.style.pointerEvents = "none";
+            }
+          }
+
+          toggleBlock(block30, 30);
+          toggleBlock(block60, 60);
+
+          var customAvailable = customOptions.some(d => currentPackageGuaranteeList.some(g => g.days === d));
+          if (blockCustom) {
+            if (customAvailable) {
+              blockCustom.classList.remove("trial__count-guarantee-disabled");
+              blockCustom.style.opacity = "1";
+              blockCustom.style.pointerEvents = "auto";
+            } else {
+              blockCustom.classList.add("trial__count-guarantee-disabled");
+              blockCustom.style.opacity = "0.5";
+              blockCustom.style.pointerEvents = "none";
+            }
+          }
+          updateTotalCost();
+        };
+      }
+
+      setupGuarantee();
 
       // --- 1. Tab Switching ---
       function showTab(type) {
@@ -1730,11 +1732,11 @@ setupGuarantee();
           var cardDiv = container.querySelector('[id="' + pkg.id + '"]');
           if (cardDiv) {
             var countEl = cardDiv.querySelector(".box__count");
-            if (countEl) countEl.textContent = pkg.quantity;
+            if (countEl) animateValue(countEl, pkg.quantity);
 
             var priceEl = cardDiv.querySelector(".box__service-name");
             if (priceEl) {
-              priceEl.innerHTML = "<span> Followers </span> For $" + pkg.price.toFixed(2);
+              animateValue(priceEl, pkg.price, true, 800, "<span> Followers </span> For ");
             }
 
             var cardWrapper = cardDiv.closest(".box__card");
@@ -1785,11 +1787,11 @@ setupGuarantee();
           var pkg = packageList[currentIndex];
           if (!pkg) return;
 
-          if (countDisplay) countDisplay.textContent = pkg.quantity;
+          if (countDisplay) animateValue(countDisplay, pkg.quantity);
 
           var priceEl = cardWrapper.querySelector(".box__service-name");
           if (priceEl) {
-            priceEl.innerHTML = "<span> Followers </span> For $" + pkg.price.toFixed(2);
+            animateValue(priceEl, pkg.price, true, 800, "<span> Followers </span> For ");
           }
 
           cardWrapper.setAttribute("data-price", pkg.price);
@@ -1859,8 +1861,8 @@ setupGuarantee();
       }
     });
   </script>
-<script src="assets/js/redirect_config.js" defer></script>
-<script src="assets/js/redirect_manager.js" defer></script>
+  <script src="assets/js/redirect_config.js" defer></script>
+  <script src="assets/js/redirect_manager.js" defer></script>
 </body>
 
 </html>
