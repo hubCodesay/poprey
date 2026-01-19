@@ -456,28 +456,7 @@
     <nav class="footer__top">
       <div class="footer__header">
         <p class="footer__title">Poprey</p>
-        <div class="footer__icons-wrapper">
-          <a class="footer__img-link" href="https://www.youtube.com/channel/UCdhf-DfixL85nlftRYkvf2w" rel="noopener" target="_blank">
-            <div class="footer__icon-wrapper">
-              <img src="${basePath}assets/images/footer_social/youtube.png" alt="YouTube" style="width: 24px; height: 24px;">
-            </div>
-          </a>
-          <a class="footer__img-link" href="https://twitter.com/Poprey2" rel="noopener" target="_blank">
-            <div class="footer__icon-wrapper">
-              <img src="${basePath}assets/images/footer_social/twitter.png" alt="Twitter" style="width: 24px; height: 24px;">
-            </div>
-          </a>
-          <a class="footer__img-link" href="https://www.facebook.com/PopreyEN" rel="noopener" target="_blank">
-            <div class="footer__icon-wrapper">
-              <img src="${basePath}assets/images/footer_social/facebook.png" alt="Facebook" style="width: 24px; height: 24px;">
-            </div>
-          </a>
-          <a class="footer__img-link" href="https://www.tiktok.com/@popreycom" rel="noopener" target="_blank">
-            <div class="footer__icon-wrapper">
-              <img src="${basePath}assets/images/footer_social/tiktok.png" alt="TikTok" style="width: 24px; height: 24px;">
-            </div>
-          </a>
-        </div>
+      
         <div class="footer__pay-img">
           <div style="display: flex; gap: 10px; margin-top: 10px; align-items: center;">
             <img src="${basePath}assets/images/payment/mastercard.png" alt="Mastercard" style="height: 24px; width: auto;">
@@ -501,8 +480,8 @@
       </div>
       <div class="footer__cards">
         <ul class="footer__card us-footer us-second-footer">
-          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-views.html">Buy YouTube Views</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-subscribers.html">Buy YouTube Subscribers</a></li>
+         
+    
           <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-likes.html">Buy YouTube Likes</a></li>
           <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-comments.html">Buy YouTube Comments</a></li>
         </ul>
@@ -510,13 +489,9 @@
     </nav>
     <div class="footer__middle">
       <div class="footer__contact-container">
-        <span class="footer__card-title footer__card-title-contact">${t("contactInfo")}</span>
+    
         <div class="footer__contact-information-container">
-          <p class="footer__card-text footer__contact-information">Company: Qloyd OÜ</p>
-          <p class="footer__card-text footer__contact-information">Registration: 16257994</p>
-          <p class="footer__card-text footer__contact-information">Address: Harju maakond, Tallinn,<br/>Lasnamäe linnaosa, Peterburi tee 71, 11415</p>
-          <p class="footer__card-text footer__contact-information">E-mail: <a href="mailto:contact@poprey.com" style="color: inherit;">contact@poprey.com</a></p>
-        </div>
+     </div>
       </div>
       <div class="footer__cards">
         <div class="footer__card">
