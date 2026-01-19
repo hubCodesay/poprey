@@ -194,11 +194,7 @@
                           <span> Comments </span>
                         </p>
                         <p class="box__service-name box__service-name-mt">
-                          For
-                          <!-- -->
-                          <!-- -->
-                          26.90
-                          <!-- -->
+                          For 0.00
                         </p>
                       </div>
                     </div>
@@ -247,11 +243,7 @@
                           <span> Comments </span>
                         </p>
                         <p class="box__service-name box__service-name-mt">
-                          For
-                          <!-- -->
-                          <!-- -->
-                          38.90
-                          <!-- -->
+                          For 0.00
                         </p>
                       </div>
                     </div>
@@ -300,11 +292,7 @@
                           <span> Comments </span>
                         </p>
                         <p class="box__service-name box__service-name-mt">
-                          For
-                          <!-- -->
-                          <!-- -->
-                          62.90
-                          <!-- -->
+                          For 0.00
                         </p>
                       </div>
                     </div>
@@ -353,11 +341,7 @@
                           <span> Comments </span>
                         </p>
                         <p class="box__service-name box__service-name-mt">
-                          For
-                          <!-- -->
-                          <!-- -->
-                          98.90
-                          <!-- -->
+                          For 0.00
                         </p>
                       </div>
                     </div>
@@ -406,11 +390,7 @@
                           <span> Comments </span>
                         </p>
                         <p class="box__service-name box__service-name-mt">
-                          For
-                          <!-- -->
-                          <!-- -->
-                          239.00
-                          <!-- -->
+                          For 0.00
                         </p>
                       </div>
                     </div>
@@ -459,11 +439,7 @@
                           <span> Comments </span>
                         </p>
                         <p class="box__service-name box__service-name-mt">
-                          For
-                          <!-- -->
-                          <!-- -->
-                          279.00
-                          <!-- -->
+                          For 0.00
                         </p>
                       </div>
                     </div>
@@ -512,11 +488,7 @@
                           <span> Comments </span>
                         </p>
                         <p class="box__service-name box__service-name-mt">
-                          For
-                          <!-- -->
-                          <!-- -->
-                          399.00
-                          <!-- -->
+                          For 0.00
                         </p>
                       </div>
                     </div>
@@ -565,11 +537,7 @@
                           <span> Comments </span>
                         </p>
                         <p class="box__service-name box__service-name-mt">
-                          For
-                          <!-- -->
-                          <!-- -->
-                          789.00
-                          <!-- -->
+                          For 0.00
                         </p>
                       </div>
                     </div>
@@ -1416,14 +1384,14 @@
           const countEl = card.querySelector('.box__count');
           if (countEl) animateValue(countEl, pkg.quantity);
 
-          const priceEl = card.querySelector('.box__service-name');
-          if (priceEl) {
-            animateValue(priceEl, pkg.price, true, 800, "<span> Comments </span> For ");
-          }
-
           const nameEl = card.querySelector('.box__service-name:not(.box__service-name-mt)');
           if (nameEl) {
             nameEl.innerHTML = `<span> Comments </span>`;
+          }
+
+          const priceEl = card.querySelector('.box__service-name-mt');
+          if (priceEl) {
+            animateValue(priceEl, pkg.price, true, 800, "For ");
           }
         });
 
