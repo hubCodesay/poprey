@@ -1,0 +1,14 @@
+.local-block--active {
+        background: linear-gradient(94.79deg, #f6ec32 -53.82%, #df2e80 79.03%, #132ef7 201.25%), #fff;
+        padding: 0!important;
+        width: 50%;
+        z-index: 9999;
+      }
+
+      /* Highlight selected product card in the services list */
+      .box .box__card.trial-selected {
+        box-shadow: 0 12px 30px rgba(18,46,87,0.06), 0 2px 0 rgba(0,0,0,0.02);
+        border: 1px solid rgb(34 150 243);
+        background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+      }
+      .box .box__card.trial-selected .box__count { color: #111; }

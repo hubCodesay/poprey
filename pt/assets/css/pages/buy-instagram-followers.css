@@ -1,0 +1,85 @@
+@media only screen and (max-width: 600px) {
+  body {
+    margin: -10px;
+    color: #000;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
+    background-color: #fff;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    -webkit-text-size-adjust: none;
+    min-width: 320px;
+  }
+}
+.text--fz25 {
+  font-size: 25px;
+}
+
+iframe {
+  max-width: 100%;
+}
+/* Active tab styles (match index behaviour) */
+.local-block--active {
+  background:
+    linear-gradient(94.79deg, #f6ec32 -53.82%, #df2e80 79.03%, #132ef7 201.25%),
+    #fff;
+  padding: 0 !important;
+  width: 50%;
+  z-index: 9999;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(18, 46, 87, 0.04);
+}
+.servicesList__white-text.active,
+.servicesList__color-text.active {
+  color: #fff !important;
+  font-weight: 600;
+}
+/* make tab blocks visually clickable */
+.regular_btn,
+.premium_btn {
+  cursor: pointer;
+  transition: all 0.18s ease-out;
+}
+.regular_btn:hover,
+.premium_btn:hover {
+  transform: translateY(-2px);
+}
+/* ensure selected product card highlight shows on this page */
+.box .box__card.trial-selected {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 30px rgba(18, 46, 87, 0.06),
+    0 2px 0 rgba(0, 0, 0, 0.02);
+  border: 1px solid rgb(34 150 243);
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+}
+.box .box__card.trial-selected .box__count {
+  color: #111;
+}
+.header__inner {
+  padding: 45px 0;
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 768px) {
+  .header__inner {
+    padding: 35px 0;
+  }
+}
+.header__services-nav {
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 991px) {
+  .servicesList__wrap {
+    margin-top: 45px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .box__card {
+    padding: 25px 20px;
+    width: calc((100% / 2) - 20px);
+    margin: 10px;
+  }
+}
