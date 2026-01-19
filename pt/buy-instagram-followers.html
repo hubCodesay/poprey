@@ -1418,405 +1418,395 @@
     // Disable site.js global trial logic
     window.SKIP_GLOBAL_TRIAL = true;
 
-    document.addEventListener("DOMContentLoaded", function () {
-      console.log("Poprey Followers Script: DOMContentLoaded");
+    
 
-      var activeServiceType = "regular";
-      var currentFollowersPrice = 0.00;
-      var currentGuaranteePrice = 0.00;
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("Poprey Followers Script: DOMContentLoaded");
 
-      // Track the currently selected package's guarantee options
-      var currentPackageGuaranteeList = [];
+        var activeServiceType = "regular";
+        var currentFollowersPrice = 0.00;
+        var currentGuaranteePrice = 0.00;
+        
+        // Track the currently selected package's guarantee options
+        var currentPackageGuaranteeList = [];
 
-      function updateTotalCost() {
-        var total = currentFollowersPrice + currentGuaranteePrice;
-        var costDisplays = document.querySelectorAll(".trial__text-cost");
-        costDisplays.forEach(function (el) {
-          animateValue(el, total, true);
-        });
-
-        var buyBtn = document.querySelector(".trial__buy");
-        if (buyBtn) buyBtn.removeAttribute("disabled");
-      }
-
-      // --- Guarantee Logic ---
-
-      // --- Guarantee Logic ---
-      function setupGuarantee() {
-        var block30 = document.querySelector("#guarantee-fixed-30");
-        var block60 = document.querySelector("#guarantee-fixed-60");
-        var blockCustom = document.querySelector("#guarantee-custom");
-        var periodText = document.querySelector(".trial__period-text");
-
-        // Custom Options
-        var customOptions = [90, 180, 360];
-        var customIndex = 2; // Default to 90
-
-        // Reset Selection
-        function resetSelection() {
-          [block30, block60, blockCustom].forEach(el => {
-            if (el) {
-              el.classList.remove("trial__count-guarantee-active");
-              el.style.borderColor = "";
-            }
-          });
-        }
-
-        // Check if specific day option exists in current package
-        function getOption(days) {
-          return currentPackageGuaranteeList.find(g => g.days === days);
-        }
-
-        // Update Price & UI Function
-        function selectGuarantee(days, blockElement) {
-          var option = getOption(days);
-          if (option) {
-            currentGuaranteePrice = option.price;
-            updateTotalCost();
-
-            resetSelection();
-            if (blockElement) {
-              blockElement.classList.add("trial__count-guarantee-active");
-            }
-
-            // Update Period Text
-            if (periodText) {
-              periodText.textContent = "Within " + days + " days period we will refill any number of followers that might leave you";
-            }
-            return true;
-          }
-          return false;
-        }
-
-        // Handler for static blocks
-        function attachHandler(block, days) {
-          if (!block) return;
-          block.addEventListener("click", function () {
-            selectGuarantee(days, block);
-          });
-        }
-
-        attachHandler(block30, 30);
-        attachHandler(block60, 60);
-
-        // Helper to update Custom Block Appearance (Text & Availability)
-        function updateCustomBlockDisplay() {
-          if (!blockCustom) return;
-          var days = customOptions[customIndex];
-          var textDesktop = blockCustom.querySelector(".trial__count-text-desktop");
-          var textMobile = blockCustom.querySelector(".trial__count-text-mobile");
-
-          if (textDesktop) textDesktop.innerHTML = days + " <!-- --> <!-- --> Days";
-          if (textMobile) textMobile.innerHTML = days + " <!-- --> <!-- --> Days Guarantee";
-
-          if (blockCustom.classList.contains("trial__count-guarantee-active")) {
-            selectGuarantee(days, blockCustom);
-          }
-        }
-
-        if (blockCustom) {
-          var circuls = blockCustom.querySelectorAll(".trial__cirkul");
-          var minus = blockCustom.querySelector(".trial__cirkul-minus");
-          var plus = circuls[circuls.length - 1];
-
-          blockCustom.addEventListener("click", function (e) {
-            if (!e.target.closest(".trial__cirkul")) {
-              var days = customOptions[customIndex];
-              selectGuarantee(days, blockCustom);
-            }
-          });
-
-          if (minus) {
-            minus.addEventListener("click", function (e) {
-              e.stopPropagation();
-              if (customIndex > 0) {
-                customIndex--;
-                updateCustomBlockDisplay();
-              }
+        function updateTotalCost() {
+            var total = currentFollowersPrice + currentGuaranteePrice;
+            var costDisplays = document.querySelectorAll(".trial__text-cost");
+            costDisplays.forEach(function(el) {
+                el.textContent = "$" + total.toFixed(2) + " Kosten";
             });
-          }
-
-          if (plus) {
-            plus.addEventListener("click", function (e) {
-              e.stopPropagation();
-              if (customIndex < customOptions.length - 1) {
-                customIndex++;
-                updateCustomBlockDisplay();
-              }
-            });
-          }
+            
+            var buyBtn = document.querySelector(".trial__buy");
+            if(buyBtn) buyBtn.removeAttribute("disabled");
         }
 
-        window.updateGuaranteeAvailability = function (pkg) {
-          currentPackageGuaranteeList = pkg.guarantee || [];
-          currentGuaranteePrice = 0.00;
-          resetSelection();
+        // --- Guarantee Logic ---
 
-          if (periodText) {
-            periodText.textContent = "Please choose the guarantee to be refilled with any number of followers in case of an Instagram update.";
-          }
+        // --- Guarantee Logic ---
+        function setupGuarantee() {
+            var block30 = document.querySelector("#guarantee-fixed-30");
+            var block60 = document.querySelector("#guarantee-fixed-60");
+            var blockCustom = document.querySelector("#guarantee-custom");
+            var periodText = document.querySelector(".trial__period-text");
+            
+            // Custom Options
+            var customOptions = [90, 180, 360];
+            var customIndex = 2; // Default to 90
 
-          function toggleBlock(block, days) {
-            if (!block) return;
-            var available = currentPackageGuaranteeList.some(g => g.days === days);
-            if (available) {
-              block.classList.remove("trial__count-guarantee-disabled");
-              block.style.opacity = "1";
-              block.style.pointerEvents = "auto";
-            } else {
-              block.classList.add("trial__count-guarantee-disabled");
-              block.style.opacity = "0.5";
-              block.style.pointerEvents = "none";
+            // Reset Selection
+            function resetSelection() {
+                [block30, block60, blockCustom].forEach(el => {
+                    if (el) {
+                        el.classList.remove("trial__count-guarantee-active");
+                        el.style.borderColor = ""; 
+                    }
+                });
             }
-          }
 
-          toggleBlock(block30, 30);
-          toggleBlock(block60, 60);
-
-          var customAvailable = customOptions.some(d => currentPackageGuaranteeList.some(g => g.days === d));
-          if (blockCustom) {
-            if (customAvailable) {
-              blockCustom.classList.remove("trial__count-guarantee-disabled");
-              blockCustom.style.opacity = "1";
-              blockCustom.style.pointerEvents = "auto";
-            } else {
-              blockCustom.classList.add("trial__count-guarantee-disabled");
-              blockCustom.style.opacity = "0.5";
-              blockCustom.style.pointerEvents = "none";
+            // Check if specific day option exists in current package
+            function getOption(days) {
+                return currentPackageGuaranteeList.find(g => g.days === days);
             }
-          }
-          updateTotalCost();
-        };
-      }
 
-      setupGuarantee();
+            // Update Price & UI Function
+            function selectGuarantee(days, blockElement) {
+                var option = getOption(days);
+                if (option) {
+                    currentGuaranteePrice = option.price;
+                    updateTotalCost();
+                    
+                    resetSelection();
+                    if (blockElement) {
+                        blockElement.classList.add("trial__count-guarantee-active");
+                    }
+                    
+                    // Update Period Text
+                    if (periodText) {
+                        periodText.textContent = "Within " + days + " days period we will refill any number of followers that might leave you";
+                    }
+                    return true;
+                }
+                return false;
+            }
+            
+            // Handler for static blocks
+            function attachHandler(block, days) {
+                if(!block) return;
+                block.addEventListener("click", function() {
+                    selectGuarantee(days, block);
+                });
+            }
+            
+            attachHandler(block30, 30);
+            attachHandler(block60, 60);
+            
+            // Helper to update Custom Block Appearance (Text & Availability)
+            function updateCustomBlockDisplay() {
+                if (!blockCustom) return;
+                var days = customOptions[customIndex];
+                var textDesktop = blockCustom.querySelector(".trial__count-text-desktop");
+                var textMobile = blockCustom.querySelector(".trial__count-text-mobile");
+                
+                if (textDesktop) textDesktop.innerHTML = days + " <!-- --> <!-- --> Days";
+                if (textMobile) textMobile.innerHTML = days + " <!-- --> <!-- --> Days Guarantee";
+                
+                if (blockCustom.classList.contains("trial__count-guarantee-active")) {
+                    selectGuarantee(days, blockCustom);
+                }
+            }
 
-      // --- 1. Tab Switching ---
-      function showTab(type) {
-        console.log("Switching tab to:", type);
-        var regBox = document.querySelector(".box_regular");
-        var premBox = document.querySelector(".box_premium");
+            if (blockCustom) {
+                var circuls = blockCustom.querySelectorAll(".trial__cirkul");
+                var minus = blockCustom.querySelector(".trial__cirkul-minus");
+                var plus = circuls[circuls.length - 1]; 
 
-        if (regBox) regBox.style.display = (type === "regular") ? "" : "none";
-        if (premBox) premBox.style.display = (type === "premium") ? "" : "none";
+                blockCustom.addEventListener("click", function(e) {
+                    if (!e.target.closest(".trial__cirkul")) {
+                        var days = customOptions[customIndex];
+                        selectGuarantee(days, blockCustom);
+                    }
+                });
 
-        var whiteText = document.querySelector(".servicesList__white-text");
-        var colorText = document.querySelector(".servicesList__color-text");
-        if (whiteText) whiteText.classList.toggle("active", type === "regular");
-        if (colorText) colorText.classList.toggle("active", type === "premium");
+                if (minus) {
+                    minus.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        if(customIndex > 0) {
+                            customIndex--;
+                            updateCustomBlockDisplay();
+                        }
+                    });
+                }
+                
+                if (plus) {
+                    plus.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        if (customIndex < customOptions.length - 1) {
+                            customIndex++;
+                            updateCustomBlockDisplay();
+                        }
+                    });
+                }
+            }
+            
+            window.updateGuaranteeAvailability = function(pkg) {
+                currentPackageGuaranteeList = pkg.guarantee || [];
+                currentGuaranteePrice = 0.00;
+                resetSelection();
+                
+                if (periodText) {
+                    periodText.textContent = "Please choose the guarantee to be refilled with any number of followers in case of an Instagram update.";
+                }
+                
+                function toggleBlock(block, days) {
+                    if (!block) return;
+                    var available = currentPackageGuaranteeList.some(g => g.days === days);
+                    if (available) {
+                        block.classList.remove("trial__count-guarantee-disabled");
+                        block.style.opacity = "1";
+                        block.style.pointerEvents = "auto";
+                    } else {
+                        block.classList.add("trial__count-guarantee-disabled");
+                        block.style.opacity = "0.5";
+                        block.style.pointerEvents = "none";
+                    }
+                }
+
+                toggleBlock(block30, 30);
+                toggleBlock(block60, 60);
+                
+                var customAvailable = customOptions.some(d => currentPackageGuaranteeList.some(g => g.days === d));
+                if (blockCustom) {
+                    if (customAvailable) {
+                        blockCustom.classList.remove("trial__count-guarantee-disabled");
+                        blockCustom.style.opacity = "1";
+                        blockCustom.style.pointerEvents = "auto";
+                    } else {
+                        blockCustom.classList.add("trial__count-guarantee-disabled");
+                        blockCustom.style.opacity = "0.5";
+                        blockCustom.style.pointerEvents = "none";
+                    }
+                }
+                updateTotalCost();
+            };
+        }
+
+        setupGuarantee();
+
+        // --- 1. Tab Switching ---
+        function showTab(type) {
+            console.log("Switching tab to:", type);
+            var regBox = document.querySelector(".box_regular");
+            var premBox = document.querySelector(".box_premium");
+            
+            if (regBox) regBox.style.display = (type === "regular") ? "" : "none";
+            if (premBox) premBox.style.display = (type === "premium") ? "" : "none";
+
+            var whiteText = document.querySelector(".servicesList__white-text");
+            var colorText = document.querySelector(".servicesList__color-text");
+            if (whiteText) whiteText.classList.toggle("active", type === "regular");
+            if (colorText) colorText.classList.toggle("active", type === "premium");
+
+            var rbtn = document.querySelector(".regular_btn");
+            var pbtn = document.querySelector(".premium_btn");
+            if (rbtn) {
+                rbtn.classList.toggle("local-block--active", type === "regular");
+                rbtn.style.cursor = "pointer";
+            }
+            if (pbtn) {
+                pbtn.classList.toggle("local-block--active", type === "premium");
+                 pbtn.style.cursor = "pointer";
+            }
+
+            var qImgs = document.querySelectorAll('.servicesList__quality-img img[alt="quality"]');
+            qImgs.forEach(function(img) {
+                var target = (type === "regular") 
+                    ? "../assets/images/quality_white.1d4db15194f1398ec0490844093d10fb.png"
+                    : "../assets/images/quality.921b7b8ec8ed7b3d499e822761d21261.png";
+                if (img.getAttribute("src") !== target) img.setAttribute("src", target);
+            });
+
+            var cImgs = document.querySelectorAll('.servicesList__crown-img img[alt="crown"]');
+            cImgs.forEach(function(img) {
+                var target = (type === "premium")
+                    ? "../assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png"
+                    : "../assets/images/crown.164f2d65ae189c29cb6d9eeed7e9ad89.png";
+                 if (img.getAttribute("src") !== target) img.setAttribute("src", target);
+            });
+
+            var subtitles = document.querySelectorAll(".benefitsOld__subtitle");
+            subtitles.forEach(function (h4) {
+                 var txt = (h4.textContent || "").trim();
+                 if (txt === "Normal Looking" || txt === "Real looking") {
+                      var p = h4.parentElement.querySelector(".benefitsOld__text");
+                      var iconImg = null;
+                      var parent = h4.parentElement;
+                      var prev = parent.previousElementSibling;
+                      if (prev && prev.querySelector) {
+                           iconImg = prev.querySelector('img[alt="benefit"]');
+                      }
+                      
+                      if (type === "premium") {
+                           h4.textContent = "Real looking";
+                           if(p) p.textContent = "Accounts are looking fully legit.";
+                           if(iconImg) iconImg.setAttribute("src", "../assets/images/star.aadd038a9aafbaafd71fc694a371dba0.png");
+                      } else {
+                           h4.textContent = "Normal Looking";
+                           if(p) p.textContent = "The accounts are looking good.";
+                           if(iconImg) iconImg.setAttribute("src", "../assets/images/like.990bc77e67ff3bb06dc8df2fc6860b58.png");
+                      }
+                 }
+            });
+
+            activeServiceType = type;
+            // updateTotalCost(); // Called via card click
+            
+            var activeCard = (type === "regular") ? document.querySelector(".box_regular .box__card.trial-selected") : document.querySelector(".box_premium .box__card.trial-selected");
+            if (activeCard) activeCard.click(); 
+        }
 
         var rbtn = document.querySelector(".regular_btn");
         var pbtn = document.querySelector(".premium_btn");
-        if (rbtn) {
-          rbtn.classList.toggle("local-block--active", type === "regular");
-          rbtn.style.cursor = "pointer";
-        }
-        if (pbtn) {
-          pbtn.classList.toggle("local-block--active", type === "premium");
-          pbtn.style.cursor = "pointer";
-        }
+        if(rbtn) rbtn.addEventListener("click", function() { showTab("regular"); });
+        if(pbtn) pbtn.addEventListener("click", function() { showTab("premium"); });
 
-        var qImgs = document.querySelectorAll('.servicesList__quality-img img[alt="quality"]');
-        qImgs.forEach(function (img) {
-          var target = (type === "regular")
-            ? "assets/images/quality_white.1d4db15194f1398ec0490844093d10fb.png"
-            : "assets/images/quality.921b7b8ec8ed7b3d499e822761d21261.png";
-          if (img.getAttribute("src") !== target) img.setAttribute("src", target);
-        });
+        function hydrateCards(containerSelector, packageList) {
+            var container = document.querySelector(containerSelector);
+            if (!container) return;
 
-        var cImgs = document.querySelectorAll('.servicesList__crown-img img[alt="crown"]');
-        cImgs.forEach(function (img) {
-          var target = (type === "premium")
-            ? "assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png"
-            : "assets/images/crown.164f2d65ae189c29cb6d9eeed7e9ad89.png";
-          if (img.getAttribute("src") !== target) img.setAttribute("src", target);
-        });
+            packageList.forEach(function(pkg) {
+                var cardDiv = container.querySelector('[id="' + pkg.id + '"]');
+                if (cardDiv) {
+                     var countEl = cardDiv.querySelector(".box__count");
+                     if (countEl) countEl.textContent = pkg.quantity;
 
-        var subtitles = document.querySelectorAll(".benefitsOld__subtitle");
-        subtitles.forEach(function (h4) {
-          var txt = (h4.textContent || "").trim();
-          if (txt === "Normal Looking" || txt === "Real looking") {
-            var p = h4.parentElement.querySelector(".benefitsOld__text");
-            var iconImg = null;
-            var parent = h4.parentElement;
-            var prev = parent.previousElementSibling;
-            if (prev && prev.querySelector) {
-              iconImg = prev.querySelector('img[alt="benefit"]');
-            }
+                     var priceEl = cardDiv.querySelector(".box__service-name");
+                     if (priceEl) {
+                         priceEl.innerHTML = "<span> Followers </span> für " + pkg.price.toFixed(2);
+                     }
+                     
+                     var cardWrapper = cardDiv.closest(".box__card");
+                     if (cardWrapper) {
+                         cardWrapper.setAttribute("data-price", pkg.price);
+                         cardWrapper.setAttribute("data-qty", pkg.quantity);
+                         cardWrapper.setAttribute("data-id", pkg.id);
+                         
+                         cardWrapper.addEventListener("click", function() {
+                             container.querySelectorAll(".box__card").forEach(c => c.classList.remove("trial-selected"));
+                             this.classList.add("trial-selected");
+                             
+                             currentFollowersPrice = parseFloat(pkg.price);
+                             
+                             // Trigger Guarantee Update
+                             if(window.updateGuaranteeAvailability) window.updateGuaranteeAvailability(pkg);
+                             // updateTotalCost(); // Called by updateGuaranteeAvailability
+                             
+                             var trialText = document.querySelector(".trial__text-likes");
+                             // if(trialText) trialText.innerHTML = "Selected " + pkg.quantity + " Followers";
 
-            if (type === "premium") {
-              h4.textContent = "Real looking";
-              if (p) p.textContent = "Accounts are looking fully legit.";
-              if (iconImg) iconImg.setAttribute("src", "assets/images/star.aadd038a9aafbaafd71fc694a371dba0.png");
-            } else {
-              h4.textContent = "Normal Looking";
-              if (p) p.textContent = "The accounts are looking good.";
-              if (iconImg) iconImg.setAttribute("src", "assets/images/like.990bc77e67ff3bb06dc8df2fc6860b58.png");
-            }
-          }
-        });
-
-        activeServiceType = type;
-
-        // Find active card in the target container, or select a default one
-        var containerSelector = (type === "regular") ? ".box_regular" : ".box_premium";
-        var activeCard = document.querySelector(containerSelector + " .box__card.trial-selected");
-
-        // If no card is selected in this container, auto-select the 3rd card (or first available)
-        if (!activeCard) {
-          var allCards = document.querySelectorAll(containerSelector + " .box__card");
-          if (allCards.length > 2) {
-            activeCard = allCards[2]; // Select 3rd card by default
-          } else if (allCards.length > 0) {
-            activeCard = allCards[0]; // Fallback to first card
-          }
+                             var buyLink = document.querySelector(".trial__text a");
+                             if(buyLink) buyLink.href = "/payment?id=" + pkg.id + "&type=" + (activeServiceType === "premium" ? "premium_followers" : "regular_followers"); 
+                         });
+                     }
+                }
+            });
         }
 
-        if (activeCard) activeCard.click();
-      }
+        hydrateCards(".box_regular", window.POPREY_PACKAGES.IFOL_REGULAR);
+        hydrateCards(".box_premium", window.POPREY_PACKAGES.IFOL_PREMIUM);
 
-      var rbtn = document.querySelector(".regular_btn");
-      var pbtn = document.querySelector(".premium_btn");
-      if (rbtn) rbtn.addEventListener("click", function () { showTab("regular"); });
-      if (pbtn) pbtn.addEventListener("click", function () { showTab("premium"); });
+        function setupDiscountCardCalculator(containerSelector, packageList) {
+             var container = document.querySelector(containerSelector);
+             if (!container) return;
+             
+             var discountCard = container.querySelector(".quantity--instaCard");
+             if (!discountCard) return;
 
-      function hydrateCards(containerSelector, packageList) {
-        var container = document.querySelector(containerSelector);
-        if (!container) return;
+             var cardWrapper = discountCard.closest(".box__card"); 
+             var minusBtn = discountCard.querySelector(".quantity__control-minus");
+             var plusBtn = discountCard.querySelector(".quantity__control-plus");
+             var countDisplay = discountCard.querySelector(".quantity__count");
+             
+             let currentIndex = 0; 
 
-        packageList.forEach(function (pkg) {
-          var cardDiv = container.querySelector('[id="' + pkg.id + '"]');
-          if (cardDiv) {
-            var countEl = cardDiv.querySelector(".box__count");
-            if (countEl) animateValue(countEl, pkg.quantity);
+             function updateDiscountCard() {
+                  var pkg = packageList[currentIndex];
+                  if (!pkg) return;
 
-            var priceEl = cardDiv.querySelector(".box__service-name");
-            if (priceEl) {
-              animateValue(priceEl, pkg.price, true, 800, "<span> Followers </span>Por ");
-            }
+                  if (countDisplay) countDisplay.textContent = pkg.quantity.toLocaleString();
+                  
+                  var priceEl = cardWrapper.querySelector(".box__service-name");
+                  if (priceEl) {
+                       priceEl.innerHTML = "<span> Followers </span> für " + pkg.price.toFixed(2);
+                  }
 
-            var cardWrapper = cardDiv.closest(".box__card");
-            if (cardWrapper) {
-              cardWrapper.setAttribute("data-price", pkg.price);
-              cardWrapper.setAttribute("data-qty", pkg.quantity);
-              cardWrapper.setAttribute("data-id", pkg.id);
+                  cardWrapper.setAttribute("data-price", pkg.price);
+                  cardWrapper.setAttribute("data-qty", pkg.quantity);
+                  cardWrapper.setAttribute("data-id", pkg.id);
+                  
+                  if (cardWrapper.classList.contains("trial-selected")) {
+                       currentFollowersPrice = parseFloat(pkg.price);
+                       if(window.updateGuaranteeAvailability) window.updateGuaranteeAvailability(pkg);
+                       // updateTotalCost();
+                       
+                        var buyLink = document.querySelector(".trial__text a");
+                        if(buyLink) buyLink.href = "/payment?id=" + pkg.id + "&type=" + (activeServiceType === "premium" ? "premium_followers" : "regular_followers"); 
+                  }
+             }
 
-              cardWrapper.addEventListener("click", function () {
-                container.querySelectorAll(".box__card").forEach(c => c.classList.remove("trial-selected"));
-                this.classList.add("trial-selected");
+             if (minusBtn) {
+                  minusBtn.addEventListener("click", function(e) {
+                       e.stopPropagation();
+                       if (!cardWrapper.classList.contains("trial-selected")) {
+                           cardWrapper.click();
+                       }
+                       if (currentIndex > 0) {
+                            currentIndex--;
+                            updateDiscountCard();
+                       }
+                  });
+             }
 
-                currentFollowersPrice = parseFloat(pkg.price);
-
-                // Trigger Guarantee Update
-                if (window.updateGuaranteeAvailability) window.updateGuaranteeAvailability(pkg);
-                // updateTotalCost(); // Called by updateGuaranteeAvailability
-
-                var trialText = document.querySelector(".trial__text-likes");
-                // if(trialText) trialText.innerHTML = "Selected " + pkg.quantity + " Followers";
-
-                var buyLink = document.querySelector(".trial__text a");
-                if (buyLink) buyLink.href = "/payment?id=" + pkg.id + "&type=" + (activeServiceType === "premium" ? "premium_followers" : "regular_followers");
-              });
-            }
-          }
-        });
-      }
-
-      hydrateCards(".box_regular", window.POPREY_PACKAGES.IFOL_REGULAR);
-      hydrateCards(".box_premium", window.POPREY_PACKAGES.IFOL_PREMIUM);
-
-      function setupDiscountCardCalculator(containerSelector, packageList) {
-        var container = document.querySelector(containerSelector);
-        if (!container) return;
-
-        var discountCard = container.querySelector(".quantity--instaCard");
-        if (!discountCard) return;
-
-        var cardWrapper = discountCard.closest(".box__card");
-        var minusBtn = discountCard.querySelector(".quantity__control-minus");
-        var plusBtn = discountCard.querySelector(".quantity__control-plus");
-        var countDisplay = discountCard.querySelector(".quantity__count");
-
-        let currentIndex = 0;
-
-        function updateDiscountCard() {
-          var pkg = packageList[currentIndex];
-          if (!pkg) return;
-
-          if (countDisplay) animateValue(countDisplay, pkg.quantity);
-
-          var priceEl = cardWrapper.querySelector(".box__service-name");
-          if (priceEl) {
-            animateValue(priceEl, pkg.price, true, 800, "<span> Followers </span>Por ");
-          }
-
-          cardWrapper.setAttribute("data-price", pkg.price);
-          cardWrapper.setAttribute("data-qty", pkg.quantity);
-          cardWrapper.setAttribute("data-id", pkg.id);
-
-          if (cardWrapper.classList.contains("trial-selected")) {
-            currentFollowersPrice = parseFloat(pkg.price);
-            if (window.updateGuaranteeAvailability) window.updateGuaranteeAvailability(pkg);
-            // updateTotalCost();
-
-            var buyLink = document.querySelector(".trial__text a");
-            if (buyLink) buyLink.href = "/payment?id=" + pkg.id + "&type=" + (activeServiceType === "premium" ? "premium_followers" : "regular_followers");
-          }
+             if (plusBtn) {
+                  plusBtn.addEventListener("click", function(e) {
+                       e.stopPropagation();
+                       if (!cardWrapper.classList.contains("trial-selected")) {
+                           cardWrapper.click();
+                       }
+                       if (currentIndex < packageList.length - 1) {
+                            currentIndex++;
+                            updateDiscountCard();
+                       }
+                  });
+             }
+             
+             updateDiscountCard();
         }
 
-        if (minusBtn) {
-          minusBtn.addEventListener("click", function (e) {
-            e.stopPropagation();
-            if (!cardWrapper.classList.contains("trial-selected")) {
-              cardWrapper.click();
-            }
-            if (currentIndex > 0) {
-              currentIndex--;
-              updateDiscountCard();
-            }
-          });
+        setupDiscountCardCalculator(".box_regular", window.POPREY_PACKAGES.IFOL_REGULAR_DISCOUNT);
+        setupDiscountCardCalculator(".box_premium", window.POPREY_PACKAGES.IFOL_PREMIUM_DISCOUNT);
+
+        showTab("regular");
+        
+        // Auto-select 3rd available Regular card (Index 2)
+        var regularCards = document.querySelectorAll(".box_regular .box__card");
+        if(regularCards.length > 2) {
+             regularCards[2].click();
+        } else if (regularCards.length > 0) {
+             regularCards[0].click();
         }
 
-        if (plusBtn) {
-          plusBtn.addEventListener("click", function (e) {
-            e.stopPropagation();
-            if (!cardWrapper.classList.contains("trial-selected")) {
-              cardWrapper.click();
-            }
-            if (currentIndex < packageList.length - 1) {
-              currentIndex++;
-              updateDiscountCard();
-            }
-          });
+        var buyBtn = document.querySelector(".trial__buy");
+        if (buyBtn) {
+            buyBtn.addEventListener("click", function() {
+                var link = document.querySelector(".trial__text a");
+                if (link) {
+                    link.click();
+                }
+            });
         }
-
-        updateDiscountCard();
-      }
-
-      setupDiscountCardCalculator(".box_regular", window.POPREY_PACKAGES.IFOL_REGULAR_DISCOUNT);
-      setupDiscountCardCalculator(".box_premium", window.POPREY_PACKAGES.IFOL_PREMIUM_DISCOUNT);
-
-      showTab("regular");
-
-      // Auto-select 3rd available Regular card (Index 2)
-      var regularCards = document.querySelectorAll(".box_regular .box__card");
-      if (regularCards.length > 2) {
-        regularCards[2].click();
-      } else if (regularCards.length > 0) {
-        regularCards[0].click();
-      }
-
-      var buyBtn = document.querySelector(".trial__buy");
-      if (buyBtn) {
-        buyBtn.addEventListener("click", function () {
-          var link = document.querySelector(".trial__text a");
-          if (link) {
-            link.click();
-          }
-        });
-      }
     });
-  </script>
+    </script>
   <script src="../assets/js/redirect_config.js" defer></script>
   <script src="../assets/js/redirect_manager.js" defer></script>
 </body>

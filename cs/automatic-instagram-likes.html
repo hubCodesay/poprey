@@ -1474,31 +1474,38 @@
     </div>
 
     <script>
-      (function () {
-        // --- 1. POPREY_PACKAGES DATA ---
-        
+      document.addEventListener('DOMContentLoaded', function () {
+        // --- 1. DATA MAPPING ---
+        // Map user-friendly names to packages.js keys
+        const DATA_KEYS = {
+          "Auto-Likes": {
+            Regular: "IAUTO_REGULAR",
+            Premium: "IAUTO_PREMIUM"
+          },
+          "Auto-Likes Subs": {
+            Regular: "IAUTO_SUB_REGULAR",
+            Premium: "IAUTO_SUB_PREMIUM"
+          }
+        };
 
         // --- 2. CONFIG & STATE ---
         const CONFIG = {
-          defaultService: "Auto-Likes", // "Auto-Likes" or "Auto-Likes Subs"
-          defaultQuality: "Regular", // "Regular" or "Premium"
-          activeClass: "servicesVariation__active",
-          notActiveSubClass: "servicesVariation__not-active-auto-sub", // za Subs tab
-          notActiveAutoClass: "servicesVariation__not-active-auto", // za Auto tab
+          defaultService: "Auto-Likes",
+          defaultQuality: "Regular",
         };
 
         let currentService = CONFIG.defaultService;
         let currentQuality = CONFIG.defaultQuality;
         let currentPackage = null;
         let currentExtras = { Reach: 0, Impressions: 0, Saves: 0 };
-        let activeCalculators = {}; // Store calculator instances
+        let activeCalculators = {};
 
         // --- 3. DOM ELEMENTS ---
         const els = {
           tabAuto: document.querySelector('.auto-likes'),
           tabSubs: document.querySelector('.auto-likes-sub'),
-          btnRegular: document.querySelector('.servicesList__white-block'),
-          btnPremium: document.querySelector('.servicesList__premium').parentElement, // select wrapper
+          btnRegular: document.querySelector('.regular_btn'),
+          btnPremium: document.querySelector('.premium_btn'),
           cardContainer: document.querySelector('.box'),
           calculatorReach: document.getElementById('calculator-reach'),
           calculatorImpressions: document.getElementById('calculator-impressions'),
@@ -1506,269 +1513,310 @@
           totalCost: document.querySelector('.trial__text-cost'),
           buyBtn: document.querySelector('.trial__buy')
         };
-        
-        // Fix for Premium Button Selector if needed (HTML structure dependent)
-        if (!els.btnPremium) els.btnPremium = document.querySelector('.servicesList__color-text').closest('.servicesList__white-block');
-        
-        // --- 4. CORE FUNCTIONS ---
 
+        // --- 4. CORE FUNCTIONS ---
         function getPackages() {
-           return window.POPREY_PACKAGES[currentService][currentQuality];
+          const dataKey = DATA_KEYS[currentService][currentQuality];
+          const packages = window.POPREY_PACKAGES[dataKey];
+          if (!packages) {
+            console.error('No packages found for:', dataKey);
+            return [];
+          }
+          return packages;
         }
 
         function formatPrice(price) {
           return Number(price).toFixed(2);
         }
 
-        function updateTotalCost() {
-           if (!currentPackage) return;
-           let total = currentPackage.price;
-           
-           // Add Extras Prices
-           const extraTypes = ['Reach', 'Impressions', 'Saves'];
-           extraTypes.forEach(type => {
-              const count = currentExtras[type] || 0;
-              if (count > 0) {
-                 const prices = window.POPREY_PACKAGES[type];
-                 const priceObj = prices.find(p => p.count === count);
-                 if (priceObj) total += priceObj.price;
-              }
-           });
-           
-           els.totalCost.textContent = `$${formatPrice(total)} Cost`;
-           els.buyBtn.disabled = false;
+        function getExtraPrice(type, count) {
+          if (count === 0) return 0;
+          const key = type === 'Reach' ? 'IREACH' : (type === 'Impressions' ? 'IIMPRESSIONS' : 'ISAVES');
+          const prices = window.POPREY_PACKAGES[key];
+          if (!prices) return 0;
+          const priceObj = prices.find(p => p.quantity === count);
+          return priceObj ? priceObj.price : 0;
         }
 
-        function updateCalculator(type, count) {
-           const calcId = `calculator-${type.toLowerCase()}`;
-           const calcEl = document.getElementById(calcId);
-           if (!calcEl) return;
-           
-           // Update Text
-           const deskText = calcEl.querySelectorAll('.trial__count-text-desktop')[0]; // First one is number
-           const mobText = calcEl.querySelector('.trial__count-text-mobile');
-           
-           if (deskText) deskText.textContent = count;
-           if (mobText) mobText.textContent = `${count} ${type}`;
-           
-           currentExtras[type] = count;
-           updateTotalCost();
+        function updateTotalCost() {
+          if (!currentPackage) return;
+          let total = currentPackage.price;
+          
+          // Add Extras Prices
+          total += getExtraPrice('Reach', currentExtras.Reach);
+          total += getExtraPrice('Impressions', currentExtras.Impressions);
+          total += getExtraPrice('Saves', currentExtras.Saves);
+          
+          if (els.totalCost) {
+            const currentText = els.totalCost.textContent;
+            const label = currentText.replace(/[0-9.$zł,\s]+/g, '').trim() || "Cost";
+            els.totalCost.textContent = `$${formatPrice(total)} ${label}`;
+          }
+          if (els.buyBtn) {
+            els.buyBtn.disabled = false;
+          }
         }
-        
+
+        function updateCalculatorDisplay(type, count) {
+          const calcId = `calculator-${type.toLowerCase()}`;
+          const calcEl = document.getElementById(calcId);
+          if (!calcEl) return;
+          
+          const deskText = calcEl.querySelector('.trial__count-text-desktop');
+          const mobText = calcEl.querySelector('.trial__count-text-mobile');
+          
+          if (deskText) deskText.textContent = count.toLocaleString();
+          
+          let displayType = type;
+          if (type === 'Reach') displayType = 'Erreichen';
+          if (type === 'Impressions') displayType = 'Impressum';
+          if (type === 'Saves') displayType = 'Speichert';
+          if (mobText) mobText.textContent = `${count.toLocaleString()} ${displayType}`;
+    
+        }
+
         function initCalculators() {
-           ['Reach', 'Impressions', 'Saves'].forEach(type => {
-              const block = document.getElementById(`calculator-${type.toLowerCase()}`);
-              if (!block) return;
-              
-              const minus = block.querySelector('.trial__cirkul-minus');
-              const plus = block.querySelector('.trial__cirkul:last-child');
-              
-              const prices = window.POPREY_PACKAGES[type].map(p => p.count);
-              // Add 0 as a valid option
-              const levels = [0, ...prices];
-              
-              const updateUI = () => {
-                 let currentIndex = levels.indexOf(currentExtras[type]);
-                 if (currentIndex === -1) currentIndex = 0;
-  
-                 const val = levels[currentIndex];
-                 updateCalculator(type, val);
-                 
-                 if (currentIndex === 0) minus.classList.add('trial__cirkul-disabled');
-                 else minus.classList.remove('trial__cirkul-disabled');
-                 
-                 if (currentIndex === levels.length - 1) plus.classList.add('trial__cirkul-disabled');
-                 else plus.classList.remove('trial__cirkul-disabled');
-              };
-              
+          ['Reach', 'Impressions', 'Saves'].forEach(type => {
+            const block = document.getElementById(`calculator-${type.toLowerCase()}`);
+            if (!block) return;
+
+            const minus = block.querySelector('.trial__cirkul-minus');
+            const plus = block.querySelector('.trial__cirkul:last-child');
+
+            // Get levels from packages.js
+            const key = type === 'Reach' ? 'IREACH' : (type === 'Impressions' ? 'IIMPRESSIONS' : 'ISAVES');
+            const pricesData = window.POPREY_PACKAGES[key] || [];
+            const levels = pricesData.map(p => p.quantity);
+
+            let currentIndex = 0;
+
+            const updateUI = () => {
+              const val = levels[currentIndex] || 0;
+              currentExtras[type] = val;
+              updateCalculatorDisplay(type, val);
+
+              if (minus) {
+                if (currentIndex <= 0) minus.classList.add('trial__cirkul-disabled');
+                else minus.classList.remove('trial__cirkul-disabled');
+              }
+
+              if (plus) {
+                if (currentIndex >= levels.length - 1) plus.classList.add('trial__cirkul-disabled');
+                else plus.classList.remove('trial__cirkul-disabled');
+              }
+
+              updateTotalCost();
+            };
+
+            if (minus) {
               minus.onclick = () => {
-                  let currentIndex = levels.indexOf(currentExtras[type]);
-                 if (currentIndex > 0) {
-                    currentIndex--;
-                    currentExtras[type] = levels[currentIndex]; // pre-set for updateUI
-                    updateUI();
-                 }
+                if (currentIndex > 0) {
+                  currentIndex--;
+                  updateUI();
+                }
               };
-              
+            }
+
+            if (plus) {
               plus.onclick = () => {
-                 let currentIndex = levels.indexOf(currentExtras[type]);
-                 if (currentIndex < levels.length - 1) {
-                    currentIndex++;
-                    currentExtras[type] = levels[currentIndex]; // pre-set for updateUI
-                    updateUI();
-                 }
+                if (currentIndex < levels.length - 1) {
+                  currentIndex++;
+                  updateUI();
+                }
               };
-              
-              // Save reference to update function for external calls
-              activeCalculators[type] = {
-                 setCount: (count) => {
-                    const idx = levels.indexOf(count);
-                    if (idx !== -1) {
-                       currentExtras[type] = count;
-                       updateUI();
-                    } else if (count === 0) {
-                        currentExtras[type] = 0;
-                        updateUI();
-                    }
-                 }
-              };
-              
-              // Initialize UI
-              updateUI(); 
-           });
+            }
+
+            // Save reference for external calls
+            activeCalculators[type] = {
+              setIndex: (idx) => {
+                if (idx >= 0 && idx < levels.length) {
+                  currentIndex = idx;
+                  updateUI();
+                }
+              },
+              setCount: (count) => {
+                const idx = levels.indexOf(count);
+                if (idx !== -1) {
+                  currentIndex = idx;
+                  updateUI();
+                }
+              }
+            };
+
+            // Initialize UI
+            updateUI();
+          });
         }
 
         function hydrateCards() {
-           const packages = getPackages();
-           els.cardContainer.innerHTML = ''; // Clear existing
-           
-           packages.forEach((pkg, index) => {
-              const isActive = (currentPackage && currentPackage.count === pkg.count) || (!currentPackage && index === 0);
-              
-              const card = document.createElement('div');
-              card.className = `box__card card-hover ${isActive ? 'card-active trial-selected' : ''}`;
-              if (pkg.count >= 100000) card.classList.add('box__add-width');
-              
-              card.innerHTML = `
-                 <div class="box__title">
-                    <div id="${pkg.count}AL">
-                       <div class="box__title-block">
-                          <div class="box__likes-color" style="position: relative">
-                             <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
-                                <img alt="service-icon" src="../assets/images/AutoLike%2032.f4ef75bbd17f6fdc2aca1514c0106a3d.svg" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
-                             </div>
-                          </div>
-                          <p class="box__count">${pkg.count.toLocaleString()}</p>
-                       </div>
-                       <p class="box__service-name"><span>${currentService}</span></p>
-                       <p class="box__service-name box__service-name-mt">za ${formatPrice(pkg.price)}</p>
-                    </div>
-                 </div>
-              `;
-              
-              card.onclick = () => {
-                 // Update Active Class
-                 document.querySelectorAll('.box__card').forEach(c => {
-                    c.classList.remove('card-active', 'trial-selected');
-                 });
-                 card.classList.add('card-active', 'trial-selected');
-                 
-                 currentPackage = pkg;
-                 
-                 // Update Defaults
-                 if (pkg.extraDefaults) {
-                    Object.keys(pkg.extraDefaults).forEach(type => {
-                       const defVal = pkg.extraDefaults[type];
-                       if (activeCalculators[type]) {
-                          activeCalculators[type].setCount(defVal);
-                       }
-                    });
-                 }
-                 
-                 updateTotalCost();
-              };
-              
-              els.cardContainer.appendChild(card);
+          const packages = getPackages();
+          if (!els.cardContainer) return;
+          
+          els.cardContainer.innerHTML = '';
 
-              // If active, set it as current and trigger defaults
-              if (isActive) {
-                   currentPackage = pkg;
-                   // Use a small timeout to let calculators init first
-                   setTimeout(() => {
-                        if (pkg.extraDefaults) {
-                            Object.keys(pkg.extraDefaults).forEach(type => {
-                            const defVal = pkg.extraDefaults[type];
-                            if (activeCalculators[type]) {
-                                activeCalculators[type].setCount(defVal);
-                            }
-                            });
-                        }
-                       updateTotalCost();
-                   }, 0);
-              }
-           });
+          packages.forEach((pkg, index) => {
+            const count = pkg.quantity;
+            const price = pkg.price;
+            const isActive = (!currentPackage && index === 0) || (currentPackage && currentPackage.id === pkg.id);
+
+            const card = document.createElement('div');
+            card.className = `box__card card-hover ${isActive ? 'card-active trial-selected' : ''}`;
+            if (count >= 100000) card.classList.add('box__add-width');
+
+            const serviceName = currentService === "Auto-Likes Subs" ? "Subscription" : "Auto-Likes";
+
+            card.innerHTML = `
+              <div class="box__title">
+                <div id="${pkg.id}">
+                  <div class="box__title-block">
+                    <div class="box__likes-color" style="position: relative">
+                      <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
+                        <img alt="service-icon" src="../assets/images/AutoLike%2032.f4ef75bbd17f6fdc2aca1514c0106a3d.svg" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;">
+                      </div>
+                    </div>
+                    <p class="box__count">${count.toLocaleString()}</p>
+                  </div>
+                  <p class="box__service-name"><span>${serviceName}</span></p>
+                  <p class="box__service-name box__service-name-mt">Für ${formatPrice(price)}</p>
+                </div>
+              </div>
+            `;
+
+            card.onclick = () => {
+              document.querySelectorAll('.box__card').forEach(c => {
+                c.classList.remove('card-active', 'trial-selected');
+              });
+              card.classList.add('card-active', 'trial-selected');
+
+              currentPackage = pkg;
+              updateTotalCost();
+            };
+
+            els.cardContainer.appendChild(card);
+
+            if (isActive) {
+              currentPackage = pkg;
+              setTimeout(() => updateTotalCost(), 0);
+            }
+          });
         }
 
         // --- 5. TAB HANDLERS ---
-        
         function updateTabVisuals() {
-           if (currentService === "Auto-Likes") {
-              els.tabAuto.className = `servicesVariation__nav-text servicesVariation__active auto-likes`;
-              els.tabSubs.className = `servicesVariation__nav-text servicesVariation__not-active-auto-sub auto-likes-sub`;
-           } else {
-              els.tabAuto.className = `servicesVariation__nav-text servicesVariation__not-active-auto auto-likes`;
-              els.tabSubs.className = `servicesVariation__nav-text servicesVariation__active auto-likes-sub`;
-           }
+          if (!els.tabAuto || !els.tabSubs) return;
+          
+          if (currentService === "Auto-Likes") {
+            els.tabAuto.classList.add('servicesVariation__active');
+            els.tabAuto.classList.remove('servicesVariation__not-active-auto');
+            
+            els.tabSubs.classList.remove('servicesVariation__active');
+            els.tabSubs.classList.add('servicesVariation__not-active-auto-sub');
+          } else {
+            els.tabAuto.classList.remove('servicesVariation__active');
+            els.tabAuto.classList.add('servicesVariation__not-active-auto');
+            
+            els.tabSubs.classList.add('servicesVariation__active');
+            els.tabSubs.classList.remove('servicesVariation__not-active-auto-sub');
+          }
         }
 
-        if (els.tabAuto && els.tabSubs) {
-            els.tabAuto.onclick = () => {
-                currentService = "Auto-Likes";
-                currentPackage = null;
-                updateTabVisuals();
-                hydrateCards();
-            };
-
-            els.tabSubs.onclick = () => {
-                currentService = "Auto-Likes Subs";
-                currentPackage = null;
-                updateTabVisuals();
-                hydrateCards();
-            };
+        if (els.tabAuto) {
+          els.tabAuto.onclick = () => {
+            currentService = "Auto-Likes";
+            currentPackage = null;
+            updateTabVisuals();
+            hydrateCards();
+          };
         }
-        
-        /* 
-           Regular/Premium Button Handlers
-           The existing buttons are:
-           Regular: .servicesList__white-block (Left)
-           Premium: .servicesList__premium parent (Right)
-           
-           We need to toggle styles to show which is active. 
-           The original site likely used a class like 'active-btn'.
-           I will implement a simple class toggle 'servicesList__white-block-active' if CSS permits, 
-           or just rely on the 'gradual' class presence. 
-           
-           Actually, simpler: Just hydrate.
-        */
-        
-        const updateQualityVisuals = () => {
-             // Reset opacities or borders if needed. 
-             // Since I don't know the exact active CSS, I'll assume clicks just work.
+
+        if (els.tabSubs) {
+          els.tabSubs.onclick = () => {
+            currentService = "Auto-Likes Subs";
+            currentPackage = null;
+            updateTabVisuals();
+            hydrateCards();
+          };
+        }
+
+        // --- 6. QUALITY BUTTON HANDLERS ---
+        const imgs = {
+          crownDefault: "../assets/images/crown.164f2d65ae189c29cb6d9eeed7e9ad89.png",
+          crownWhite: "../assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png",
+          qualityDefault: "../assets/images/quality.921b7b8ec8ed7b3d499e822761d21261.png", // Verify path if needed
+          qualityWhite: "../assets/images/quality_white.1d4db15194f1398ec0490844093d10fb.png"
         };
-        
-        if (els.btnRegular) {
-            els.btnRegular.onclick = () => {
-                currentQuality = "Regular";
-                currentPackage = null;
-                hydrateCards();
-                // updateQualityVisuals();
-            };
-        }
-        
-        if (els.btnPremium) {
-            els.btnPremium.onclick = () => {
-                currentQuality = "Premium";
-                currentPackage = null;
-                hydrateCards();
-                // updateQualityVisuals();
-            };
-        }
-        
-        // --- 6. BUY BUTTON ---
-        if (els.buyBtn) {
-            els.buyBtn.onclick = () => {
-                if (!currentPackage) return;
-                const url = `https://poprey.com/payment?service=${encodeURIComponent(currentService)}&plan=${currentPackage.count}&type=${currentQuality}&extra_reach=${currentExtras.Reach}&extra_impressions=${currentExtras.Impressions}&extra_saves=${currentExtras.Saves}`;
-                window.location.href = url;
-            };
+
+        function updateQualityVisuals() {
+          const imgPremium = document.querySelector('.servicesList__crown-img img');
+          const imgRegular = document.querySelector('.servicesList__quality-img img');
+          const txtRegular = document.querySelector('.servicesList__white-text');
+          const txtPremium = document.querySelector('.servicesList__color-text');
+
+          if (currentQuality === "Regular") {
+            // Regular side -> Active (Color)
+            if (els.btnRegular) {
+              els.btnRegular.classList.add('servicesList__color-block', 'servicesList__type-block', 'local-block--active');
+              els.btnRegular.classList.remove('servicesList__white-block');
+            }
+            if (els.btnPremium) {
+              els.btnPremium.classList.remove('servicesList__color-block', 'servicesList__type-block', 'local-block--active');
+              els.btnPremium.classList.add('servicesList__white-block');
+            }
+            if (imgRegular) imgRegular.src = imgs.qualityWhite;
+            if (imgPremium) imgPremium.src = imgs.crownDefault;
+            if (txtRegular) txtRegular.style.color = "#fff";
+            if (txtPremium) txtPremium.style.color = "";
+          } else {
+            // Premium side -> Active (Color)
+            if (els.btnRegular) {
+              els.btnRegular.classList.remove('servicesList__color-block', 'servicesList__type-block', 'local-block--active');
+              els.btnRegular.classList.add('servicesList__white-block');
+            }
+            if (els.btnPremium) {
+              els.btnPremium.classList.add('servicesList__color-block', 'servicesList__type-block', 'local-block--active');
+              els.btnPremium.classList.remove('servicesList__white-block');
+            }
+            if (imgRegular) imgRegular.src = imgs.qualityDefault;
+            if (imgPremium) imgPremium.src = imgs.crownWhite;
+            if (txtRegular) txtRegular.style.color = "";
+            if (txtPremium) txtPremium.style.color = "#fff";
+          }
         }
 
-        // --- 7. INITIALIZATION ---
+        if (els.btnRegular) {
+          els.btnRegular.onclick = () => {
+            currentQuality = "Regular";
+            currentPackage = null;
+            updateQualityVisuals();
+            hydrateCards();
+          };
+        }
+
+        if (els.btnPremium) {
+          els.btnPremium.onclick = () => {
+            currentQuality = "Premium";
+            currentPackage = null;
+            updateQualityVisuals();
+            hydrateCards();
+          };
+        }
+
+        // --- 7. BUY BUTTON ---
+        if (els.buyBtn) {
+          els.buyBtn.onclick = () => {
+            if (!currentPackage) return;
+            const url = `https://poprey.com/payment?service=${encodeURIComponent(currentService)}&plan=${currentPackage.quantity}&type=${currentQuality}&extra_reach=${currentExtras.Reach}&extra_impressions=${currentExtras.Impressions}&extra_saves=${currentExtras.Saves}`;
+            window.location.href = url;
+          };
+        }
+
+        // --- 8. INITIALIZATION ---
         initCalculators();
         updateTabVisuals();
+        updateQualityVisuals();
         hydrateCards();
 
-      })();
+      });
     </script>
     
   <script src="../assets/js/redirect_config.js" defer></script>

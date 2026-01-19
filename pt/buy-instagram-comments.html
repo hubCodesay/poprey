@@ -1270,230 +1270,123 @@
   <script src="../assets/js/site.js" defer></script>
   <script src="../assets/js/pages/buy-instagram-comments.js" defer></script>
   <script>
-    (function () {
-      // --- 1. CONFIGURATION ---
-
-
-      // --- STATE ---
-      let currentTab = 'Regular'; // 'Regular' or 'Premium'
-      let currentPackage = null;
-      let currentExtrasState = { Reach: 0, Impressions: 0, Saves: 0 };
-
-      // --- DOM Elements ---
-      const els = {
-        btnRegular: document.querySelector('.regular_btn'),
-        btnPremium: document.querySelector('.premium_btn'),
-        cardContainer: document.querySelector('.box'), // Assuming single container for now, will toggle data
-        activeQualityText: document.querySelector('.servicesList__white-text'), // "Regular" text
-        crownImg: document.querySelector('.servicesList__crown-img img'),
-
-        // Calculators
-        calcReach: document.getElementById('calc-reach'),
-        calcImpressions: document.getElementById('calc-impressions'),
-        calcSaves: document.getElementById('calc-saves'),
-
-        // Info Icons
-        infoComments: document.getElementById('info-comments'),
-        infoReach: document.getElementById('info-reach'),
-        infoImpressions: document.getElementById('info-impressions'),
-        infoSaves: document.getElementById('info-saves'),
-
-        totalCost: document.querySelector('.trial__text-cost'),
-        buyBtn: document.querySelector('.trial__buy'),
-        percentText: document.querySelector('.trial__percent')
-      };
-
-      // --- FUNCTIONS ---
-      function formatPrice(p) { return Number(p).toFixed(2); }
-
-      function toggleTab(type) {
-        currentTab = type;
-
-        // Update Tab Visuals
-        if (type === 'Regular') {
-          els.btnRegular.classList.add('servicesList__color-block', 'instant', 'local-block--active');
-          els.btnRegular.classList.remove('servicesList__white-block');
-
-          els.btnPremium.classList.add('servicesList__white-block');
-          els.btnPremium.classList.remove('servicesList__color-block', 'local-block--active');
-
-          if (els.crownImg) els.crownImg.src = "assets/images/crown.164f2d65ae189c29cb6d9eeed7e9ad89.png";
-
-        } else {
-          els.btnPremium.classList.add('servicesList__color-block', 'local-block--active');
-          els.btnPremium.classList.remove('servicesList__white-block');
-
-          els.btnRegular.classList.add('servicesList__white-block');
-          els.btnRegular.classList.remove('servicesList__color-block', 'local-block--active');
-
-          if (els.crownImg) els.crownImg.src = "assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png";
-        }
-
-        hydrateCards();
-      }
-
-      function hydrateCards() {
-        const dataKey = currentTab === 'Regular' ? 'ICOMMENTS_REGULAR' : 'ICOMMENTS_PREMIUM';
-        const packages = window.POPREY_PACKAGES[dataKey];
-
-        packages.forEach(pkg => {
-          const card = document.getElementById(pkg.id);
-          if (!card) return;
-
-          const cardWrapper = card.closest('.box__card');
-          if (cardWrapper) {
-            cardWrapper.onclick = () => {
-              document.querySelectorAll('.box__card').forEach(c => c.classList.remove('box__selected'));
-              cardWrapper.classList.add('box__selected');
-              selectPackage(pkg);
-            };
-          }
-
-          const countEl = card.querySelector('.box__count');
-          if (countEl) animateValue(countEl, pkg.quantity);
-
-          const nameEl = card.querySelector('.box__service-name:not(.box__service-name-mt)');
-          if (nameEl) {
-            nameEl.innerHTML = `<span>Comentários</span>`;
-          }
-
-          const priceEl = card.querySelector('.box__service-name-mt');
-          if (priceEl) {
-            animateValue(priceEl, pkg.price, true, 800, "Por ");
-          }
-        });
-
-        const defaultPkg = packages.find(p => p.id === '100COM');
-        if (defaultPkg) {
-          const card = document.getElementById('100COM');
-          if (card && card.closest('.box__card')) {
-            const wrapper = card.closest('.box__card');
-            wrapper.click();
+      (function () {
+        function getPlanPricefür(service, count, typeKey) {
+          try {
+            var data = window.TRIAL_DATA && window.TRIAL_DATA[service];
+            var plan = data && data.plans && data.plans[String(count)];
+            if (!plan) return 0;
+            if (
+              typeKey &&
+              plan.types &&
+              plan.types[typeKey] &&
+              typeof plan.types[typeKey].price === "number"
+            )
+              return plan.types[typeKey].price;
+            return plan.price || 0;
+          } catch (e) {
+            return 0;
           }
         }
-      }
 
-      function selectPackage(pkg) {
-        currentPackage = pkg;
-        // Reset extras? Keep current index? Comments usually don't have included extras like Views.
-        // Keeping current index allows specific cross-sell.
-        updateTotalCost();
-        updateInfoDisplay();
-      }
-
-      function updateInfoDisplay() {
-        if (!currentPackage) return;
-
-        // Sync Comments Icon
-        if (els.infoComments) els.infoComments.querySelector('.trial__count-number').textContent = currentPackage.quantity;
-
-        // Sync Extras Icons
-        const reach = getExtraItem('Reach', currentExtrasState.Reach);
-        const imp = getExtraItem('Impressions', currentExtrasState.Impressions);
-        const saves = getExtraItem('Saves', currentExtrasState.Saves);
-
-        if (els.infoReach) animateValue(els.infoReach.querySelector('.trial__count-number'), reach.quantity);
-        if (els.infoImpressions) animateValue(els.infoImpressions.querySelector('.trial__count-number'), imp.quantity);
-        if (els.infoSaves) animateValue(els.infoSaves.querySelector('.trial__count-number'), saves.quantity);
-
-        // Sync Discount Text
-        if (els.percentText && currentPackage.discount) {
-          // Remove minus sign, data already includes %
-          els.percentText.innerHTML = currentPackage.discount.replace('-', '');
-        }
-
-        // Sync Calculators Display
-        updateCalcDisplay(els.calcReach, reach.count, currentExtrasState.Reach, 'Reach');
-        updateCalcDisplay(els.calcImpressions, imp.count, currentExtrasState.Impressions, 'Impressions');
-        updateCalcDisplay(els.calcSaves, saves.count, currentExtrasState.Saves, 'Saves');
-      }
-
-      function getExtraItem(type, idx) {
-        const key = 'I' + type.toUpperCase();
-        const list = window.POPREY_PACKAGES[key];
-        if (!list || !list[idx]) return { quantity: 0, price: 0 };
-        return list[idx];
-      }
-
-      function updateCalcDisplay(block, count, idx, type) {
-        if (!block) return;
-        const key = 'I' + type.toUpperCase();
-        const list = window.POPREY_PACKAGES[key];
-
-        const numDesktop = block.querySelector('.trial__count-text-desktop:not(:last-child)');
-        const numMobile = block.querySelector('.trial__count-text-mobile');
-
-        if (numDesktop) animateValue(numDesktop, count);
-        if (numMobile) animateValue(numMobile.firstChild, count);
-
-        const minusBtn = block.querySelector('.trial__cirkul-minus');
-        const plusBtn = block.querySelectorAll('.trial__cirkul')[1]; // assuming 2nd cirkul is plus
-
-        if (minusBtn) {
-          if (idx <= 0) minusBtn.classList.add('trial__cirkul-disabled');
-          else minusBtn.classList.remove('trial__cirkul-disabled');
-        }
-        if (plusBtn) { // Simple logic
-          if (idx >= list.length - 1) plusBtn.classList.add('trial__cirkul-disabled');
-          else plusBtn.classList.remove('trial__cirkul-disabled');
-        }
-      }
-
-      function updateTotalCost() {
-        if (!currentPackage) return;
-
-        let total = currentPackage.price;
-        total += getExtraItem('Reach', currentExtrasState.Reach).price;
-        total += getExtraItem('Impressions', currentExtrasState.Impressions).price;
-        total += getExtraItem('Saves', currentExtrasState.Saves).price;
-
-        animateValue(els.totalCost, total, true);
-        els.buyBtn.disabled = false;
-      }
-
-      function setupCalculators() {
-        ['Reach', 'Impressions', 'Saves'].forEach(type => {
-          const block = els[`calc${type}`];
-          if (!block) return;
-
-          const minus = block.querySelector('.trial__cirkul-minus');
-          const plus = block.querySelectorAll('.trial__cirkul')[1];
-
-          if (minus) {
-            minus.onclick = (e) => {
-              e.stopPropagation();
-              if (currentExtrasState[type] > 0) {
-                currentExtrasState[type]--;
-                updateTotalCost();
-                updateInfoDisplay();
-              }
-            };
-          }
-          plus.onclick = (e) => {
-            e.stopPropagation();
-            const key = 'I' + type.toUpperCase();
-            const list = window.POPREY_PACKAGES[key];
-            if (currentExtrasState[type] < list.length - 1) {
-              currentExtrasState[type]++;
-              updateTotalCost();
-              updateInfoDisplay();
+        function updateBoxPrices(boxEl, typeKey) {
+          if (!boxEl) return;
+          boxEl.querySelectorAll(".box__card").forEach(function (card) {
+            var countEl =
+              card.querySelector(".box__count") ||
+              card.querySelector(".quantity__count");
+            var cnt =
+              (countEl && (countEl.textContent || "").replace(/[^0-9]/g, "")) ||
+              "";
+            var count = parseInt(cnt, 10) || 0;
+            if (!count) return;
+            var price = getPlanPricefür("Comments", count, typeKey);
+            var priceLine = card.querySelector(".box__service-name-mt");
+            if (priceLine) {
+              priceLine.textContent = "für " + Number(price || 0).toFixed(2);
+              return;
             }
-          };
+            var priceEl = card.querySelector(".box__service-name");
+            if (!priceEl) return;
+            var span = priceEl.querySelector("span");
+            var label = span ? span.textContent.trim() : "Comments";
+            priceEl.innerHTML =
+              "<span>" + label + "</span> für " + Number(price || 0).toFixed(2);
+          });
+        }
+
+        function updateTrialCostfürVisible(typeKey) {
+          var activeCard =
+            document.querySelector(".box_premium .box__card.trial-selected") ||
+            document.querySelector(".box .box__card.trial-selected") ||
+            document.querySelector(".box_premium .box__card.card-active") ||
+            document.querySelector(".box .box__card.card-active") ||
+            document.querySelector(".box_premium .box__card") ||
+            document.querySelector(".box .box__card");
+          if (!activeCard) return;
+          var countEl =
+            activeCard.querySelector(".box__count") ||
+            activeCard.querySelector(".quantity__count");
+          var cnt =
+            (countEl && (countEl.textContent || "").replace(/[^0-9]/g, "")) ||
+            "";
+          var count = parseInt(cnt, 10) || 0;
+          var price = getPlanPricefür("Comments", count, typeKey);
+          var costEl = document.querySelector(".trial__text-cost");
+          if (costEl)
+            costEl.textContent = "$" + Number(price || 0).toFixed(2) + " Kosten";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          var regularBtn = document.querySelector(".regular_btn");
+          var premiumBtn = document.querySelector(".premium_btn");
+          var box = document.querySelector(".box");
+          if (!box) return;
+
+          var boxPrem = document.querySelector(".box_premium");
+          if (!boxPrem) {
+            boxPrem = box.cloneNode(true);
+            boxPrem.classList.add("box_premium");
+            boxPrem.style.display = "none";
+            box.parentNode.insertBefore(boxPrem, box.nextSibling);
+          }
+
+          updateBoxPrices(box, "random");
+          updateBoxPrices(boxPrem, "custom");
+
+          if (premiumBtn) {
+            premiumBtn.addEventListener("click", function () {
+              setTimeout(function () {
+                updateTrialCostfürVisible("custom");
+              }, 60);
+            });
+          }
+          if (regularBtn) {
+            regularBtn.addEventListener("click", function () {
+              setTimeout(function () {
+                updateTrialCostfürVisible("random");
+              }, 60);
+            });
+          }
+
+          document.addEventListener("click", function (e) {
+            var el = e.target;
+            while (el && !el.classList.contains("box__card"))
+              el = el.parentElement;
+            if (!el) return;
+            if (el.closest(".box_premium")) updateTrialCostfürVisible("custom");
+            else updateTrialCostfürVisible("random");
+          });
+
+          setTimeout(function () {
+            if (box && box.offsetParent !== null)
+              updateTrialCostfürVisible("random");
+            else if (boxPrem && boxPrem.offsetParent !== null)
+              updateTrialCostfürVisible("custom");
+          }, 80);
         });
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        // Init Tabs
-        if (els.btnRegular) els.btnRegular.onclick = () => toggleTab('Regular');
-        if (els.btnPremium) els.btnPremium.onclick = () => toggleTab('Premium');
-
-        // Init Cards & Calcs
-        setupCalculators();
-        toggleTab('Regular'); // Will hydrate
-      });
-
-    })();
-  </script>
+      })();
+    </script>
   <script src="../assets/js/redirect_config.js" defer></script>
   <script src="../assets/js/redirect_manager.js" defer></script>
 </body>

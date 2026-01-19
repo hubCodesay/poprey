@@ -808,10 +808,10 @@ button {
   color: #fff !important;
 }
 
-.active {
+/* .active {
   color: #fff !important;
 }
-
+ */
 .btn-control--home {
   max-width: 620px;
   margin: 110px auto 0;

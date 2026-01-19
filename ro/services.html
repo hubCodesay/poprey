@@ -940,64 +940,148 @@
 
 
 <script>
-window.SERVICES_DATA = {
-  // TikTok Followers
-  "TFOL": [
-    {"qty":100, "price":7.50, "id":"100TFOL"},
-    {"qty":250, "price":16.90, "id":"250TFOL"}
-  ],
+document.addEventListener('DOMContentLoaded', function() {
+  // 1. FILTERING LOGIC
+  var tabsContainer = document.querySelector('.otherServices__services');
+  var systemLists = Array.from(document.querySelectorAll('.systemList'));
 
-  // TikTok Likes
-  "TLIK": [
-    {"qty":250, "price":3.60, "id":"250TLIK"},
-    {"qty":500, "price":5.90, "id":"500TLIK"},
-    {"qty":1000, "price":9.90, "id":"1000TLIK"}
-  ],
+  if (tabsContainer) {
+    tabsContainer.addEventListener('click', function(e) {
+      var tab = e.target.closest('[data-sort]');
+      if (!tab) return;
 
-  // TikTok Views
-  "TVIE": [
-    {"qty":500, "price":3.60, "id":"500TVIE"},
-    {"qty":1000, "price":5.90, "id":"1000TVIE"},
-    {"qty":2500, "price":12.90, "id":"2500TVIE"}
-  ],
+      var tabs = Array.from(tabsContainer.querySelectorAll('[data-sort]'));
+      tabs.forEach(function(t) {
+        t.classList.remove('otherServices__active');
+        t.classList.add('otherServices__not-active');
+      });
+      tab.classList.remove('otherServices__not-active');
+      tab.classList.add('otherServices__active');
 
-  // TikTok Saves (Post Likes)
-  "TPOST": [
-    {"qty":250, "price":3.60, "id":"250TPOST"},
-    {"qty":500, "price":5.90, "id":"500TPOST"},
-    {"qty":1000, "price":9.90, "id":"1000TPOST"}
-  ],
+      var sortValue = tab.getAttribute('data-sort');
+      systemLists.forEach(function(list) {
+        var listSort = list.getAttribute('data-sort');
+        if (sortValue === 'all' || listSort === sortValue) {
+          list.style.display = ''; 
+          list.style.visibility = 'visible';
+          list.style.opacity = '1';
+        } else {
+          list.style.display = 'none';
+        }
+      });
+    });
+  }
 
-  // TikTok Shares
-  "TSHR": [
-    {"qty":500, "price":3.60, "id":"500TSHR"},
-    {"qty":1000, "price":5.90, "id":"1000TSHR"}
-  ],
+  // 2. QUANTITY LOGIC
+  var PACKAGES = window.SERVICES_DATA;
+  if(!PACKAGES) { console.error('Poprey: Config (window.SERVICES_DATA) not found'); return; }
 
-  // Reddit Community Members
-  "REDMEM": [
-    {"qty":250, "price":19.90, "id":"250REDMEM"},
-    {"qty":500, "price":34.90, "id":"500REDMEM"}
-  ],
+  var parseQty = function(str) {
+    if(!str) return {qty:0, unit:""};
+    var m = str.trim().match(/^(\d+)\s+(.*)$/);
+    if(m) return {qty: parseInt(m[1]), unit: m[2]};
+    return {qty:0, unit:""};
+  }
 
-  // Facebook Post Likes
-  "FBLIK": [
-    {"qty":100, "price":3.60, "id":"100FBLIK"},
-    {"qty":250, "price":7.90, "id":"250FBLIK"}
-  ],
+  var updateCard = function(card) {
+    var btn = card.querySelector('.otherServiceCard__buy-btn');
+    if(!btn) return;
+    var key = btn.getAttribute('data-key');
+    if(!key || !PACKAGES[key]) return;
+    
+    var pkgList = PACKAGES[key];
+    var qtyEl = card.querySelector('.quantity__other-text');
+    var decBtn = card.querySelector('.quantity__other-service-decrease');
+    var incBtn = card.querySelector('.quantity__other-service-increase');
+    var current = parseQty(qtyEl.innerText);
+    
+    // Find closest index
+    var idx = 0;
+    var minDiff = Number.MAX_VALUE;
+    pkgList.forEach(function(p, i){
+        var d = Math.abs(p.qty - current.qty);
+        if(d < minDiff) { minDiff = d; idx = i; }
+    });
+    
+    // Update State
+    var p = pkgList[idx];
+    qtyEl.innerText = p.qty + ' ' + current.unit;
+    // Keep German translation: "Jetzt kaufen"
+    var originalText = btn.innerHTML;
+    var currency = originalText.indexOf('zł') !== -1 ? 'zł' : (originalText.indexOf('$') !== -1 ? '$' : '');
+    
+    // Extract base text (e.g. "Jetzt kaufen" or "Buy Now") by removing price in parens and currency
+    var baseText = originalText.split('(')[0].trim();
+    // Remove if price/currency was outside parens
+    if (baseText.includes('$')) baseText = baseText.split('$')[0].trim();
+    if (baseText.includes('zł')) baseText = baseText.split('zł')[0].trim();
 
-  // Facebook Page Followers
-  "FBFOL": [
-    {"qty":100, "price":7.50, "id":"100FBFOL"},
-    {"qty":250, "price":16.90, "id":"250FBFOL"}
-  ],
+    btn.innerHTML = baseText + ' (' + p.price.toFixed(2) + ') ' + currency;
+    
+    if(p.id) btn.id = p.id;
+    
+    // Update Buttons
+    if(decBtn) {
+        if(idx <= 0) decBtn.classList.add('quantity__disabled');
+        else decBtn.classList.remove('quantity__disabled');
+        
+        var hint = decBtn.querySelector('p:nth-child(2)');
+        if(hint) hint.innerText = '';
+    }
+    if(incBtn) {
+        if(idx >= pkgList.length - 1) incBtn.classList.add('quantity__disabled');
+        else incBtn.classList.remove('quantity__disabled');
 
-  // Instagram Threads Followers
-  "THFOL": [
-    {"qty":100, "price":7.50, "id":"100THFOL"},
-    {"qty":250, "price":16.90, "id":"250THFOL"}
-  ]
-};
+        var hint = incBtn.querySelector('p:nth-child(2)');
+        if(hint) {
+             if(idx < pkgList.length - 1) hint.innerText = pkgList[idx+1].qty;
+             else hint.innerText = '';
+        }
+    }
+  };
+
+  // Init
+  var cards = document.querySelectorAll('.otherServiceCard');
+  for(var i=0; i<cards.length; i++) {
+     updateCard(cards[i]);
+  }
+
+  // Click handler
+  document.addEventListener('click', function(e) {
+    var inc = e.target.closest('.quantity__other-service-increase');
+    var dec = e.target.closest('.quantity__other-service-decrease');
+    if(!inc && !dec) return;
+    
+    var card = e.target.closest('.otherServiceCard');
+    if(!card) return;
+    
+    var btn = card.querySelector('.otherServiceCard__buy-btn');
+    if(!btn) return;
+    var key = btn.getAttribute('data-key');
+    if(!key || !PACKAGES[key]) return;
+    
+    var pkgList = PACKAGES[key];
+    var qtyEl = card.querySelector('.quantity__other-text');
+    var current = parseQty(qtyEl.innerText);
+    
+    var idx = 0;
+    var minDiff = Number.MAX_VALUE;
+    pkgList.forEach(function(p, ix){
+        var d = Math.abs(p.qty - current.qty);
+        if(d < minDiff) { minDiff = d; idx = ix; }
+    });
+    
+    if(dec && !dec.classList.contains('quantity__disabled')) {
+        idx = Math.max(0, idx - 1);
+    } else if(inc && !inc.classList.contains('quantity__disabled')) {
+        idx = Math.min(pkgList.length - 1, idx + 1);
+    }
+    
+    var p = pkgList[idx];
+    qtyEl.innerText = p.qty + ' ' + current.unit;
+    updateCard(card);
+  });
+});
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

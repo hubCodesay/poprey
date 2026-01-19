@@ -1363,19 +1363,19 @@
             data: YOUTUBE_LIKES, 
             id: "calc-likes", 
             iconId: "icon-likes",
-            label: "Likes"
+            label: "Mögen"
         },
         subs: { 
             data: YOUTUBE_SUBS, 
             id: "calc-subs", 
             iconId: null, // No icon for subs in the percent block
-            label: "Subscribers"
+            label: "Abonnenten"
         },
         comments: { 
             data: YOUTUBE_COMMENTS, 
             id: "calc-comments", 
             iconId: "icon-comments",
-            label: "Comments"
+            label: "Kommentare"
         }
       };
 
@@ -1386,7 +1386,10 @@
       function updateTotalCost() {
         var total = state.views.price + state.likes.price + state.subs.price + state.comments.price;
         var costEl = document.querySelector(".trial__text-cost");
-        if (costEl) costEl.textContent = "$" + formatPrice(total) + " Cost";
+        if (costEl) {
+            const costLabel = costEl.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() || "Kosten";
+            costEl.textContent = "$" + formatPrice(total) + " " + costLabel;
+        }
 
         var buyBtn = document.querySelector(".trial__buy");
         if (buyBtn) {
@@ -1525,7 +1528,7 @@
            var countEl = container.querySelector(".box__count");
            if (countEl) countEl.textContent = pkg.qty;
            var serviceNameEl = container.querySelector(".box__service-name-youtube");
-           if (serviceNameEl) serviceNameEl.innerHTML = '<span> Views </span>Pentru $' + formatPrice(pkg.price);
+           if (serviceNameEl) serviceNameEl.innerHTML = '<span> Views </span> For $' + formatPrice(pkg.price);
         }
       });
 

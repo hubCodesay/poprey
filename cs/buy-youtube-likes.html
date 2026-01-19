@@ -1536,218 +1536,260 @@
       window.SKIP_GLOBAL_TRIAL = true;
     </script>
     <script>
-      (function () {
-        var PACKAGES = window.POPREY_PACKAGES || {};
-        var YOUTUBE_LIKES = PACKAGES.YLIK || [];
-        var YOUTUBE_VIEWS = PACKAGES.YVIE || [];
+    document.addEventListener("DOMContentLoaded", function () {
+      console.log("YouTube Likes: Using Embedded Data", DATA);
+      initYouTubeLikesPage(DATA);
+    });
 
-        // Nápovědaer to find package by ID
-        function getPackageById(id) {
-          return YOUTUBE_LIKES.find(function(pkg) { return pkg.id === id; });
+    function initYouTubeLikesPage(PACKAGES) {
+      // Data
+      var YOUTUBE_LIKES = PACKAGES.YLIK || [];
+      var YOUTUBE_VIEWS = PACKAGES.YVIE || [];
+      var YOUTUBE_SUBS = PACKAGES.YSUB || [];
+      var YOUTUBE_COMMENTS = PACKAGES.YCOM || [];
+
+      // State
+      var state = {
+        likes: { price: 0, qty: 0, percent: 0 },
+        views: { price: 0, qty: 0 },
+        subs: { price: 0, qty: 0 },
+        comments: { price: 0, qty: 0 }
+      };
+
+      // Config map
+      var CONFIG = {
+        views: { 
+            data: YOUTUBE_VIEWS, 
+            id: "calc-views", 
+            iconId: "icon-views",
+            label: "Ansichten"
+        },
+        subs: { 
+            data: YOUTUBE_SUBS, 
+            id: "calc-subs", 
+            iconId: null, // No icon for subs in the percent block
+            label: "Abonnenten"
+        },
+        comments: { 
+            data: YOUTUBE_COMMENTS, 
+            id: "calc-comments", 
+            iconId: "icon-comments",
+            label: "Kommentare"
+        }
+      };
+
+      // --- HELPERS ---
+
+      function formatPrice(p) { return Number(p).toFixed(2); }
+
+      function updateTotalCost() {
+        var total = state.likes.price + state.views.price + state.subs.price + state.comments.price;
+        var costEl = document.querySelector(".trial__text-cost");
+        if (costEl) {
+            const costLabel = costEl.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() || "Kosten";
+            costEl.textContent = "$" + formatPrice(total) + " " + costLabel;
         }
 
-        // Hydrate UI from Config (Likes)
-        function hydrateUI() {
-          YOUTUBE_LIKES.forEach(function(pkg) {
-            var container = document.getElementById(pkg.id);
-            if (container) {
-              // Update Quantity
-              var countEl = container.querySelector(".box__count");
-              if (countEl) countEl.textContent = pkg.qty;
+        var buyBtn = document.querySelector(".trial__buy");
+        if (buyBtn) {
+            if (total > 0) buyBtn.removeAttribute("disabled");
+            else buyBtn.setAttribute("disabled", "disabled");
+        }
+      }
 
-              // Update Price Text
-              var serviceNameEl = container.querySelector(".box__service-name-youtube");
-              if (serviceNameEl) {
-                 // Preserve "Likes" span, update the rest
-                 serviceNameEl.innerHTML = '<span> Likes </span> za $' + pkg.price.toFixed(2);
-              }
+      function updatePercentDisplay() {
+        var p = state.likes.percent;
+        var percentEl = document.querySelector(".trial__percent");
+        if (percentEl) percentEl.textContent = p + " %";
+
+        // Update Likes Icon Text
+        var likesIconBlock = document.getElementById("icon-likes");
+        if (likesIconBlock) {
+             var numEl = likesIconBlock.querySelector(".trial__count-number");
+             if (numEl) numEl.textContent = state.likes.qty;
+        }
+      }
+
+      function updateCalculatorUI(type, pkg, isActive) {
+        var conf = CONFIG[type];
+        var block = document.getElementById(conf.id);
+        if (!block) return;
+
+        // Toggle disabled class on block
+        if (isActive) {
+            block.classList.remove("trial__count-disabled");
+            block.classList.add("active-block");
+        } else {
+             block.classList.add("trial__count-disabled");
+             block.classList.remove("active-block");
+        }
+
+        // Handle Minus Button disabled state
+        var minusBtn = block.querySelector(".trial__cirkul-minus");
+        if (minusBtn) {
+            if (isActive) minusBtn.classList.remove("trial__cirkul-disabled");
+            else minusBtn.classList.add("trial__cirkul-disabled");
+        }
+
+        // Update Numbers
+        var displayQty = (isActive && pkg) ? pkg.qty : 0;
+        
+        var desktopNums = block.querySelectorAll(".trial__count-text-desktop");
+        if (desktopNums.length > 0) {
+             desktopNums[0].textContent = displayQty;
+        }
+        var specialNum = block.querySelector(".like_buy_youtube_likes");
+        if (specialNum) specialNum.textContent = displayQty;
+
+        var mobile = block.querySelector(".trial__count-text-mobile");
+        if (mobile) mobile.textContent = displayQty + " " + conf.label;
+
+        if (conf.iconId) {
+            var iconBlock = document.getElementById(conf.iconId);
+            if (iconBlock) {
+                var iconNum = iconBlock.querySelector(".trial__count-number");
+                if (iconNum) iconNum.textContent = displayQty;
             }
-          });
+        }
+      }
+
+      function setServiceValue(type, qty) {
+        var conf = CONFIG[type];
+        var pkg = conf.data.find(function(p) { return p.qty === qty; });
+        
+        if (qty === 0 || !pkg) {
+            state[type].qty = 0;
+            state[type].price = 0;
+            updateCalculatorUI(type, null, false);
+        } else {
+            state[type].qty = pkg.qty;
+            state[type].price = pkg.price;
+            updateCalculatorUI(type, pkg, true);
+        }
+        updateTotalCost();
+      }
+
+      function setupCalculator(type) {
+        var conf = CONFIG[type];
+        var block = document.getElementById(conf.id);
+        if (!block) return;
+
+        var qtys = conf.data.map(function(p) { return p.qty; });
+        
+        var minusBtn = block.querySelector(".trial__cirkul-minus");
+        var plusBtn = block.querySelector(".trial__cirkul:not(.trial__cirkul-minus)");
+        
+        if (minusBtn) {
+            minusBtn.style.cursor = "pointer";
+            minusBtn.onclick = function() {
+                var current = state[type].qty;
+                var idx = qtys.indexOf(current);
+                if (idx > 0) {
+                     setServiceValue(type, qtys[idx - 1]);
+                } else if (idx === 0) {
+                     setServiceValue(type, 0);
+                }
+            };
         }
 
-        // keep running totals for Likes and Views
-        window._trial_likes_cost = window._trial_likes_cost || 0;
-        window._trial_views_cost = window._trial_views_cost || 0;
-
-        function updateTotalCost() {
-          try {
-            var total =
-              (Number(window._trial_likes_cost) || 0) +
-              (Number(window._trial_views_cost) || 0);
-            var costEl = document.querySelector(".trial__text-cost");
-            if (costEl) costEl.textContent = "$" + total.toFixed(2) + " Cena";
-          } catch (e) {}
+        if (plusBtn) {
+            plusBtn.style.cursor = "pointer";
+            plusBtn.onclick = function() {
+                var current = state[type].qty;
+                if (current === 0) {
+                    setServiceValue(type, qtys[0]);
+                } else {
+                    var idx = qtys.indexOf(current);
+                    if (idx < qtys.length - 1) {
+                        setServiceValue(type, qtys[idx + 1]);
+                    }
+                }
+            };
         }
+      }
 
-        function setActiveCard(card) {
-          if (!card) return;
-          if (card.classList.contains("box__stopped-block")) return;
-          
-          document.querySelectorAll(".box__card").forEach(function (c) {
-            c.classList.remove("trial-selected");
-            c.removeAttribute("aria-pressed");
-          });
-          
-          card.classList.add("trial-selected");
-          card.setAttribute("aria-pressed", "true");
+      // --- HYDRATION & INIT ---
 
-          // Get ID and Package Data
-          var idEl = card.querySelector("[id]");
-          var id = idEl ? idEl.id : null;
-          var pkg = getPackageById(id);
-
-          var qty = pkg ? pkg.qty : 0;
-          var price = pkg ? pkg.price : 0;
-
-          // Mirror Likes count into the Likes percent icon number
-          try {
-            var likesCountEl = document.querySelector(
-              ".trial__percent-icon_likes .trial__count-number",
-            );
-            if (likesCountEl) likesCountEl.textContent = qty;
-          } catch (e) {}
-
-          // Store likes price and update total
-          try {
-            window._trial_likes_cost = price;
-            updateTotalCost();
-          } catch (e) {}
-
-          // Enable Buy button and store selected plan id
-          try {
-            var buyBtn = document.querySelector(".trial__buy");
-            if (buyBtn) {
-              buyBtn.removeAttribute("disabled");
-              buyBtn.dataset.selected = id;
-            }
-          } catch (e) {}
+      var likesCards = document.querySelectorAll(".box_regular .box__card");
+      YOUTUBE_LIKES.forEach(function (pkg, index) {
+        var container = document.getElementById(pkg.id);
+        if (container) {
+           var countEl = container.querySelector(".box__count");
+           if (countEl) countEl.textContent = pkg.qty;
+           var serviceNameEl = container.querySelector(".box__service-name-youtube");
+           if (serviceNameEl) serviceNameEl.innerHTML = '<span> Likes </span> For $' + formatPrice(pkg.price);
         }
+      });
 
-        document.querySelectorAll(".box__card").forEach(function (card) {
+      if (likesCards.length > 0) {
+        likesCards.forEach(function (card) {
           card.style.cursor = "pointer";
-          card.addEventListener("click", function (e) {
-            setActiveCard(card);
-          });
-          card.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              setActiveCard(card);
-            }
+          card.addEventListener("click", function () {
+             likesCards.forEach(function(c) { c.classList.remove("trial-selected"); });
+             card.classList.add("trial-selected");
+
+             var idContainer = card.querySelector(".box__title > div");
+             var cardId = idContainer ? idContainer.id : "";
+             
+             var pkg = YOUTUBE_LIKES.find(function(p) { return p.id === cardId; });
+             
+             if (pkg) {
+                 state.likes.price = pkg.price;
+                 state.likes.qty = pkg.qty;
+                 state.likes.percent = pkg.percent || 0;
+                 updatePercentDisplay();
+                 updateTotalCost();
+             }
           });
         });
-
-        // --- VIEWS CALCULATOR LOGIC ---
-        var viewBlock = document.querySelector(".active-block_view") || document.querySelector(".trial__count.active-block_view");
         
-        function getViewsPackage(qty) {
-          return YOUTUBE_VIEWS.find(function(pkg) { return pkg.qty === Number(qty); }) || YOUTUBE_VIEWS[0];
-        }
+        if (likesCards[0]) likesCards[0].click();
+      }
 
-        function setViewValue(n) {
-          if (!viewBlock || !YOUTUBE_VIEWS.length) return;
-          
-          // Clamp to allowed values from config
-          var allowedQtys = YOUTUBE_VIEWS.map(function(p) { return p.qty; });
-          var val = Number(n);
-          if (allowedQtys.indexOf(val) === -1) {
-             // find closest or default
-             val = allowedQtys.reduce(function(prev, curr) {
-               return (Math.abs(curr - val) < Math.abs(prev - val) ? curr : prev);
-             });
-          }
-          
-          var pkg = getViewsPackage(val);
-          
-          // Update UI Text
-          var desktopNums = viewBlock.querySelectorAll(".trial__count-text-desktop");
-          if (desktopNums && desktopNums.length > 0) {
-            desktopNums[0].textContent = pkg.qty;
-            if (desktopNums[1]) desktopNums[1].textContent = "Views";
-          }
-          var mobile = viewBlock.querySelector(".trial__count-text-mobile");
-          if (mobile) mobile.textContent = pkg.qty + " Views";
-          
-          // Update Percent Icon Number
-          var viewCountNumber = document.querySelector(".trial__percent-icon_view .trial__count-number");
-          if (viewCountNumber) viewCountNumber.textContent = pkg.qty;
+      setupCalculator("views");
+      // setupCalculator("subs"); // Disabled per user request
+      // setupCalculator("comments"); // Disabled per user request
 
-          // Update Price
-          try {
-            window._trial_views_cost = pkg.price;
-            updateTotalCost();
-          } catch (e) {}
+      setServiceValue("views", 0);
+      setServiceValue("subs", 0);
+      setServiceValue("comments", 0);
+    }
 
-          // Manage Button States
-          var minus = viewBlock.querySelector(".trial__cirkul-minus");
-          var plus = (function () {
-            var cirkuls = viewBlock.querySelectorAll(".trial__cirkul");
-            for (var i = 0; i < cirkuls.length; i++) {
-              if (!cirkuls[i].classList.contains("trial__cirkul-minus")) return cirkuls[i];
-            }
-            return null;
-          })();
-          
-          if (minus) minus.classList.toggle("trial__cirkul-disabled", pkg.qty === allowedQtys[0]);
-          if (plus) plus.classList.toggle("trial__cirkul-disabled", pkg.qty === allowedQtys[allowedQtys.length - 1]);
-        }
-
-        function stepViews(delta) {
-          var currentQty = ALLOWED_VIEWS[0]; // fallback
-          // Try to read current qty from DOM
-           try {
-             var d = viewBlock.querySelector(".trial__count-text-desktop");
-             if (d) currentQty = Number((d.textContent || "").replace(/[^0-9]/g, ""));
-           } catch(e) {}
-           
-           var currentIdx = ALLOWED_VIEWS.indexOf(currentQty);
-           if (currentIdx === -1) currentIdx = 0;
-           
-           var newIdx = Math.max(0, Math.min(ALLOWED_VIEWS.length - 1, currentIdx + delta));
-           setViewValue(ALLOWED_VIEWS[newIdx]);
-        }
-
-        var ALLOWED_VIEWS = YOUTUBE_VIEWS.map(function(p) { return p.qty; });
-
-        if (viewBlock && ALLOWED_VIEWS.length > 0) {
-           var minusBtn = viewBlock.querySelector(".trial__cirkul-minus");
-           var plusBtn = (function () {
-            var cirkuls = viewBlock.querySelectorAll(".trial__cirkul");
-            for (var i = 0; i < cirkuls.length; i++) {
-              if (!cirkuls[i].classList.contains("trial__cirkul-minus")) return cirkuls[i];
-            }
-            return null;
-          })();
-
-          if (minusBtn) {
-            minusBtn.style.cursor = "pointer";
-            minusBtn.addEventListener("click", function() { stepViews(-1); });
-          }
-          if (plusBtn) {
-             plusBtn.style.cursor = "pointer";
-             plusBtn.addEventListener("click", function() { stepViews(1); });
-          }
-          
-          // Initialize Views
-          setViewValue(ALLOWED_VIEWS[0]);
-        }
-
-        // Initialize Likes UI
-        hydrateUI();
-
-        // On load: if none selected, activate first available card
-        try {
-          var already = document.querySelector(".box__card.trial-selected");
-          if (!already) {
-            var firstAvailable = document.querySelector(
-              ".box__card:not(.box__stopped-block)",
-            );
-            if (firstAvailable) setActiveCard(firstAvailable);
-          }
-        } catch (err) {
-          // ignore
-        }
-      })();
-    </script>
+    var DATA = {
+      "YVIE": [
+        { "id": "250VIE", "qty": 211, "price": 1.90, "percent": 5 },
+        { "id": "500VIE", "qty": 500, "price": 2.90, "percent": 10 },
+        { "id": "1000VIE", "qty": 1000, "price": 4.90, "percent": 15 },
+        { "id": "2000VIE", "qty": 2000, "price": 8.90, "percent": 20 },
+        { "id": "3000VIE", "qty": 3000, "price": 14.90, "percent": 25 },
+        { "id": "5000VIE", "qty": 5000, "price": 19.90, "percent": 30 },
+        { "id": "7500VIE", "qty": 7500, "price": 29.90, "percent": 35 },
+        { "id": "10000VIE", "qty": 10000, "price": 39.90, "percent": 40 }
+      ],
+      "YLIK": [
+        { "id": "100LIK", "qty": 111, "price": 0.90, "percent": 5 },
+        { "id": "250LIK", "qty": 250, "price": 1.90, "percent": 10 },
+        { "id": "500LIK", "qty": 500, "price": 2.90, "percent": 15 },
+        { "id": "1000LIK", "qty": 1000, "price": 4.90, "percent": 20 },
+        { "id": "2000LIK", "qty": 2000, "price": 8.90, "percent": 25 },
+        { "id": "3000LIK", "qty": 3000, "price": 12.90, "percent": 30 },
+        { "id": "4000LIK", "qty": 4000, "price": 16.90, "percent": 35 },
+        { "id": "5000LIK", "qty": 5000, "price": 19.90, "percent": 40 }
+      ],
+      "YSUB": [
+        { "id": "100SUB", "qty": 111, "price": 2.90 },
+        { "id": "250SUB", "qty": 250, "price": 5.90 },
+        { "id": "500SUB", "qty": 500, "price": 10.90 },
+        { "id": "1000SUB", "qty": 1000, "price": 19.90 }
+      ],
+      "YCOM": [
+        { "id": "10COM", "qty": 11, "price": 1.90 },
+        { "id": "25COM", "qty": 25, "price": 3.90 },
+        { "id": "50COM", "qty": 50, "price": 6.90 },
+        { "id": "100COM", "qty": 100, "price": 12.90 }
+      ]
+    };
+  </script>
     <script src="../assets/js/packages.js"></script>
     <script
       src="../assets/js/site.js"

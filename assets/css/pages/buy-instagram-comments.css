@@ -57,11 +57,7 @@ iframe {
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(18, 46, 87, 0.04);
 }
-.servicesList__white-text.active,
-.servicesList__color-text.active {
-  color: #fff !important;
-  font-weight: 600;
-}
+
 .regular_btn,
 .premium_btn {
   cursor: pointer;

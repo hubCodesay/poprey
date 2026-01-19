@@ -2114,7 +2114,7 @@
       var pbtn = document.querySelector(".premium_btn");
       if (rbtn) {
         rbtn.classList.toggle("local-block--active", type === "regular");
-        // pource cursor pointer
+        // fürce cursor pointer
         rbtn.style.cursor = "pointer";
       }
       if (pbtn) {
@@ -2145,7 +2145,7 @@
       var subtitles = document.querySelectorAll(".benefitsOld__subtitle");
       subtitles.forEach(function (h4) {
         var txt = (h4.textContent || "").trim();
-        if (txt === "Normal Looking" || txt === "Real looking") {
+        if (txt === "Normales Schauen" || txt === "Real looking") {
           var p = h4.parentElement.querySelector(".benefitsOld__text");
           var iconImg = null;
           var parent = h4.parentElement;
@@ -2155,12 +2155,12 @@
           }
 
           if (type === "premium") {
-            h4.textContent = "Real looking";
-            if (p) p.textContent = "Accounts are looking fully legit.";
+            h4.textContent = "Echt aussehend";
+            if (p) p.textContent = "Die Konten sehen absolut echt aus.";
             if (iconImg) iconImg.setAttribute("src", "../assets/images/star.aadd038a9aafbaafd71fc694a371dba0.png");
           } else {
-            h4.textContent = "Normal Looking";
-            if (p) p.textContent = "The accounts are looking good.";
+            h4.textContent = "Normales Schauen";
+            if (p) p.textContent = "Die Konten sehen gut aus.";
             if (iconImg) iconImg.setAttribute("src", "../assets/images/like.990bc77e67ff3bb06dc8df2fc6860b58.png");
           }
         }
@@ -2205,13 +2205,13 @@
       var total = currentLikesPrice + currentReachPrice + currentImpressionsPrice + currentSavesPrice;
       var costDisplays = document.querySelectorAll(".trial__text-cost");
       costDisplays.forEach(function (el) {
-        el.textContent = "$" + total.toFixed(2) + " Coût";
+        el.textContent = "$" + total.toFixed(2) + " cost";
       });
 
       // Update "Buy Now" button ?
       // Usually there is a link or form.
       // Here lines 2269 show <a href="free-instagram-likes.html" id="0LIK">...</a>
-      // And a button <button id="index-buy-now-btn" class="trial__buy global-buy-now">Acheter maintenant</button>
+      // And a button <button id="index-buy-now-btn" class="trial__buy global-buy-now">Jetzt kaufen</button>
       // Ideally we need to enable the button and set the link.
     }
 
@@ -2219,7 +2219,7 @@
       var percentEl = document.querySelector(".trial__percent");
       // User only asked for Likes to sync.
       // If we wanted to sum up others we'd need percent data for them too.
-      // pour now: Just use likes percent.
+      // für now: Just use likes percent.
       // If we assume a base chance of 0, then total = currentLikesPercent.
       // (Or add others if we had them).
       var totalP = currentLikesPercent;
@@ -2245,11 +2245,11 @@
           // Update Price
           var priceEl = cardDiv.querySelector(".box__service-name");
           if (priceEl) {
-            // Keep existing structure: <span> Likes </span> pour ... price
-            priceEl.innerHTML = "<span> Likes </span> pour " + pkg.price.toFixed(2);
+            // Keep existing structure: <span> Likes </span> für ... price
+            priceEl.innerHTML = "<span> Likes </span> für " + pkg.price.toFixed(2);
           }
 
-          // Aideer for click event
+          // Hilfeer for click event
           // Find the clickable card wrapper (parent of ID div?)
           var cardWrapper = cardDiv.closest(".box__card");
           if (cardWrapper) {
@@ -2325,7 +2325,7 @@
         // Update price display in this card
         var priceEl = cardWrapper.querySelector(".box__service-name");
         if (priceEl) {
-          priceEl.innerHTML = "<span> Likes </span> pour " + pkg.price.toFixed(2);
+          priceEl.innerHTML = "<span> Likes </span> für " + pkg.price.toFixed(2);
         }
 
         // Update data attributes for selection logic

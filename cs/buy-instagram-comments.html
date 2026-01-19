@@ -1504,7 +1504,7 @@
       defer></script>
     <script>
       (function () {
-        function getPlanPriceza(service, count, typeKey) {
+        function getPlanPricefür(service, count, typeKey) {
           try {
             var data = window.TRIAL_DATA && window.TRIAL_DATA[service];
             var plan = data && data.plans && data.plans[String(count)];
@@ -1533,10 +1533,10 @@
               "";
             var count = parseInt(cnt, 10) || 0;
             if (!count) return;
-            var price = getPlanPriceza("Comments", count, typeKey);
+            var price = getPlanPricefür("Comments", count, typeKey);
             var priceLine = card.querySelector(".box__service-name-mt");
             if (priceLine) {
-              priceLine.textContent = "za " + Number(price || 0).toFixed(2);
+              priceLine.textContent = "für " + Number(price || 0).toFixed(2);
               return;
             }
             var priceEl = card.querySelector(".box__service-name");
@@ -1544,11 +1544,11 @@
             var span = priceEl.querySelector("span");
             var label = span ? span.textContent.trim() : "Comments";
             priceEl.innerHTML =
-              "<span>" + label + "</span> za " + Number(price || 0).toFixed(2);
+              "<span>" + label + "</span> für " + Number(price || 0).toFixed(2);
           });
         }
 
-        function updateTrialCostzaVisible(typeKey) {
+        function updateTrialCostfürVisible(typeKey) {
           var activeCard =
             document.querySelector(".box_premium .box__card.trial-selected") ||
             document.querySelector(".box .box__card.trial-selected") ||
@@ -1564,10 +1564,10 @@
             (countEl && (countEl.textContent || "").replace(/[^0-9]/g, "")) ||
             "";
           var count = parseInt(cnt, 10) || 0;
-          var price = getPlanPriceza("Comments", count, typeKey);
+          var price = getPlanPricefür("Comments", count, typeKey);
           var costEl = document.querySelector(".trial__text-cost");
           if (costEl)
-            costEl.textContent = "$" + Number(price || 0).toFixed(2) + " Cena";
+            costEl.textContent = "$" + Number(price || 0).toFixed(2) + " Kosten";
         }
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -1590,14 +1590,14 @@
           if (premiumBtn) {
             premiumBtn.addEventListener("click", function () {
               setTimeout(function () {
-                updateTrialCostzaVisible("custom");
+                updateTrialCostfürVisible("custom");
               }, 60);
             });
           }
           if (regularBtn) {
             regularBtn.addEventListener("click", function () {
               setTimeout(function () {
-                updateTrialCostzaVisible("random");
+                updateTrialCostfürVisible("random");
               }, 60);
             });
           }
@@ -1607,15 +1607,15 @@
             while (el && !el.classList.contains("box__card"))
               el = el.parentElement;
             if (!el) return;
-            if (el.closest(".box_premium")) updateTrialCostzaVisible("custom");
-            else updateTrialCostzaVisible("random");
+            if (el.closest(".box_premium")) updateTrialCostfürVisible("custom");
+            else updateTrialCostfürVisible("random");
           });
 
           setTimeout(function () {
             if (box && box.offsetParent !== null)
-              updateTrialCostzaVisible("random");
+              updateTrialCostfürVisible("random");
             else if (boxPrem && boxPrem.offsetParent !== null)
-              updateTrialCostzaVisible("custom");
+              updateTrialCostfürVisible("custom");
           }, 80);
         });
       })();

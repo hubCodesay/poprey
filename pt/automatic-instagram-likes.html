@@ -1529,7 +1529,9 @@
           total += getExtraPrice('Saves', currentExtras.Saves);
           
           if (els.totalCost) {
-            els.totalCost.textContent = `$${formatPrice(total)} Kosten`;
+            const currentText = els.totalCost.textContent;
+            const label = currentText.replace(/[0-9.$zł,\s]+/g, '').trim() || "Cost";
+            els.totalCost.textContent = `$${formatPrice(total)} ${label}`;
           }
           if (els.buyBtn) {
             els.buyBtn.disabled = false;

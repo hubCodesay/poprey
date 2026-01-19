@@ -1324,9 +1324,9 @@
 
           const priceEl = card.querySelector('.box__service-name');
           if (priceEl) {
-            // Views page uses <span> Views </span> por 0.00
+            // Views page uses <span> Views </span>Für 0.00
             // We'll update the price part specifically
-            animateValue(priceEl, pkg.price, true, 800, "<span> Views </span> por ");
+            animateValue(priceEl, pkg.price, true, 800, "<span> Views </span> für ");
           }
         });
 
@@ -1436,7 +1436,8 @@
 
         if (total < 0) total = 0; // Safety
 
-        animateValue(els.totalCost, total, true, 800, "", " Custo");
+        const costLabel = els.totalCost.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() || "Kosten";
+        animateValue(els.totalCost, total, true, 800, "", " " + costLabel);
         els.buyBtn.disabled = false;
       }
 
@@ -1581,7 +1582,7 @@
       });
 
     })();
-  </script>
+    </script>
   <script src="../assets/js/redirect_config.js" defer></script>
   <script src="../assets/js/redirect_manager.js" defer></script>
 </body>

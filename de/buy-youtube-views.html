@@ -1412,7 +1412,10 @@
       function updateTotalCost() {
         var total = state.views.price + state.likes.price + state.subs.price + state.comments.price;
         var costEl = document.querySelector(".trial__text-cost");
-        if (costEl) costEl.textContent = "$" + formatPrice(total) + " Kosten";
+        if (costEl) {
+            const costLabel = costEl.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() || "Kosten";
+            costEl.textContent = "$" + formatPrice(total) + " " + costLabel;
+        }
 
         var buyBtn = document.querySelector(".trial__buy");
         if (buyBtn) {
