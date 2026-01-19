@@ -24,7 +24,7 @@
       content="Buy Instagram views from Poprey to increase your post's visibility and engagement. Our service offers 100% real and fast results, with affordable prices"
       name="description" />
     <meta
-      content="en_US"
+      content="fr_FR"
       property="og:locale" />
     <meta
       content="article"
@@ -51,7 +51,7 @@
       content="https://poprey.com/assets/images/views_image.7f9bc2f3f33fc2067c8bb1dd8b28e8ad.png"
       property="og:image:secure_url" />
     <meta
-      content="en_US"
+      content="fr_FR"
       property="og:locale" />
     <meta
       content="article"
@@ -1534,9 +1534,9 @@
 
           const priceEl = card.querySelector('.box__service-name');
           if (priceEl) {
-            // Views page uses <span> Views </span>Für 0.00
+            // Views page uses <span> Views </span>Pour 0.00
             // We'll update the price part specifically
-            animateValue(priceEl, pkg.price, true, 800, "<span> Views </span> für ");
+            animateValue(priceEl, pkg.price, true, 800, "<span> Views </span> pour ");
           }
         });
 
@@ -1646,8 +1646,7 @@
 
         if (total < 0) total = 0; // Safety
 
-        const costLabel = els.totalCost.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() || "Kosten";
-        animateValue(els.totalCost, total, true, 800, "", " " + costLabel);
+        animateValue(els.totalCost, total, true, 800, "", " Coût");
         els.buyBtn.disabled = false;
       }
 
