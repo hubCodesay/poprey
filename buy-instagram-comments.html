@@ -1317,6 +1317,7 @@
         btnPremium: document.querySelector('.premium_btn'),
         cardContainer: document.querySelector('.box'), // Assuming single container for now, will toggle data
         activeQualityText: document.querySelector('.servicesList__white-text'), // "Regular" text
+        qualityImg: document.querySelector('.servicesList__quality-img img'),
         crownImg: document.querySelector('.servicesList__crown-img img'),
 
         // Calculators
@@ -1350,6 +1351,7 @@
           els.btnPremium.classList.remove('servicesList__color-block', 'local-block--active');
 
           if (els.crownImg) els.crownImg.src = "assets/images/crown.164f2d65ae189c29cb6d9eeed7e9ad89.png";
+          if (els.qualityImg) els.qualityImg.src = "assets/images/quality_white.1d4db15194f1398ec0490844093d10fb.png";
 
         } else {
           els.btnPremium.classList.add('servicesList__color-block', 'local-block--active');
@@ -1359,6 +1361,7 @@
           els.btnRegular.classList.remove('servicesList__color-block', 'local-block--active');
 
           if (els.crownImg) els.crownImg.src = "assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png";
+          if (els.qualityImg) els.qualityImg.src = "assets/images/quality.921b7b8ec8ed7b3d499e822761d21261.png";
         }
 
         hydrateCards();

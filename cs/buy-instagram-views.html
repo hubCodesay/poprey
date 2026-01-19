@@ -859,7 +859,7 @@
                 <div class="trial__wrapper">
                   <div class="trial__container">
                     <div class="trial__count-block">
-                      <div class="trial__count active-block">
+                      <div class="trial__count active-block" id="calc-reach">
                         <div
                           class="trial__cirkul trial__cirkul-minus trial__cirkul-disabled">
                           <div style="position: relative">
@@ -958,7 +958,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="trial__count active-block">
+                      <div class="trial__count active-block" id="calc-impressions">
                         <div
                           class="trial__cirkul trial__cirkul-minus trial__cirkul-disabled">
                           <div style="position: relative">
@@ -1057,7 +1057,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="trial__count active-block">
+                      <div class="trial__count active-block" id="calc-saves">
                         <div
                           class="trial__cirkul trial__cirkul-minus trial__cirkul-disabled">
                           <div style="position: relative">
@@ -1199,7 +1199,7 @@
                       </div>
                     </div>
                     <div class="trial__percent-icons">
-                      <div class="trial__percent-icon">
+                      <div class="trial__percent-icon" id="info-views">
                         <div
                           class="trial__percent-icon-img"
                           style="position: relative">
@@ -1243,7 +1243,7 @@
                         <p class="trial__percent-icon-text">Zhlédnutí</p>
                         <p class="trial__count-number"></p>
                       </div>
-                      <div class="trial__percent-icon">
+                      <div class="trial__percent-icon" id="info-reach">
                         <div
                           class="trial__percent-icon-img"
                           style="position: relative">
@@ -1287,7 +1287,7 @@
                         <p class="trial__percent-icon-text">Reach</p>
                         <p class="trial__count-number">0</p>
                       </div>
-                      <div class="trial__percent-icon">
+                      <div class="trial__percent-icon" id="info-impressions">
                         <div
                           class="trial__percent-icon-img"
                           style="position: relative">
@@ -1331,7 +1331,7 @@
                         <p class="trial__percent-icon-text">Impressions</p>
                         <p class="trial__count-number">0</p>
                       </div>
-                      <div class="trial__percent-icon">
+                      <div class="trial__percent-icon" id="info-saves">
                         <div
                           class="trial__percent-icon-img"
                           style="position: relative">
@@ -1429,51 +1429,388 @@
           </div>
         </section>
       </main>
-      <div id="footer-container"></div>
-<script src="../assets/js/components.js"></script>
-<script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/packages.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/storage.js"></script>
 
     </div>
-    
-      
-    </script>
     <script>
-      (function () {
-        var PACKAGES = window.POPREY_PACKAGES || {};
-        var INSTAGRAM_VIEWS = PACKAGES.IVIE || [];
+    (function () {
+      // --- 1. CONFIGURATION ---
 
-        // Hydrate UI from Config
-        function hydrateUI() {
-          INSTAGRAM_VIEWS.forEach(function(pkg) {
-            var container = document.getElementById(pkg.id);
-            if (container) {
-              // Update Quantity
-              var countEl = container.querySelector(".box__count");
-              if (countEl) countEl.textContent = pkg.qty;
 
-              // Update Price Text
-              var serviceNameEl = container.querySelector(".box__service-name");
-              if (serviceNameEl) {
-                 // zamat: <span> Views </span> za 3.60
-                 serviceNameEl.innerHTML = '<span> Views </span> za ' + pkg.price.toFixed(2);
-              }
-            }
-          });
+      // --- 2. STATE ---
+      let currentPackage = null;
+      let activeCustomIndex = 0; // 0 for 20k, 1 for 50k
+      let currentExtrasState = {
+        Reach: 0,
+        Impressions: 0,
+        Saves: 0
+      };
+      let defaultExtrasState = {
+        Reach: 0,
+        Impressions: 0,
+        Saves: 0
+      };
+
+      // --- 3. DOM ELEMENTS ---
+      const els = {
+        cardContainer: document.querySelector('.box'),
+        extras: {
+          Views: document.getElementById('info-views'),
+          Reach: document.getElementById('info-reach'),
+          Impressions: document.getElementById('info-impressions'),
+          Saves: document.getElementById('info-saves')
+        },
+        calcs: {
+          Reach: document.getElementById('calc-reach'),
+          Impressions: document.getElementById('calc-impressions'),
+          Saves: document.getElementById('calc-saves')
+        },
+        totalCost: document.querySelector('.trial__text-cost'),
+        buyBtn: document.querySelector('.trial__buy'),
+        percentText: document.querySelector('.trial__percent'),
+        // Custom Card Element
+        customCard: document.querySelector('.box__add-width')
+      };
+
+      // --- 4. CORE FUNCTIONS ---
+
+      function formatPrice(price) {
+        return Number(price).toFixed(2);
+      }
+
+      function findClosestExtraIndex(type, count) {
+        const key = type.toUpperCase();
+        const list = window.POPREY_PACKAGES['I' + key]; // IREACH, IIMPRESSIONS, ISAVES
+        if (!list) return -1;
+        let idx = list.findIndex(i => i.quantity === count);
+        if (idx !== -1) return idx;
+        return -1;
+      }
+
+      function getExtraPrice(type, idx) {
+        const key = type.toUpperCase();
+        const list = window.POPREY_PACKAGES['I' + key];
+        if (idx === -1) return 0;
+        if (!list || !list[idx]) return 0;
+        return list[idx].price;
+      }
+
+      function getExtraCount(type, idx) {
+        if (idx === -1) {
+          return currentPackage && currentPackage.extraDefaults ? (currentPackage.extraDefaults[type] || 0) : 0;
         }
-        
-        // Basic Card Selection Logic (Visual Only as per original functionality)
-        // Original page didn't have a calculator at bottom connected to these specific cards in the same way,
-        // but we can add selection highlighting if desired. za now, just hydration.
-        
-        hydrateUI();
-      })();
+        const key = type.toUpperCase();
+        const list = window.POPREY_PACKAGES['I' + key];
+        if (!list || !list[idx]) return 0;
+        return list[idx].quantity;
+      }
+
+      function selectPackage(pkg) {
+        currentPackage = pkg;
+
+        // Reset Extras State to Defaults
+        const defaults = pkg.extraDefaults || {};
+        const rIdx = findClosestExtraIndex('Reach', defaults.Reach || 0);
+        const iIdx = findClosestExtraIndex('Impressions', defaults.Impressions || 0);
+        const sIdx = findClosestExtraIndex('Saves', defaults.Saves || 0);
+
+        defaultExtrasState = { Reach: rIdx, Impressions: iIdx, Saves: sIdx };
+
+        // Allow -1 (missing default) as valid current state
+        currentExtrasState.Reach = rIdx;
+        currentExtrasState.Impressions = iIdx;
+        currentExtrasState.Saves = sIdx;
+
+        updateExtras();
+        updateTotalCost();
+      }
+
+      function hydrateCards() {
+        const packages = window.POPREY_PACKAGES.IVIEWS_REGULAR;
+
+        // Standard Packages
+        packages.forEach(pkg => {
+          const card = document.getElementById(pkg.id);
+          if (!card) return;
+
+          const cardWrapper = card.closest('.box__card');
+          if (cardWrapper) {
+            cardWrapper.onclick = () => {
+              document.querySelectorAll('.box__card').forEach(c => c.classList.remove('box__selected'));
+              cardWrapper.classList.add('box__selected');
+              selectPackage(pkg);
+            };
+          }
+
+          const countEl = card.querySelector('.box__count');
+          if (countEl) animateValue(countEl, pkg.quantity);
+
+          const priceEl = card.querySelector('.box__service-name');
+          if (priceEl) {
+            // Views page uses <span> Views </span> za 0.00
+            // We'll update the price part specifically
+            animateValue(priceEl, pkg.price, true, 800, "<span> Views </span> za ");
+          }
+        });
+
+        // Initialize Custom Card Logic
+        if (els.customCard) {
+          setupCustomCard();
+        }
+
+        // Default Selection
+        const defaultPkg = packages.find(p => p.quantity === 1000);
+        if (defaultPkg) {
+          const defaultCard = document.getElementById(defaultPkg.id);
+          if (defaultCard && defaultCard.closest('.box__card')) {
+            defaultCard.closest('.box__card').click();
+          }
+        }
+      }
+
+      function setupCustomCard() {
+        // buy-instagram-views has no custom packages in packages.js yet, so we hide it or skip
+        const card = els.customCard;
+        if (card) {
+          card.style.display = 'none';
+        }
+      }
+
+      function updateExtras() {
+        if (!currentPackage) return;
+
+        const reachIdx = currentExtrasState.Reach;
+        const impressionsIdx = currentExtrasState.Impressions;
+        const savesIdx = currentExtrasState.Saves;
+
+        const reachCount = getExtraCount('Reach', reachIdx);
+        const impressionsCount = getExtraCount('Impressions', impressionsIdx); 
+        const savesCount = getExtraCount('Saves', savesIdx);
+
+        // Update Info Icons
+        if (els.extras.Views) animateValue(els.extras.Views.querySelector('.trial__count-number'), currentPackage.quantity);
+        if (els.extras.Reach) animateValue(els.extras.Reach.querySelector('.trial__count-number'), reachCount);
+        if (els.extras.Impressions) animateValue(els.extras.Impressions.querySelector('.trial__count-number'), impressionsCount);
+        if (els.extras.Saves) animateValue(els.extras.Saves.querySelector('.trial__count-number'), savesCount);
+
+        // Update Calculator Blocks
+        updateCalcBlock(els.calcs.Reach, reachCount, reachIdx, 'Reach');
+        updateCalcBlock(els.calcs.Impressions, impressionsCount, impressionsIdx, 'Impressions');
+        updateCalcBlock(els.calcs.Saves, savesCount, savesIdx, 'Saves');
+
+        // Update Discount display in Percent block
+        if (els.percentText) {
+          let discountVal = "0";
+          if (currentPackage.percent) {
+             discountVal = currentPackage.percent;
+          } else if (currentPackage.discount) {
+             discountVal = String(currentPackage.discount).replace(/[^0-9]/g, '');
+          }
+          els.percentText.innerHTML = `${discountVal} %`;
+        }
+      }
+
+      function updateCalcBlock(block, count, idx, type) {
+        if (!block) return;
+        const key = 'I' + type.toUpperCase();
+        const list = window.POPREY_PACKAGES[key];
+        if (!Array.isArray(list)) return;
+        const listLength = list.length;
+        const defaultIdx = defaultExtrasState[type];
+
+        const num = block.querySelector('.trial__count-text-desktop');
+        if (num) animateValue(num, count);
+        const mobileNum = block.querySelector('.trial__count-text-mobile');
+        if (mobileNum) animateValue(mobileNum, count);
+
+        const minusBtn = block.querySelector('.trial__cirkul-minus');
+        const cirkuls = block.querySelectorAll('.trial__cirkul');
+        const plusBtn = cirkuls.length > 1 ? cirkuls[cirkuls.length - 1] : null;
+
+        if (minusBtn) {
+          // Disable if at virtual floor (-1) OR at real floor (0) and virtual floor doesn't exist
+          if (idx === -1 || (idx === 0 && defaultIdx !== -1)) {
+            minusBtn.classList.add('trial__cirkul-disabled');
+          } else {
+            minusBtn.classList.remove('trial__cirkul-disabled');
+          }
+        }
+        if (plusBtn) {
+          if (idx >= listLength - 1) plusBtn.classList.add('trial__cirkul-disabled');
+          else plusBtn.classList.remove('trial__cirkul-disabled');
+        }
+      }
+
+      function updateTotalCost() {
+        if (!currentPackage) return;
+
+        const defReachPrice = getExtraPrice('Reach', defaultExtrasState.Reach);
+        const defImpPrice = getExtraPrice('Impressions', defaultExtrasState.Impressions);
+        const defSavesPrice = getExtraPrice('Saves', defaultExtrasState.Saves);
+
+        const curReachPrice = getExtraPrice('Reach', currentExtrasState.Reach);
+        const curImpPrice = getExtraPrice('Impressions', currentExtrasState.Impressions);
+        const curSavesPrice = getExtraPrice('Saves', currentExtrasState.Saves);
+
+        let total = currentPackage.price;
+        total += (curReachPrice - defReachPrice);
+        total += (curImpPrice - defImpPrice);
+        total += (curSavesPrice - defSavesPrice);
+
+        if (total < 0) total = 0; // Safety
+
+        animateValue(els.totalCost, total, true, 800, "", " Cena");
+        els.buyBtn.disabled = false;
+      }
+
+      // --- 5. EVENT HANDLERS ---
+      function setupCalculatorListeners() {
+        ['Reach', 'Impressions', 'Saves'].forEach(type => {
+          const block = els.calcs[type];
+          if (!block) return;
+
+          const minusBtn = block.querySelector('.trial__cirkul-minus');
+          const cirkuls = block.querySelectorAll('.trial__cirkul');
+          const plusBtn = cirkuls.length > 1 ? cirkuls[cirkuls.length - 1] : null;
+
+          if (minusBtn) {
+            minusBtn.onclick = (e) => {
+              e.stopPropagation();
+              const key = 'I' + type.toUpperCase();
+              const list = window.POPREY_PACKAGES[key];
+              if (!Array.isArray(list)) return;
+
+              let idx = currentExtrasState[type];
+              const defaultCount = (currentPackage && currentPackage.extraDefaults) ? (currentPackage.extraDefaults[type] || 0) : 0;
+              const defaultIdx = defaultExtrasState[type];
+
+              // Logic: Find PREV step
+              // If current is -1 (Virtual Default), find immediate lower in list.
+              // If current is >= 0, check if Default fits between (current) and (current-1).
+
+              let targetIdx = -2; // -2 = no move
+
+              if (idx === -1) {
+                // At virtual default. Go to largest list item < defaultCount
+                for (let i = list.length - 1; i >= 0; i--) {
+                  if (list[i].quantity < defaultCount) {
+                    targetIdx = i;
+                    break;
+                  }
+                }
+              } else {
+                // At valid list index
+                const currentCount = list[idx].quantity;
+                // Check if default is between current and prev
+                // or if current > default > (idx-1)
+
+                // If default is virtual (not in list) AND fits here?
+                if (defaultIdx === -1 && defaultCount < currentCount) {
+                  // Check if prev list item is smaller than default
+                  const prevListCount = (idx > 0) ? list[idx - 1].quantity : -1;
+                  if (defaultCount > prevListCount) {
+                    targetIdx = -1; // Go to Virtual Default
+                  } else {
+                    targetIdx = idx - 1;
+                  }
+                } else {
+                  targetIdx = idx - 1;
+                }
+              }
+
+              // Apply Move
+              if (targetIdx === -1) {
+                currentExtrasState[type] = -1;
+                updateExtras();
+                updateTotalCost();
+              } else if (targetIdx >= 0) {
+                currentExtrasState[type] = targetIdx;
+                updateExtras();
+                updateTotalCost();
+              }
+            };
+          }
+
+          if (plusBtn) {
+            plusBtn.onclick = (e) => {
+              e.stopPropagation();
+              const key = 'I' + type.toUpperCase();
+              const list = window.POPREY_PACKAGES[key];
+              if (!Array.isArray(list)) return;
+
+              let idx = currentExtrasState[type];
+              const defaultCount = (currentPackage && currentPackage.extraDefaults) ? (currentPackage.extraDefaults[type] || 0) : 0;
+              const defaultIdx = defaultExtrasState[type];
+
+              let targetIdx = -2;
+
+              if (idx === -1) {
+                // At virtual default. Go to smallest list item > defaultCount
+                for (let i = 0; i < list.length; i++) {
+                  if (list[i].quantity > defaultCount) {
+                    targetIdx = i;
+                    break;
+                  }
+                }
+              } else {
+                const currentCount = list[idx].quantity;
+                // Check if default fits between current and next
+                if (defaultIdx === -1 && defaultCount > currentCount) {
+                  const nextListCount = (idx < list.length - 1) ? list[idx + 1].quantity : Infinity;
+                  if (defaultCount < nextListCount) {
+                    targetIdx = -1; // Go to Virtual Default
+                  } else {
+                    targetIdx = idx + 1;
+                  }
+                } else {
+                  targetIdx = idx + 1;
+                }
+              }
+
+              // Apply Move
+              if (targetIdx === -1) {
+                currentExtrasState[type] = -1;
+                updateExtras();
+                updateTotalCost();
+              } else if (targetIdx >= 0 && targetIdx < list.length) {
+                currentExtrasState[type] = targetIdx;
+                updateExtras();
+                updateTotalCost();
+              }
+            };
+          }
+        });
+      }
+
+      els.buyBtn.onclick = () => {
+        if (!currentPackage) return;
+
+        const reachCount = getExtraCount('Reach', currentExtrasState.Reach);
+        const impCount = getExtraCount('Impressions', currentExtrasState.Impressions);
+        const savesCount = getExtraCount('Saves', currentExtrasState.Saves);
+
+        const url = `https://poprey.com/payment?service=Instagram+Views&plan=${currentPackage.quantity}&extra_impressions=${impCount}&extra_reach=${reachCount}&extra_saves=${savesCount}`;
+        window.location.href = url;
+      };
+
+      // --- 6. INITIALIZATION ---
+      document.addEventListener('DOMContentLoaded', () => {
+        if (!window.POPREY_PACKAGES) {
+          console.error("POPREY_PACKAGES not defined");
+          return;
+        }
+        setupCalculatorListeners();
+        hydrateCards();
+      });
+
+    })();
     </script>
-    <script src="../assets/js/packages.js"></script>
     <script
       src="../assets/js/site.js"
       defer></script>
-    
-  <script src="../assets/js/redirect_config.js" defer></script>
-<script src="../assets/js/redirect_manager.js" defer></script>
+    <script src="../assets/js/redirect_config.js" defer></script>      <script src="../assets/js/redirect_manager.js" defer></script>
 </body>
 </html>

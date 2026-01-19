@@ -1360,9 +1360,9 @@
 
           const priceEl = card.querySelector('.box__service-name');
           if (priceEl) {
-            // Views page uses <span> Views </span> For 0.00
+            // Views page uses <span> Views </span> pentru 0.00
             // We'll update the price part specifically
-            animateValue(priceEl, pkg.price, true, 800, "<span> Views </span> For ");
+            animateValue(priceEl, pkg.price, true, 800, "<span> Views </span> pentru ");
           }
         });
 
@@ -1397,7 +1397,7 @@
         const savesIdx = currentExtrasState.Saves;
 
         const reachCount = getExtraCount('Reach', reachIdx);
-        const impressionsCount = getExtraCount('Impressions', impressionsIdx);
+        const impressionsCount = getExtraCount('Impressions', impressionsIdx); 
         const savesCount = getExtraCount('Saves', savesIdx);
 
         // Update Info Icons
@@ -1412,9 +1412,13 @@
         updateCalcBlock(els.calcs.Saves, savesCount, savesIdx, 'Saves');
 
         // Update Discount display in Percent block
-        if (els.percentText && currentPackage.discount) {
-          // Extract number from "-20%" -> "20"
-          const discountVal = currentPackage.discount.replace(/[^0-9]/g, '');
+        if (els.percentText) {
+          let discountVal = "0";
+          if (currentPackage.percent) {
+             discountVal = currentPackage.percent;
+          } else if (currentPackage.discount) {
+             discountVal = String(currentPackage.discount).replace(/[^0-9]/g, '');
+          }
           els.percentText.innerHTML = `${discountVal} %`;
         }
       }
@@ -1422,13 +1426,15 @@
       function updateCalcBlock(block, count, idx, type) {
         if (!block) return;
         const key = 'I' + type.toUpperCase();
-        const listLength = window.POPREY_PACKAGES[key].length;
+        const list = window.POPREY_PACKAGES[key];
+        if (!Array.isArray(list)) return;
+        const listLength = list.length;
         const defaultIdx = defaultExtrasState[type];
 
         const num = block.querySelector('.trial__count-text-desktop');
         if (num) animateValue(num, count);
         const mobileNum = block.querySelector('.trial__count-text-mobile');
-        if (mobileNum) animateValue(mobileNum.firstChild, count);
+        if (mobileNum) animateValue(mobileNum, count);
 
         const minusBtn = block.querySelector('.trial__cirkul-minus');
         const cirkuls = block.querySelectorAll('.trial__cirkul');
@@ -1466,7 +1472,7 @@
 
         if (total < 0) total = 0; // Safety
 
-        animateValue(els.totalCost, total, true);
+        animateValue(els.totalCost, total, true, 800, "", " Cost");
         els.buyBtn.disabled = false;
       }
 
@@ -1483,8 +1489,9 @@
           if (minusBtn) {
             minusBtn.onclick = (e) => {
               e.stopPropagation();
-              const list = window.POPREY_PACKAGES.VIEWS_EXTRAS[type];
-              if (!list) return;
+              const key = 'I' + type.toUpperCase();
+              const list = window.POPREY_PACKAGES[key];
+              if (!Array.isArray(list)) return;
 
               let idx = currentExtrasState[type];
               const defaultCount = (currentPackage && currentPackage.extraDefaults) ? (currentPackage.extraDefaults[type] || 0) : 0;
@@ -1499,21 +1506,21 @@
               if (idx === -1) {
                 // At virtual default. Go to largest list item < defaultCount
                 for (let i = list.length - 1; i >= 0; i--) {
-                  if (list[i].count < defaultCount) {
+                  if (list[i].quantity < defaultCount) {
                     targetIdx = i;
                     break;
                   }
                 }
               } else {
                 // At valid list index
-                const currentCount = list[idx].count;
+                const currentCount = list[idx].quantity;
                 // Check if default is between current and prev
                 // or if current > default > (idx-1)
 
                 // If default is virtual (not in list) AND fits here?
                 if (defaultIdx === -1 && defaultCount < currentCount) {
                   // Check if prev list item is smaller than default
-                  const prevListCount = (idx > 0) ? list[idx - 1].count : -1;
+                  const prevListCount = (idx > 0) ? list[idx - 1].quantity : -1;
                   if (defaultCount > prevListCount) {
                     targetIdx = -1; // Go to Virtual Default
                   } else {
@@ -1540,8 +1547,9 @@
           if (plusBtn) {
             plusBtn.onclick = (e) => {
               e.stopPropagation();
-              const list = window.POPREY_PACKAGES.VIEWS_EXTRAS[type];
-              if (!list) return;
+              const key = 'I' + type.toUpperCase();
+              const list = window.POPREY_PACKAGES[key];
+              if (!Array.isArray(list)) return;
 
               let idx = currentExtrasState[type];
               const defaultCount = (currentPackage && currentPackage.extraDefaults) ? (currentPackage.extraDefaults[type] || 0) : 0;
@@ -1552,16 +1560,16 @@
               if (idx === -1) {
                 // At virtual default. Go to smallest list item > defaultCount
                 for (let i = 0; i < list.length; i++) {
-                  if (list[i].count > defaultCount) {
+                  if (list[i].quantity > defaultCount) {
                     targetIdx = i;
                     break;
                   }
                 }
               } else {
-                const currentCount = list[idx].count;
+                const currentCount = list[idx].quantity;
                 // Check if default fits between current and next
                 if (defaultIdx === -1 && defaultCount > currentCount) {
-                  const nextListCount = (idx < list.length - 1) ? list[idx + 1].count : Infinity;
+                  const nextListCount = (idx < list.length - 1) ? list[idx + 1].quantity : Infinity;
                   if (defaultCount < nextListCount) {
                     targetIdx = -1; // Go to Virtual Default
                   } else {
@@ -1594,7 +1602,7 @@
         const impCount = getExtraCount('Impressions', currentExtrasState.Impressions);
         const savesCount = getExtraCount('Saves', currentExtrasState.Saves);
 
-        const url = `https://poprey.com/payment?service=Instagram+Views&plan=${currentPackage.count}&extra_impressions=${impCount}&extra_reach=${reachCount}&extra_saves=${savesCount}`;
+        const url = `https://poprey.com/payment?service=Instagram+Views&plan=${currentPackage.quantity}&extra_impressions=${impCount}&extra_reach=${reachCount}&extra_saves=${savesCount}`;
         window.location.href = url;
       };
 
