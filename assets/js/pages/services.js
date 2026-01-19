@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
     qtyText.textContent = `${item.qty} ${unit}`.trim();
 
     // price in button
-    btn.textContent = `Buy Now (${formatPrice(item.price)})${PLN_SUFFIX}`;
+    btn.textContent = `Buy Now ($${formatPrice(item.price)})`;
 
     // id change
     btn.id = item.id;

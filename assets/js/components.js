@@ -161,14 +161,16 @@
 
   function getActivePage() {
     const path = window.location.pathname.toLowerCase();
-    if (path.includes('buy-youtube') || path.includes('youtube')) return 'youtube';
-    if (path.includes('services')) return 'services';
+    if (path.includes('youtube')) return 'youtube';
+    if (path.includes('services') || path.includes('tiktok') || path.includes('facebook')) return 'services';
+    if (path.includes('monitoring') || path.includes('instamonitor')) return 'monitoring';
+    // Default to instagram for all other pages (including index and specific ig services)
     return 'instagram';
   }
 
   function getActiveService() {
     const path = window.location.pathname.toLowerCase();
-    if (path.includes('index') || path === '/' || path.endsWith('/')) return 'likes';
+    if (path.includes('index') || path === '/' || path.endsWith('/') || path.endsWith('/index.html')) return 'likes';
     if (path.includes('followers')) return 'followers';
     if (path.includes('automatic') || path.includes('auto-likes')) return 'auto-likes';
     if (path.includes('views')) return 'views';
@@ -206,6 +208,13 @@
     const instaClass = activePage === 'instagram' ? 'header__active' : 'header__not-active-insta';
     const youtubeClass = activePage === 'youtube' ? 'header__active-youtube' : 'header__not-active';
     const servicesClass = activePage === 'services' ? 'header__active-other' : 'header__not-active-other';
+    const monitoringClass = activePage === 'monitoring' ? 'header__active-monitoring' : 'header__not-active-monitoring';
+
+    const instaCircleClass = activePage === 'instagram' ? 'header__cirkul' : 'header__cirkul-color';
+    // YouTube circle: use header__cirkul for active white border, and header__cirkul-color for inactive gray border
+    const youtubeCircleClass = activePage === 'youtube' ? 'header__youtube header__cirkul' : 'header__youtube header__cirkul-color';
+    // Services group shouldn't use fixed-size header__cirkul classes as it contains two icons
+    const servicesCircleClass = activePage === 'services' ? 'header__cirkul-other' : 'header__cirkul-color-other';
 
     return `
     <header class="header">
@@ -213,11 +222,11 @@
         <div class="header__services-container">
           <div class="header_flex_block">
             <div class="header_flex_item">
-              <p class="internalHeader__logo">Poprey</p>
+              <a href="${basePath}index.html" style="text-decoration: none;"><p class="internalHeader__logo">Poprey</p></a>
             </div>
             <div class="header__services-nav header_flex_item header_item_special">
-              <a class="${instaClass}" href="index.html">
-                <div class="header__cirkul">
+              <a class="${instaClass}" href="${basePath}index.html">
+                <div class="${instaCircleClass}">
                   <div class="header__instagram-img" style="position: relative">
                     <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                       <img alt="Instagram" decoding="async" src="${basePath}assets/images/${activePage === 'instagram' ? 'inst_on.75d262156d28d609dbc3dabf75912486.svg' : 'inst_off.dc6a14cd8bed89058468a66d640f9a9e.svg'}" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
@@ -226,9 +235,9 @@
                 </div>
                 <div class="${activePage === 'instagram' ? '' : 'header__not-active-text'}">Instagram</div>
               </a>
-              <a class="${youtubeClass}" href="buy-youtube-views.html">
-                <div class="header__">
-                  <div class="header__youtube header__color-icons-youtube">
+              <a class="${youtubeClass}" href="${basePath}buy-youtube-views.html">
+                <div class="${youtubeCircleClass}">
+                  <div class="header__color-icons-youtube" style="display: flex; justify-content: center; align-items: center;">
                     <div class="header__other-icons-youtube" style="position: relative">
                       <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                         <img alt="YouTube" decoding="async" src="${basePath}assets/images/${activePage === 'youtube' ? 'youtube2.97789ad92b94d8d8a663c93a77211a01.png' : 'youtube3.3c6ea823e9ee96fd0f90bdc6e215563f.png'}" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
@@ -238,9 +247,9 @@
                 </div>
                 <div class="${activePage === 'youtube' ? '' : 'header__not-active-text'}">YouTube</div>
               </a>
-              <a class="${servicesClass}" href="services.html">
-                <div class="header__cirkul-color-other">
-                  <div class="header__facebook">
+              <a class="${servicesClass}" href="${basePath}services.html">
+                <div class="${servicesCircleClass}" style="display: flex;">
+                  <div class="header__facebook" style="${activePage === 'services' ? 'border: 1px solid rgba(255, 255, 255, 0.25); background: #fff;' : ''}">
                     <div class="header__other-icons" style="position: relative">
                       <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                         <img alt="Facebook" decoding="async" src="${basePath}assets/images/facebook_blue.1dad8a2a9689d720b5caa08577ab651a.png" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
@@ -257,11 +266,11 @@
                 </div>
               </a>
             </div>
-            <div class="header__not-active-monitoring monitoringWrapp" style="max-width: 238px; margin-right: 15px; width: 100%; cursor: pointer; padding: 20px; font-size: 16px; font-weight: 500; gap: 7px; height: 60px;">
-              <img alt="monitoring" src="${basePath}assets/images/monitoringNotActive.7f049cd27e044cbb9ddd1dea9ebcf4e4.svg" />
+            <div class="${monitoringClass} monitoringWrapp" style="max-width: 238px; margin-right: 15px; width: 100%; cursor: pointer; padding: 20px; font-size: 16px; font-weight: 500; gap: 7px; height: 60px;">
+              <img alt="monitoring" src="${basePath}assets/images/${activePage === 'monitoring' ? 'monitoringActive.6d0e9803a6bc4553229b40075306915e.svg' : 'monitoringNotActive.7f049cd27e044cbb9ddd1dea9ebcf4e4.svg'}" />
               <p class="monitoringTitle">InstaMonitor</p>
             </div>
-            <a href="login/index.html?link=&amp;lang=en&amp;type=signup&amp;newDesign=newDesign.html" id="SUP">
+            <a href="${basePath}login/index.html?link=&amp;lang=en&amp;type=signup&amp;newDesign=newDesign.html" id="SUP">
               <div class="header_account header_flex_item">
                 <div class="header__img_block">
                   <img alt="account" src="${basePath}assets/images/login_logout.345632490b7225ebd8fa55c25f1254fd.svg" />

@@ -68,7 +68,7 @@
 <body>
   <div id="__next">
     <div id="header-container"></div>
-    
+
     <main>
       <section class="instaServices">
         <div class="instaServicesPage">
@@ -1398,12 +1398,7 @@
                       </div>
                     </a>
                     <div class="trial__text-cost">
-                      <!-- -->
-                      0
-                      <!-- -->
-                      <!-- -->
-                      <!-- -->
-                      Cost
+                      $0.00 Cost
                     </div>
                     <button class="trial__buy" disabled="">
                       Buy Now
@@ -1420,10 +1415,11 @@
             </div>
           </div>
         </div>
-        <div class="popup" id="popupPay">
-          <div class="popup__inner">
-            <div class="popup__close" style="position: absolute">
-              <div style="
+  </div>
+  <div class="popup" id="popupPay">
+    <div class="popup__inner">
+      <div class="popup__close" style="position: absolute">
+        <div style="
                     display: block;
                     overflow: hidden;
                     position: absolute;
@@ -1434,7 +1430,7 @@
                     box-sizing: border-box;
                     margin: 0;
                   ">
-                <img alt="close" decoding="async" src="assets/images/close.91cd52d2e301822bdd5e39e1f3e832f5.png" style="
+          <img alt="close" decoding="async" src="assets/images/close.91cd52d2e301822bdd5e39e1f3e832f5.png" style="
                       visibility: visible;
                       position: absolute;
                       top: 0;
@@ -1453,15 +1449,15 @@
                       min-height: 100%;
                       max-height: 100%;
                     " />
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
-    </main>
-    <div id="footer-container"></div>
-<script src="assets/js/components.js"></script>
-<script src="assets/js/storage.js"></script>
+      </div>
+    </div>
+  </div>
+  </section>
+  </main>
+  <div id="footer-container"></div>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/storage.js"></script>
 
   </div>
   <script src="assets/js/packages.js"></script>
@@ -1720,7 +1716,7 @@
         // Find active card in the target container, or select a default one
         var containerSelector = (type === "regular") ? ".box_regular" : ".box_premium";
         var activeCard = document.querySelector(containerSelector + " .box__card.trial-selected");
-        
+
         // If no card is selected in this container, auto-select the 3rd card (or first available)
         if (!activeCard) {
           var allCards = document.querySelectorAll(containerSelector + " .box__card");
@@ -1730,7 +1726,7 @@
             activeCard = allCards[0]; // Fallback to first card
           }
         }
-        
+
         if (activeCard) activeCard.click();
       }
 
@@ -1802,7 +1798,7 @@
           var pkg = packageList[currentIndex];
           if (!pkg) return;
 
-          if (countDisplay) countDisplay.textContent = pkg.quantity.toLocaleString();
+          if (countDisplay) countDisplay.textContent = pkg.quantity;
 
           var priceEl = cardWrapper.querySelector(".box__service-name");
           if (priceEl) {
