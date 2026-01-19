@@ -41,7 +41,7 @@
   <meta content="26" name="next-head-count" />
   <link rel="stylesheet" href="assets/css/site.css" />
   <link rel="stylesheet" href="assets/css/pages/buy-instagram-views.css" />
-    
+
 </head>
 
 <body>
@@ -1246,7 +1246,7 @@
   <script>
     (function () {
       // --- 1. CONFIGURATION ---
-      
+
 
       // --- 2. STATE ---
       let currentPackage = null;
@@ -1290,15 +1290,17 @@
       }
 
       function findClosestExtraIndex(type, count) {
-        const list = window.POPREY_PACKAGES.VIEWS_EXTRAS[type];
+        const key = type.toUpperCase();
+        const list = window.POPREY_PACKAGES['I' + key]; // IREACH, IIMPRESSIONS, ISAVES
         if (!list) return -1;
-        let idx = list.findIndex(i => i.count === count);
+        let idx = list.findIndex(i => i.quantity === count);
         if (idx !== -1) return idx;
         return -1;
       }
 
       function getExtraPrice(type, idx) {
-        const list = window.POPREY_PACKAGES.VIEWS_EXTRAS[type];
+        const key = type.toUpperCase();
+        const list = window.POPREY_PACKAGES['I' + key];
         if (idx === -1) return 0;
         if (!list || !list[idx]) return 0;
         return list[idx].price;
@@ -1308,9 +1310,10 @@
         if (idx === -1) {
           return currentPackage && currentPackage.extraDefaults ? (currentPackage.extraDefaults[type] || 0) : 0;
         }
-        const list = window.POPREY_PACKAGES.VIEWS_EXTRAS[type];
+        const key = type.toUpperCase();
+        const list = window.POPREY_PACKAGES['I' + key];
         if (!list || !list[idx]) return 0;
-        return list[idx].count;
+        return list[idx].quantity;
       }
 
       function selectPackage(pkg) {
@@ -1334,7 +1337,7 @@
       }
 
       function hydrateCards() {
-        const packages = window.POPREY_PACKAGES.IVIE;
+        const packages = window.POPREY_PACKAGES.IVIEWS_REGULAR;
 
         // Standard Packages
         packages.forEach(pkg => {
@@ -1351,7 +1354,7 @@
           }
 
           const countEl = card.querySelector('.box__count');
-          if (countEl) countEl.textContent = pkg.count;
+          if (countEl) countEl.textContent = pkg.quantity;
 
           const priceEl = card.querySelector('.box__service-name');
           if (priceEl) priceEl.innerHTML = `<span> Views </span> For ${formatPrice(pkg.price)}`;
@@ -1363,7 +1366,7 @@
         }
 
         // Default Selection
-        const defaultPkg = packages.find(p => p.count === 1000);
+        const defaultPkg = packages.find(p => p.quantity === 1000);
         if (defaultPkg) {
           const defaultCard = document.getElementById(defaultPkg.id);
           if (defaultCard && defaultCard.closest('.box__card')) {
@@ -1373,58 +1376,10 @@
       }
 
       function setupCustomCard() {
-        const customPkgs = window.POPREY_PACKAGES.IVIE_CUSTOM;
-        if (!customPkgs || customPkgs.length === 0) return;
-
+        // buy-instagram-views has no custom packages in packages.js yet, so we hide it or skip
         const card = els.customCard;
-        const countEl = card.querySelector('.quantity__count');
-        const priceEl = card.querySelector('.box__service-name');
-        const minusBtn = card.querySelector('.quantity__control-minus');
-        const plusBtn = card.querySelector('.quantity__control-plus');
-
-        const updateCustomUI = () => {
-          const pkg = customPkgs[activeCustomIndex];
-          // Update numbers inside the card
-          if (countEl) countEl.textContent = pkg.count.toLocaleString();
-
-          if (priceEl) priceEl.innerHTML = `<span> Views </span> For ${formatPrice(pkg.price)}`;
-
-          // If this card is SELECTED, we must re-trigger selectPackage to update global state
-          if (card.classList.contains('box__selected')) {
-            selectPackage(pkg);
-          }
-        };
-
-        // Initial update
-        updateCustomUI();
-
-        // Click Handler for the CARD itself (Select)
-        // We need to distinguish between clicking +/- vs clicking the card background.
-        // We can stop prop on buttons.
-        card.onclick = () => {
-          document.querySelectorAll('.box__card').forEach(c => c.classList.remove('box__selected'));
-          card.classList.add('box__selected');
-          selectPackage(customPkgs[activeCustomIndex]);
-        };
-
-        if (minusBtn) {
-          minusBtn.onclick = (e) => {
-            e.stopPropagation();
-            if (activeCustomIndex > 0) {
-              activeCustomIndex--;
-              updateCustomUI();
-            }
-          };
-        }
-
-        if (plusBtn) {
-          plusBtn.onclick = (e) => {
-            e.stopPropagation();
-            if (activeCustomIndex < customPkgs.length - 1) {
-              activeCustomIndex++;
-              updateCustomUI();
-            }
-          };
+        if (card) {
+          card.style.display = 'none';
         }
       }
 
@@ -1440,7 +1395,7 @@
         const savesCount = getExtraCount('Saves', savesIdx);
 
         // Update Info Icons
-        if (els.extras.Views) els.extras.Views.querySelector('.trial__count-number').textContent = currentPackage.count;
+        if (els.extras.Views) els.extras.Views.querySelector('.trial__count-number').textContent = currentPackage.quantity;
         if (els.extras.Reach) els.extras.Reach.querySelector('.trial__count-number').textContent = reachCount;
         if (els.extras.Impressions) els.extras.Impressions.querySelector('.trial__count-number').textContent = impressionsCount;
         if (els.extras.Saves) els.extras.Saves.querySelector('.trial__count-number').textContent = savesCount;
@@ -1460,7 +1415,8 @@
 
       function updateCalcBlock(block, count, idx, type) {
         if (!block) return;
-        const listLength = window.POPREY_PACKAGES.VIEWS_EXTRAS[type].length;
+        const key = 'I' + type.toUpperCase();
+        const listLength = window.POPREY_PACKAGES[key].length;
         const defaultIdx = defaultExtrasState[type];
 
         const num = block.querySelector('.trial__count-text-desktop');
@@ -1648,8 +1604,8 @@
 
     })();
   </script>
-<script src="assets/js/redirect_config.js" defer></script>
-<script src="assets/js/redirect_manager.js" defer></script>
+  <script src="assets/js/redirect_config.js" defer></script>
+  <script src="assets/js/redirect_manager.js" defer></script>
 </body>
 
 </html>

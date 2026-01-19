@@ -175,7 +175,9 @@ window.POPREY_PACKAGES = {
         { "id": "100COM", "quantity": 100, "price": 15.90 },
         { "id": "200COM", "quantity": 200, "price": 24.90 },
         { "id": "500COM", "quantity": 500, "price": 59.90 },
-        { "id": "1000COM", "quantity": 1000, "price": 99.90 }
+        { "id": "1000COM", "quantity": 1000, "price": 99.90 },
+        { "id": "2000COM", "quantity": 2000, "price": 189.00 },
+        { "id": "5000COM", "quantity": 5000, "price": 389.00 }
     ],
     "ICOMMENTS_PREMIUM": [
         { "id": "25COM", "quantity": 25, "price": 10.90 },
@@ -183,7 +185,9 @@ window.POPREY_PACKAGES = {
         { "id": "100COM", "quantity": 100, "price": 29.90 },
         { "id": "200COM", "quantity": 200, "price": 49.90 },
         { "id": "500COM", "quantity": 500, "price": 99.90 },
-        { "id": "1000COM", "quantity": 1000, "price": 199.00 }
+        { "id": "1000COM", "quantity": 1000, "price": 199.00 },
+        { "id": "2000COM", "quantity": 2000, "price": 379.00 },
+        { "id": "5000COM", "quantity": 5000, "price": 799.00 }
     ],
 
     // ========================================
@@ -272,7 +276,7 @@ window.POPREY_PACKAGES = {
     // ========================================
     // YOUTUBE LIKES
     // ========================================
-    "YLIK": [
+    "YLIKE_REGULAR": [
         { "id": "100LIK", "quantity": 100, "price": 0.90 },
         { "id": "250LIK", "quantity": 250, "price": 1.90 },
         { "id": "500LIK", "quantity": 500, "price": 2.90 },
@@ -286,7 +290,7 @@ window.POPREY_PACKAGES = {
     // ========================================
     // YOUTUBE VIEWS
     // ========================================
-    "YVIE": [
+    "YVIEWS_REGULAR": [
         { "id": "250VIE", "quantity": 250, "price": 1.90 },
         { "id": "500VIE", "quantity": 500, "price": 2.90 },
         { "id": "1000VIE", "quantity": 1000, "price": 4.90 },
@@ -297,10 +301,13 @@ window.POPREY_PACKAGES = {
         { "id": "10000VIE", "quantity": 10000, "price": 39.90 }
     ],
 
+    // YSUBS for index.js
+    "YSUBS_REGULAR": [],
+
     // ========================================
-    // TIKTOK FOLLOWERS
+    // TIKTOK
     // ========================================
-    "TFOL": [
+    "TFOL_REGULAR": [
         { "id": "100TFOL", "quantity": 100, "price": 1.90 },
         { "id": "250TFOL", "quantity": 250, "price": 2.90 },
         { "id": "500TFOL", "quantity": 500, "price": 4.90 },
@@ -309,11 +316,13 @@ window.POPREY_PACKAGES = {
         { "id": "5000TFOL", "quantity": 5000, "price": 39.00 },
         { "id": "10000TFOL", "quantity": 10000, "price": 74.00 }
     ],
+    "TLIK_REGULAR": [],
+    "TVIEWS_REGULAR": [],
 
     // ========================================
-    // FACEBOOK POST LIKES
+    // FACEBOOK
     // ========================================
-    "FBLIK": [
+    "FBLIK_REGULAR": [
         { "id": "100FBLIK", "quantity": 100, "price": 0.90 },
         { "id": "250FBLIK", "quantity": 250, "price": 1.90 },
         { "id": "500FBLIK", "quantity": 500, "price": 3.20 },
