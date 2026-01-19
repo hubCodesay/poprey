@@ -1790,7 +1790,7 @@
     function defaultSelectionCount(serviceName) {
       switch (serviceName) {
         case "Likes":
-          return 200;
+          return 25;
         case "Views":
           return 2000;
         case "Comments":

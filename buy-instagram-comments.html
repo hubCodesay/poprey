@@ -1120,7 +1120,7 @@
                       <!-- -->
                       Cost
                     </div>
-                    <button class="trial__buy" disabled="">
+                    <button id="buy-instagram-comments-buy-now-btn" class="trial__buy global-buy-now">
                       Buy Now
                     </button>
                   </div>
@@ -1344,64 +1344,15 @@
     <script src="assets/js/storage.js"></script>
 
   </div>
-  <script src="assets/js/site.js" defer></script>
+  
+    <script src="assets/js/packages.js"></script>
+    <script src="assets/js/site.js" defer></script>
   <script src="assets/js/pages/index.js" defer></script>
   <script src="assets/js/pages/buy-instagram-comments.js" defer></script>
   <script>
       (function () {
         // --- 1. CONFIGURATION ---
-        window.POPREY_PACKAGES = {
-          "ICOM_REGULAR": [
-            { count: 21, price: 26.90, id: "25COM", discount: "-12%" },
-            { count: 50, price: 38.90, id: "50COM", discount: "-13%" },
-            { count: 100, price: 62.90, id: "100COM", discount: "-20%" },
-            { count: 200, price: 98.90, id: "200COM", discount: "-25%" },
-            { count: 500, price: 239.00, id: "500COM", discount: "-30%" },
-            { count: 1000, price: 279.00, id: "1000COM", discount: "-35%" },
-            { count: 2000, price: 399.00, id: "2000COM", discount: "-40%" },
-            { count: 5000, price: 789.00, id: "5000COM", discount: "-45%" }
-          ],
-          "ICOM_PREMIUM": [
-             // Placeholder prices (Regular * 1.5 roughly, pending confirmation)
-            { count: 22, price: 39.90, id: "25COM", discount: "-11%" },
-            { count: 50, price: 58.90, id: "50COM", discount: "-12%" },
-            { count: 100, price: 94.90, id: "100COM", discount: "-20%" },
-            { count: 200, price: 148.90, id: "200COM", discount: "-25%" },
-            { count: 500, price: 358.00, id: "500COM", discount: "-30%" },
-            { count: 1000, price: 418.00, id: "1000COM", discount: "-35%" },
-            { count: 2000, price: 598.00, id: "2000COM", discount: "-40%" },
-            { count: 5000, price: 1183.00, id: "5000COM", discount: "-45%" }
-          ],
-          "COMMENTS_EXTRAS": {
-            Reach: [
-              { count: 2500, price: 1.0 },
-              { count: 5000, price: 7.5 },
-              { count: 7500, price: 11.9 },
-              { count: 10000, price: 19.9 },
-              { count: 15000, price: 42.9 },
-              { count: 25000, price: 78.9 },
-              { count: 50000, price: 119.0 },
-            ],
-            Impressions: [
-              { count: 2500, price: 1.0 },
-              { count: 5000, price: 7.5 },
-              { count: 10000, price: 11.9 },
-              { count: 15000, price: 19.9 },
-              { count: 25000, price: 42.9 },
-              { count: 45000, price: 78.9 },
-              { count: 80000, price: 119.0 },
-            ],
-            Saves: [
-              { count: 50, price: 1.0 },
-              { count: 100, price: 7.5 },
-              { count: 150, price: 11.9 },
-              { count: 250, price: 19.9 },
-              { count: 500, price: 42.9 },
-              { count: 750, price: 78.9 },
-              { count: 1000, price: 119.0 },
-            ]
-          }
-        };
+        
 
         // --- STATE ---
         let currentTab = 'Regular'; // 'Regular' or 'Premium'
@@ -1640,6 +1591,8 @@
 
       })();
   </script>
+<script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
 </body>
 
 </html>

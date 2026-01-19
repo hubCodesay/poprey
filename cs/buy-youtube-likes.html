@@ -1329,9 +1329,8 @@
                     </div>
                     <div class="trial__text">
                       <div class="trial__text-cost">0 Cost</div>
-                      <button
-                        class="trial__buy"
-                        disabled>
+                      <button id="buy-youtube-likes-buy-now-btn"
+                        class="trial__buy global-buy-now">
                         Buy Now
                       </button>
                     </div>
@@ -1540,32 +1539,7 @@
 <script src="assets/js/storage.js"></script>
 
     </div>
-    <script>
-      window.POPREY_PACKAGES = {
-        // YouTube Likes
-        "YLIK": [
-          { qty: 111, price: 1.00, id: "100LIK" },
-          { qty: 251, price: 7.50, id: "250LIK" },
-          { qty: 500, price: 11.90, id: "500LIK" },
-          { qty: 1000, price: 19.90, id: "1000LIK" },
-          { qty: 2000, price: 34.90, id: "2000LIK" },
-          { qty: 3000, price: 50.90, id: "3000LIK" },
-          { qty: 4000, price: 66.90, id: "4000LIK" },
-          { qty: 5000, price: 18.90, id: "5000LIK" }
-        ],
-        // YouTube Views (Calculator)
-        "YVIE": [
-          { qty: 251, price: 0.50 },
-          { qty: 510, price: 1.90 },
-          { qty: 1000, price: 3.50 },
-          { qty: 2000, price: 6.50 },
-          { qty: 3000, price: 9.90 },
-          { qty: 5000, price: 14.90 },
-          { qty: 7500, price: 24.90 },
-          { qty: 10000, price: 34.90 }
-        ]
-      };
-    </script>
+    
     <script>
       window.SKIP_GLOBAL_TRIAL = true;
     </script>
@@ -1782,9 +1756,12 @@
         }
       })();
     </script>
+    <script src="../assets/js/packages.js"></script>
     <script
       src="../assets/js/site.js"
       defer></script>
-    <script src="../assets/js/packages.js"></script>
-  </body>
+    
+  <script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
+</body>
 </html>

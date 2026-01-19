@@ -20774,3 +20774,8 @@ table td:first-of-type {
   opacity: 1;
   transition: opacity 0.3s;
 }
+/* Global Buy Now Button Style */
+.global-buy-now {
+    background-color: #8B4513 !important; /* SaddleBrown */
+    color: white !important;
+}

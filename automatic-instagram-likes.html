@@ -1430,9 +1430,8 @@
                         <!-- -->
                         Cost
                       </div>
-                      <button
-                        class="trial__buy"
-                        disabled="">
+                      <button id="automatic-instagram-likes-buy-now-btn"
+                        class="trial__buy global-buy-now">
                         Buy Now
                       </button>
                     </div>
@@ -1728,11 +1727,17 @@
           if (!els.tabAuto || !els.tabSubs) return;
           
           if (currentService === "Auto-Likes") {
-            els.tabAuto.className = 'servicesVariation__active auto-likes';
-            els.tabSubs.className = 'servicesVariation__not-active-auto-sub auto-likes-sub';
+            els.tabAuto.classList.add('servicesVariation__active');
+            els.tabAuto.classList.remove('servicesVariation__not-active-auto');
+            
+            els.tabSubs.classList.remove('servicesVariation__active');
+            els.tabSubs.classList.add('servicesVariation__not-active-auto-sub');
           } else {
-            els.tabAuto.className = 'servicesVariation__not-active-auto auto-likes';
-            els.tabSubs.className = 'servicesVariation__active auto-likes-sub';
+            els.tabAuto.classList.remove('servicesVariation__active');
+            els.tabAuto.classList.add('servicesVariation__not-active-auto');
+            
+            els.tabSubs.classList.add('servicesVariation__active');
+            els.tabSubs.classList.remove('servicesVariation__not-active-auto-sub');
           }
         }
 
@@ -1757,32 +1762,45 @@
         // --- 6. QUALITY BUTTON HANDLERS ---
         const imgs = {
           crownDefault: "assets/images/crown.164f2d65ae189c29cb6d9eeed7e9ad89.png",
-          crownWhite: "assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png"
+          crownWhite: "assets/images/crown_white.13ec5a923028b7c79617258e2b732268.png",
+          qualityDefault: "assets/images/quality.921b7b8ec8ed7b3d499e822761d21261.png", // Verify path if needed
+          qualityWhite: "assets/images/quality_white.1d4db15194f1398ec0490844093d10fb.png"
         };
 
         function updateQualityVisuals() {
           const imgPremium = document.querySelector('.servicesList__crown-img img');
+          const imgRegular = document.querySelector('.servicesList__quality-img img');
+          const txtRegular = document.querySelector('.servicesList__white-text');
+          const txtPremium = document.querySelector('.servicesList__color-text');
 
           if (currentQuality === "Regular") {
+            // Regular side -> Active (Color)
             if (els.btnRegular) {
-              els.btnRegular.classList.remove('servicesList__white-block');
               els.btnRegular.classList.add('servicesList__color-block', 'servicesList__type-block', 'local-block--active');
+              els.btnRegular.classList.remove('servicesList__white-block');
             }
             if (els.btnPremium) {
               els.btnPremium.classList.remove('servicesList__color-block', 'servicesList__type-block', 'local-block--active');
               els.btnPremium.classList.add('servicesList__white-block');
             }
+            if (imgRegular) imgRegular.src = imgs.qualityWhite;
             if (imgPremium) imgPremium.src = imgs.crownDefault;
+            if (txtRegular) txtRegular.style.color = "#fff";
+            if (txtPremium) txtPremium.style.color = "";
           } else {
+            // Premium side -> Active (Color)
             if (els.btnRegular) {
               els.btnRegular.classList.remove('servicesList__color-block', 'servicesList__type-block', 'local-block--active');
               els.btnRegular.classList.add('servicesList__white-block');
             }
             if (els.btnPremium) {
-              els.btnPremium.classList.remove('servicesList__white-block');
               els.btnPremium.classList.add('servicesList__color-block', 'servicesList__type-block', 'local-block--active');
+              els.btnPremium.classList.remove('servicesList__white-block');
             }
+            if (imgRegular) imgRegular.src = imgs.qualityDefault;
             if (imgPremium) imgPremium.src = imgs.crownWhite;
+            if (txtRegular) txtRegular.style.color = "";
+            if (txtPremium) txtPremium.style.color = "#fff";
           }
         }
 
@@ -1821,5 +1839,7 @@
 
       });
     </script>
-  </body>
+  <script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
+</body>
 </html>

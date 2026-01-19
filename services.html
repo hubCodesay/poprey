@@ -131,7 +131,7 @@
                     </div>
                   </div>
                   <div>
-                    <button type="button" id="100TFOL" class="otherServiceCard__buy-btn" data-key="TFOL">Buy Now $7.51</button>
+                    <button type="button" id="100TFOL" class="otherServiceCard__buy-btn global-buy-now" data-key="TFOL">Buy Now $7.51</button>
                   </div>
                 </div>
               </div>
@@ -203,7 +203,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       id="250TLIK"
                       data-key="TLIK"
                       type="button">
@@ -278,7 +278,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       id="500TVIE"
                       data-key="TVIE"
                       type="button">
@@ -353,7 +353,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       id="250TPOST"
                       data-key="TPOST"
                       type="button">
@@ -428,7 +428,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       type="button"
                       id="500TSHR"
                       data-key="TSHR">
@@ -494,7 +494,7 @@
                     </div>
                   </div>
                   <div>
-                    <button type="button" class="otherServiceCard__buy-btn" id="250REDMEM" data-key="REDMEM">Buy Now $19.90</button>
+                    <button type="button" class="otherServiceCard__buy-btn global-buy-now" id="250REDMEM" data-key="REDMEM">Buy Now $19.90</button>
                   </div>
                 </div>
               </div>
@@ -551,7 +551,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       type="button"
                       id="100FBLIK"
                       data-key="FBLIK">
@@ -605,7 +605,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       type="button"
                       id="100FBFOL"
                       data-key="FBFOL">
@@ -661,7 +661,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       type="button"
                       id="100THFOL"
                       data-key="THFOL">
@@ -802,7 +802,7 @@
         <div class="container">
           <div class="btn-control btn-control--flex btn-control--center">
             <div class="footer__account">
-              <button class="footer__sign-in">
+              <button id="services-footer-account-btn" class="footer__sign-in global-buy-now">
                 <span
                   class="lazy-load-image-background opacity lazy-load-image-loaded"
                   style="
@@ -817,7 +817,7 @@
                 </span>
                 <span> Account </span>
               </button>
-              <button class="footer__contact">
+              <button id="services-footer-contact-btn" class="footer__contact global-buy-now">
                 <span
                   class="lazy-load-image-background opacity lazy-load-image-loaded"
                   style="
@@ -947,7 +947,8 @@
       </template>
     </apple-pay-merchandising-modal>
 
-      <script
+      <script src="assets/js/packages.js"></script>
+    <script
       src="assets/js/site.js"
       defer></script>
 
@@ -1147,6 +1148,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-    <script src="assets/js/packages.js"></script>
-  </body>
+    
+  <script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
+</body>
 </html>

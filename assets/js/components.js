@@ -266,18 +266,16 @@
                 </div>
               </a>
             </div>
-            <div class="${monitoringClass} monitoringWrapp" style="max-width: 238px; margin-right: 15px; width: 100%; cursor: pointer; padding: 20px; font-size: 16px; font-weight: 500; gap: 7px; height: 60px;">
+            <button class="${monitoringClass} monitoringWrapp" id="header-instamonitor-btn" style="max-width: 238px; margin-right: 15px; width: 100%; cursor: pointer; padding: 20px; font-size: 16px; font-weight: 500; gap: 7px; height: 60px; background: none;  display: flex; align-items: center;" type="button">
               <img alt="monitoring" src="${basePath}assets/images/${activePage === 'monitoring' ? 'monitoringActive.6d0e9803a6bc4553229b40075306915e.svg' : 'monitoringNotActive.7f049cd27e044cbb9ddd1dea9ebcf4e4.svg'}" />
               <p class="monitoringTitle">InstaMonitor</p>
-            </div>
-            <a href="${basePath}login/index.html?link=&amp;lang=en&amp;type=signup&amp;newDesign=newDesign.html" id="SUP">
-              <div class="header_account header_flex_item">
-                <div class="header__img_block">
-                  <img alt="account" src="${basePath}assets/images/login_logout.345632490b7225ebd8fa55c25f1254fd.svg" />
-                </div>
-                <div class="header__account-title">${t('account')}</div>
+            </button>
+            <button class="header_account header_flex_item" id="header-account-btn" type="button" style="background: none;  cursor: pointer;">
+              <div class="header__img_block">
+                <img alt="account" src="${basePath}assets/images/login_logout.345632490b7225ebd8fa55c25f1254fd.svg" />
               </div>
-            </a>
+              <div class="header__account-title">${t('account')}</div>
+            </button>
           </div>
         </div>
       </div>

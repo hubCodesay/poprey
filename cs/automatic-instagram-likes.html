@@ -1430,9 +1430,8 @@
                         <!-- -->
                         Cost
                       </div>
-                      <button
-                        class="trial__buy"
-                        disabled="">
+                      <button id="automatic-instagram-likes-buy-now-btn"
+                        class="trial__buy global-buy-now">
                         Buy Now
                       </button>
                     </div>
@@ -1496,7 +1495,8 @@
         </section>
       </main>
       <div id="footer-container"></div>
-<script src="assets/js/components.js"></script>
+<script src="../assets/js/packages.js"></script>
+    <script src="assets/js/components.js"></script>
 <script src="assets/js/storage.js"></script>
 
     </div>
@@ -1504,70 +1504,7 @@
     <script>
       (function () {
         // --- 1. POPREY_PACKAGES DATA ---
-        window.POPREY_PACKAGES = {
-          "Auto-Likes": {
-            Regular: [
-              { count: 1000, price: 46.9, extraDefaults: { Impressions: 1000, Reach: 1000, Saves: 100 } },
-              { count: 2000, price: 74.9, extraDefaults: { Impressions: 2000, Reach: 2000, Saves: 200 } },
-              { count: 5000, price: 149.0, extraDefaults: { Impressions: 5000, Reach: 5000, Saves: 500 } },
-              { count: 10000, price: 259.0, extraDefaults: { Impressions: 10000, Reach: 10000, Saves: 1000 } },
-              { count: 20000, price: 429.0, extraDefaults: { Impressions: 20000, Reach: 20000, Saves: 2000 } },
-              { count: 50000, price: 869.0, extraDefaults: { Impressions: 50000, Reach: 50000, Saves: 5000 } },
-              { count: 100000, price: 1490.0, extraDefaults: { Impressions: 100000, Reach: 100000, Saves: 10000 } },
-              { count: 200000, price: 2790.0, extraDefaults: { Impressions: 200000, Reach: 200000, Saves: 20000 } },
-            ],
-            Premium: [
-              { count: 1000, price: 50.9, extraDefaults: { Impressions: 1000, Reach: 1000, Saves: 100 } },
-              { count: 2000, price: 82.9, extraDefaults: { Impressions: 2000, Reach: 2000, Saves: 200 } },
-              { count: 5000, price: 179.0, extraDefaults: { Impressions: 5000, Reach: 5000, Saves: 500 } },
-              { count: 10000, price: 319.0, extraDefaults: { Impressions: 10000, Reach: 10000, Saves: 1000 } },
-              { count: 20000, price: 589.0, extraDefaults: { Impressions: 20000, Reach: 20000, Saves: 2000 } },
-              { count: 50000, price: 1090.0, extraDefaults: { Impressions: 50000, Reach: 50000, Saves: 5000 } },
-              { count: 100000, price: 1590.0, extraDefaults: { Impressions: 100000, Reach: 100000, Saves: 10000 } },
-              { count: 200000, price: 2990.0, extraDefaults: { Impressions: 200000, Reach: 200000, Saves: 20000 } },
-            ]
-          },
-          "Auto-Likes Subs": {
-            Regular: [
-            
-              { count: 250, price: 119.0, extraDefaults: { Impressions: 500, Reach: 500, Saves: 75 } },
-              { count: 500, price: 189.0, extraDefaults: { Impressions: 750, Reach: 750, Saves: 100 } },
-              { count: 750, price: 239.0, extraDefaults: { Impressions: 1000, Reach: 1000, Saves: 200 } },
-              { count: 1000, price: 319.0, extraDefaults: { Impressions: 2000, Reach: 2000, Saves: 300 } },
-              { count: 2000, price: 599.0, extraDefaults: { Impressions: 3000, Reach: 3000, Saves: 500 } },
-              { count: 3000, price: 749.0, extraDefaults: { Impressions: 5000, Reach: 5000, Saves: 750 } },
-              { count: 5000, price: 1190.0, extraDefaults: { Impressions: 10000, Reach: 10000, Saves: 1000 } },
-              { count: 10000, price: 1990.0, extraDefaults: { Impressions: 10000, Reach: 10000, Saves: 2000 } }
-            ],
-            Premium: [
-              { count: 50, price: 50.9, extraDefaults: { Impressions: 100, Reach: 100, Saves: 20 } },
-              { count: 100, price: 86.9, extraDefaults: { Impressions: 250, Reach: 250, Saves: 50 } },
-              { count: 250, price: 129.0, extraDefaults: { Impressions: 500, Reach: 500, Saves: 75 } },
-              { count: 500, price: 199.0, extraDefaults: { Impressions: 750, Reach: 750, Saves: 100 } },
-              { count: 750, price: 249.0, extraDefaults: { Impressions: 1000, Reach: 1000, Saves: 200 } },
-              { count: 1000, price: 329.0, extraDefaults: { Impressions: 2000, Reach: 2000, Saves: 300 } },
-              { count: 2000, price: 619.0, extraDefaults: { Impressions: 3000, Reach: 3000, Saves: 500 } },
-              { count: 3000, price: 789.0, extraDefaults: { Impressions: 5000, Reach: 5000, Saves: 750 } },
-              { count: 5000, price: 1190.0, extraDefaults: { Impressions: 10000, Reach: 10000, Saves: 1000 } },
-              { count: 10000, price: 2090.0, extraDefaults: { Impressions: 10000, Reach: 10000, Saves: 2000 } }
-            ]
-          },
-          Reach: [
-            { count: 1000, price: 13.9 }, { count: 2000, price: 23.9 }, { count: 5000, price: 38.9 },
-            { count: 10000, price: 74.9 }, { count: 20000, price: 119.0 }, { count: 50000, price: 239.0 },
-            { count: 100000, price: 399.0 }, { count: 200000, price: 639.0 }, { count: 500000, price: 1190.0 }
-          ],
-          Impressions: [
-             { count: 1000, price: 13.9 }, { count: 2000, price: 23.9 }, { count: 5000, price: 38.9 },
-             { count: 10000, price: 74.9 }, { count: 20000, price: 119.0 }, { count: 50000, price: 239.0 },
-             { count: 100000, price: 399.0 }, { count: 200000, price: 639.0 }, { count: 500000, price: 1190.0 }
-          ],
-          Saves: [
-             { count: 100, price: 3.6 }, { count: 200, price: 6.0 }, { count: 500, price: 11.9 },
-             { count: 1000, price: 21.9 }, { count: 2000, price: 38.9 }, { count: 5000, price: 78.9 },
-             { count: 10000, price: 119.0 }, { count: 20000, price: 199.0 }, { count: 50000, price: 399.0 }
-          ]
-        };
+        
 
         // --- 2. CONFIG & STATE ---
         const CONFIG = {
@@ -1861,6 +1798,8 @@
 
       })();
     </script>
-    <script src="../assets/js/packages.js"></script>
-  </body>
+    
+  <script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
+</body>
 </html>

@@ -131,7 +131,7 @@
                     </div>
                   </div>
                   <div>
-                    <button type="button" id="250TFOL" class="otherServiceCard__buy-btn" data-key="TFOL">Buy Now (7.50) $</button>
+                    <button type="button" id="250TFOL" class="otherServiceCard__buy-btn global-buy-now" data-key="TFOL">Buy Now (7.50) $</button>
                   </div>
                 </div>
               </div>
@@ -203,7 +203,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       id="250TLIK"
                       data-key="TLIK"
                       type="button">
@@ -278,7 +278,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       id="1000TVIE"
                       data-key="TVIE"
                       type="button">
@@ -353,7 +353,7 @@
                   </div>
                   <div>
                     <button
-                      class="otherServiceCard__buy-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       id="100TPOST"
                       data-key="TPOST"
                       type="button">
@@ -423,8 +423,8 @@
                     </div>
                   </div>
                   <div>
-                    <button
-                      class="otherServiceCard__buy-btn"
+                    <button id="services-buy-now-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       type="button"
                       data-key="TSHR">
                       Buy Now (3.60) zł
@@ -489,7 +489,7 @@
                     </div>
                   </div>
                   <div>
-                    <button type="button" class="otherServiceCard__buy-btn" data-key="REDMEM">Buy Now (19.90) $</button>
+                    <button id="services-buy-now-btn" type="button" class="otherServiceCard__buy-btn global-buy-now" data-key="REDMEM">Buy Now (19.90) $</button>
                   </div>
                 </div>
               </div>
@@ -545,8 +545,8 @@
                     </div>
                   </div>
                   <div>
-                    <button
-                      class="otherServiceCard__buy-btn"
+                    <button id="services-buy-now-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       type="button"
                       data-key="FBLIK">
                       Buy Now (3.60) zł
@@ -598,8 +598,8 @@
                     </div>
                   </div>
                   <div>
-                    <button
-                      class="otherServiceCard__buy-btn"
+                    <button id="services-buy-now-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       type="button"
                       data-key="FBFOL">
                       Buy Now (7.50) zł
@@ -653,8 +653,8 @@
                     </div>
                   </div>
                   <div>
-                    <button
-                      class="otherServiceCard__buy-btn"
+                    <button id="services-buy-now-btn"
+                      class="otherServiceCard__buy-btn global-buy-now"
                       type="button"
                       data-key="THFOL">
                       Buy Now (7.50) zł
@@ -794,7 +794,7 @@
         <div class="container">
           <div class="btn-control btn-control--flex btn-control--center">
             <div class="footer__account">
-              <button class="footer__sign-in">
+              <button id="services-footer-account-btn" class="footer__sign-in global-buy-now">
                 <span
                   class="lazy-load-image-background opacity lazy-load-image-loaded"
                   style="
@@ -809,7 +809,7 @@
                 </span>
                 <span> Account </span>
               </button>
-              <button class="footer__contact">
+              <button id="services-footer-contact-btn" class="footer__contact global-buy-now">
                 <span
                   class="lazy-load-image-background opacity lazy-load-image-loaded"
                   style="
@@ -939,78 +939,14 @@
       </template>
     </apple-pay-merchandising-modal>
 
-      <script
+      <script src="../assets/js/packages.js"></script>
+    <script
       src="../assets/js/site.js"
       defer></script>
 
 
-<script>
-  
 
-</script>
-<script>
-window.POPREY_PACKAGES = {
-  // TikTok Followers
-  "TFOL": [
-    {"qty":111, "price":7.51, "id":"100TFOL"},
-    {"qty":250, "price":7.50, "id":"250TFOL"},
-    {"qty":500, "price":12.90, "id":"500TFOL"},
-    {"qty":1000, "price":22.90, "id":"1000TFOL"},
-    {"qty":10002, "price":22.92, "id":"10002TFOL"}
-  ],
 
-  // TikTok Likes
-  "TLIK": [
-    {"qty":252, "price":3.60, "id":"250TLIK"},
-    {"qty":500, "price":5.90, "id":"500TLIK"},
-    {"qty":1000, "price":9.90, "id":"1000TLIK"}
-  ],
-
-  // TikTok Views
-  "TVIE": [
-    {"qty":500, "price":3.60, "id":"500TVIE"},
-    {"qty":1000, "price":5.90, "id":"1000TVIE"},
-    {"qty":2500, "price":12.90, "id":"2500TVIE"}
-  ],
-
-  // TikTok Saves (Post Likes)
-  "TPOST": [
-    {"qty":250, "price":3.60, "id":"250TPOST"},
-    {"qty":500, "price":5.90, "id":"500TPOST"},
-    {"qty":1000, "price":9.90, "id":"1000TPOST"}
-  ],
-
-  // TikTok Shares
-  "TSHR": [
-    {"qty":500, "price":3.60, "id":"500TSHR"},
-    {"qty":1000, "price":5.90, "id":"1000TSHR"}
-  ],
-
-  // Reddit Community Members
-  "REDMEM": [
-    {"qty":250, "price":19.90, "id":"250REDMEM"},
-    {"qty":500, "price":34.90, "id":"500REDMEM"}
-  ],
-
-  // Facebook Post Likes
-  "FBLIK": [
-    {"qty":100, "price":3.60, "id":"100FBLIK"},
-    {"qty":250, "price":7.90, "id":"250FBLIK"}
-  ],
-
-  // Facebook Page Followers
-  "FBFOL": [
-    {"qty":100, "price":7.50, "id":"100FBFOL"},
-    {"qty":250, "price":16.90, "id":"250FBFOL"}
-  ],
-
-  // Instagram Threads Followers
-  "THFOL": [
-    {"qty":100, "price":7.50, "id":"100THFOL"},
-    {"qty":250, "price":16.90, "id":"250THFOL"}
-  ]
-};
-</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // 1. FILTERING LOGIC
@@ -1144,6 +1080,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-    <script src="../assets/js/packages.js"></script>
-  </body>
+    
+  <script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
+</body>
 </html>

@@ -1344,9 +1344,8 @@
                     </div>
                     <div class="trial__text">
                       <div class="trial__text-cost">0 Cost</div>
-                      <button
-                        class="trial__buy"
-                        disabled>
+                      <button id="buy-youtube-views-buy-now-btn"
+                        class="trial__buy global-buy-now">
                         Buy Now
                       </button>
                     </div>
@@ -1563,6 +1562,7 @@
       // buy-youtube-views.html implements its own trial controls.
       window.SKIP_GLOBAL_TRIAL = true;
     </script>
+    <script src="../assets/js/packages.js"></script>
     <script
       src="../assets/js/site.js"
       defer></script>
@@ -1756,32 +1756,9 @@
         }
       });
     </script>
-    <script>
-      window.POPREY_PACKAGES = {
-        // YouTube Views (Main Cards)
-        "YVIE": [
-          { qty: 211, price: 1.0, id: "250VIE" },
-          { qty: 500, price: 11.90, id: "500VIE" },
-          { qty: 1000, price: 19.90, id: "1000VIE" },
-          { qty: 2000, price: 34.90, id: "2000VIE" },
-          { qty: 3000, price: 58.90, id: "3000VIE" },
-          { qty: 5000, price: 78.90, id: "5000VIE" },
-          { qty: 7500, price: 119.00, id: "7500VIE" },
-          { qty: 10000, price: 159.00, id: "10000VIE" }
-        ],
-        // YouTube Likes (Calculator - active-block_like)
-        "YLIK": [
-          { qty: 11, price: 1.1 },
-          { qty: 100, price: 3.40 },
-          { qty: 250, price: 6.90 },
-          { qty: 500, price: 11.90 },
-          { qty: 1000, price: 21.90 },
-          { qty: 2500, price: 49.90 },
-          { qty: 5000, price: 95.90 },
-          { qty: 10000, price: 179.90 }
-        ]
-      };
-    </script>
-    <script src="../assets/js/packages.js"></script>
-  </body>
+    
+    
+  <script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
+</body>
 </html>

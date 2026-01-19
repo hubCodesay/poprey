@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-  <!--  -->
-
-  <!--  -->
   <link href="buy-instagram-followers.html" hreflang="en" rel="alternate" />
   <link href="buy-instagram-followers.html" hreflang="x-default" rel="alternate" />
   <meta content="width=device-width" name="viewport" />
@@ -1388,19 +1384,17 @@
                     </div>
                   </div>
                   <div class="trial__text">
-                    <a href="free-ig-followers.html" id="0LIK">
-                      <div class="trial__text-likes">
+                    <div class="trial__text-likes">
                         Free Trial
                         <!-- -->
                         10
                         <!-- -->
                         Followers
                       </div>
-                    </a>
                     <div class="trial__text-cost">
                       $0.00 Cost
                     </div>
-                    <button class="trial__buy" disabled="">
+                    <button id="buy-instagram-followers-buy-now-btn" class="trial__buy global-buy-now">
                       Buy Now
                     </button>
                   </div>
@@ -1456,11 +1450,12 @@
   </section>
   </main>
   <div id="footer-container"></div>
-  <script src="assets/js/components.js"></script>
+  <script src="assets/js/packages.js"></script>
+    <script src="assets/js/components.js"></script>
   <script src="assets/js/storage.js"></script>
 
   </div>
-  <script src="assets/js/packages.js"></script>
+  
   <script>
     // Disable site.js global trial logic
     window.SKIP_GLOBAL_TRIAL = true;
@@ -1487,164 +1482,156 @@
       }
 
       // --- Guarantee Logic ---
-      function setupGuarantee() {
-        var block30 = document.querySelector("#guarantee-fixed-30");
-        var block60 = document.querySelector("#guarantee-fixed-60");
-        var blockCustom = document.querySelector("#guarantee-custom");
-        var periodText = document.querySelector(".trial__period-text");
+      
+        // --- Guarantee Logic ---
+        function setupGuarantee() {
+            var block30 = document.querySelector("#guarantee-fixed-30");
+            var block60 = document.querySelector("#guarantee-fixed-60");
+            var blockCustom = document.querySelector("#guarantee-custom");
+            var periodText = document.querySelector(".trial__period-text");
+            
+            // Custom Options
+            var customOptions = [90, 180, 360];
+            var customIndex = 2; // Default to 90
 
-        // Custom Options
-        var customOptions = [90, 180, 360];
-        var customIndex = 0; // Default to 90
-
-        // Reset Selection
-        function resetSelection() {
-          document.querySelectorAll(".trial__count-guarantee, .trial__count-guarantee-disabled").forEach(el => {
-            el.classList.remove("trial__count-guarantee-active");
-            // Also ensure we don't have conflicting border styles from previous manual sets
-            el.style.borderColor = "";
-          });
-        }
-
-        // Update Price & UI Function
-        function selectGuarantee(days, blockElement) {
-          // Find price for days
-          var option = currentPackageGuaranteeList.find(g => g.days === days);
-          if (option) {
-            currentGuaranteePrice = option.price;
-            updateTotalCost();
-
-            // Visual Active State
-            if (blockElement) {
-              blockElement.classList.add("trial__count-guarantee-active");
+            // Reset Selection
+            function resetSelection() {
+                [block30, block60, blockCustom].forEach(el => {
+                    if (el) {
+                        el.classList.remove("trial__count-guarantee-active");
+                        el.style.borderColor = ""; 
+                    }
+                });
             }
 
-            // Update Period Text
-            if (periodText) {
-              periodText.textContent = "Within " + days + " days period we will refill any number of followers that might leave you";
+            // Check if specific day option exists in current package
+            function getOption(days) {
+                return currentPackageGuaranteeList.find(g => g.days === days);
             }
 
-            return true;
-          }
-          return false;
-        }
-
-        // Handler for static blocks
-        function attachHandler(block, days) {
-          if (!block) return;
-          block.addEventListener("click", function () {
-            if (currentPackageGuaranteeList.length === 0) return;
-
-            resetSelection();
-            selectGuarantee(days, block);
-          });
-        }
-
-        attachHandler(block30, 30);
-        attachHandler(block60, 60);
-
-        // Check if specific day option exists in current package
-        function isOptionAvailable(days) {
-          return currentPackageGuaranteeList.some(g => g.days === days);
-        }
-
-        // Helper to update Custom Block Appearance (Text & Availability)
-        function updateCustomBlockDisplay() {
-          var days = customOptions[customIndex];
-          var textDesktop = blockCustom.querySelector(".trial__count-text-desktop");
-          var textMobile = blockCustom.querySelector(".trial__count-text-mobile");
-
-          // Update Text: "90 Days"
-          // Structure: 90 <!-- --> <!-- --> Days
-          if (textDesktop) textDesktop.innerHTML = days + " <!-- --> <!-- --> Days";
-          if (textMobile) textMobile.innerHTML = days + " <!-- --> <!-- --> Days Guarantee"; // Mobile has "Guarantee" in text
-
-          // Note: We don't auto-select here unless it was already selected.
-          // If the block is currently active (has class), we re-trigger selectGuarantee logic to update price/text
-          if (blockCustom.classList.contains("trial__count-guarantee-active")) {
-            selectGuarantee(days, blockCustom);
-          }
-        }
-
-        if (blockCustom) {
-          var minus = blockCustom.querySelector(".trial__cirkul-minus");
-          // Plus is the last trial__cirkul
-          var circuls = blockCustom.querySelectorAll(".trial__cirkul");
-          var plus = circuls[circuls.length - 1];
-
-          blockCustom.addEventListener("click", function (e) {
-            // If clicking the container (not buttons), select it
-            if (!e.target.closest(".trial__cirkul")) {
-              if (currentPackageGuaranteeList.length === 0) return;
-
-              // Check if current custom option is available in package?
-              // Assuming all packages support 90/180/360 if they have guarantee layout.
-              // But strictly we should check:
-              var days = customOptions[customIndex];
-              if (!isOptionAvailable(days)) return; // Should visually disable if not available?
-
-              resetSelection();
-              selectGuarantee(days, blockCustom);
+            // Update Price & UI Function
+            function selectGuarantee(days, blockElement) {
+                var option = getOption(days);
+                if (option) {
+                    currentGuaranteePrice = option.price;
+                    updateTotalCost();
+                    
+                    resetSelection();
+                    if (blockElement) {
+                        blockElement.classList.add("trial__count-guarantee-active");
+                    }
+                    
+                    // Update Period Text
+                    if (periodText) {
+                        periodText.textContent = "Within " + days + " days period we will refill any number of followers that might leave you";
+                    }
+                    return true;
+                }
+                return false;
             }
-          });
+            
+            // Handler for static blocks
+            function attachHandler(block, days) {
+                if(!block) return;
+                block.addEventListener("click", function() {
+                    selectGuarantee(days, block);
+                });
+            }
+            
+            attachHandler(block30, 30);
+            attachHandler(block60, 60);
+            
+            // Helper to update Custom Block Appearance (Text & Availability)
+            function updateCustomBlockDisplay() {
+                if (!blockCustom) return;
+                var days = customOptions[customIndex];
+                var textDesktop = blockCustom.querySelector(".trial__count-text-desktop");
+                var textMobile = blockCustom.querySelector(".trial__count-text-mobile");
+                
+                if (textDesktop) textDesktop.innerHTML = days + " <!-- --> <!-- --> Days";
+                if (textMobile) textMobile.innerHTML = days + " <!-- --> <!-- --> Days Guarantee";
+                
+                if (blockCustom.classList.contains("trial__count-guarantee-active")) {
+                    selectGuarantee(days, blockCustom);
+                }
+            }
 
-          // Plus / Minus Logic
-          if (minus) {
-            minus.addEventListener("click", function (e) {
-              e.stopPropagation();
-              // Cycle down
-              if (customIndex > 0) {
-                customIndex--;
-                updateCustomBlockDisplay();
-              }
-            });
-          }
+            if (blockCustom) {
+                var circuls = blockCustom.querySelectorAll(".trial__cirkul");
+                var minus = blockCustom.querySelector(".trial__cirkul-minus");
+                var plus = circuls[circuls.length - 1]; 
 
-          if (plus) {
-            plus.addEventListener("click", function (e) {
-              e.stopPropagation();
-              // Cycle up
-              if (customIndex < customOptions.length - 1) {
-                customIndex++;
-                updateCustomBlockDisplay();
-              }
-            });
-          }
+                blockCustom.addEventListener("click", function(e) {
+                    if (!e.target.closest(".trial__cirkul")) {
+                        var days = customOptions[customIndex];
+                        selectGuarantee(days, blockCustom);
+                    }
+                });
+
+                if (minus) {
+                    minus.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        if(customIndex > 0) {
+                            customIndex--;
+                            updateCustomBlockDisplay();
+                        }
+                    });
+                }
+                
+                if (plus) {
+                    plus.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        if (customIndex < customOptions.length - 1) {
+                            customIndex++;
+                            updateCustomBlockDisplay();
+                        }
+                    });
+                }
+            }
+            
+            window.updateGuaranteeAvailability = function(pkg) {
+                currentPackageGuaranteeList = pkg.guarantee || [];
+                currentGuaranteePrice = 0.00;
+                resetSelection();
+                
+                if (periodText) {
+                    periodText.textContent = "Please choose the guarantee to be refilled with any number of followers in case of an Instagram update.";
+                }
+                
+                function toggleBlock(block, days) {
+                    if (!block) return;
+                    var available = currentPackageGuaranteeList.some(g => g.days === days);
+                    if (available) {
+                        block.classList.remove("trial__count-guarantee-disabled");
+                        block.style.opacity = "1";
+                        block.style.pointerEvents = "auto";
+                    } else {
+                        block.classList.add("trial__count-guarantee-disabled");
+                        block.style.opacity = "0.5";
+                        block.style.pointerEvents = "none";
+                    }
+                }
+
+                toggleBlock(block30, 30);
+                toggleBlock(block60, 60);
+                
+                var customAvailable = customOptions.some(d => currentPackageGuaranteeList.some(g => g.days === d));
+                if (blockCustom) {
+                    if (customAvailable) {
+                        blockCustom.classList.remove("trial__count-guarantee-disabled");
+                        blockCustom.style.opacity = "1";
+                        blockCustom.style.pointerEvents = "auto";
+                    } else {
+                        blockCustom.classList.add("trial__count-guarantee-disabled");
+                        blockCustom.style.opacity = "0.5";
+                        blockCustom.style.pointerEvents = "none";
+                    }
+                }
+                updateTotalCost();
+            };
         }
 
-        window.updateGuaranteeAvailability = function (pkg) {
-          currentPackageGuaranteeList = pkg.guarantee || [];
-          currentGuaranteePrice = 0.00;
-          resetSelection();
-
-          // Reset Text
-          if (periodText) {
-            periodText.textContent = "Please choose the guarantee to be refilled with any number of followers in case of an Instagram update.";
-          }
-
-          var enabled = currentPackageGuaranteeList.length > 0;
-
-          [block30, block60, blockCustom].forEach(el => {
-            if (el) {
-              // Use CSS classes if possible, but inline styles for simple toggle
-              if (enabled) {
-                el.classList.remove("trial__count-guarantee-disabled");
-                el.classList.add("trial__count-guarantee"); // Assuming this is the enabled base class
-                el.style.opacity = "1";
-                el.style.pointerEvents = "auto";
-              } else {
-                el.classList.add("trial__count-guarantee-disabled");
-                el.classList.remove("trial__count-guarantee");
-                el.style.opacity = "0.5";
-                el.style.pointerEvents = "none";
-              }
-            }
-          });
-          updateTotalCost();
-        };
-      }
-
-      setupGuarantee();
+setupGuarantee();
 
       // --- 1. Tab Switching ---
       function showTab(type) {
@@ -1872,6 +1859,8 @@
       }
     });
   </script>
+<script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
 </body>
 
 </html>

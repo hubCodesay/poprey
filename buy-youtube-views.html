@@ -1164,7 +1164,7 @@
                   </div>
                   <div class="trial__text">
                     <div class="trial__text-cost">0 Cost</div>
-                    <button class="trial__buy" disabled>
+                    <button id="buy-youtube-views-buy-now-btn" class="trial__buy global-buy-now">
                       Buy Now
                     </button>
                   </div>
@@ -1352,12 +1352,16 @@
     // Prevent the global trial initializer from running on this page.
     window.SKIP_GLOBAL_TRIAL = true;
   </script>
-  <script src="assets/js/site.js" defer></script>
+  
+    <script src="assets/js/packages.js"></script>
+    <script src="assets/js/site.js" defer></script>
   <script>
     // Prevent the global trial initializer from running on this page.
     window.SKIP_GLOBAL_TRIAL = true;
   </script>
-  <script src="assets/js/site.js" defer></script>
+  
+    <script src="assets/js/packages.js"></script>
+    <script src="assets/js/site.js" defer></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       console.log("YouTube Views: Using Embedded Data", DATA);
@@ -1633,6 +1637,8 @@
       ]
     };
   </script>
+<script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
 </body>
 
 </html>

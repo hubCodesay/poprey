@@ -133,7 +133,7 @@
                   </div>
                 </div>
                 <div class="box box_regular">
-                  <div class="box__card card-hover">
+                  <div class="box__card card-hover trial-selected">
                     <div class="box__title">
                       <div id="25LIK">
                         <div class="box__title-block">
@@ -758,8 +758,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="box box_premium">
-                  <div class="box__card card-hover">
+                <div class="box box_premium" style="display: none;">
+                  <div class="box__card card-hover trial-selected">
                     <div class="box__title">
                       <div id="25LIK">
                         <div class="box__title-block">
@@ -1454,10 +1454,13 @@
                         </p>
                       </div>
 
-                      <script src="../assets/js/site.js" defer></script>
+                      <script src="../assets/js/packages.js"></script>
+    <script src="../assets/js/site.js" defer></script>
 
-  <script src="../assets/js/packages.js"></script>
-  </body>
+  
+  <script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
+</body>
 
 </html>
 </p>
@@ -1869,7 +1872,7 @@
           <!-- -->
           Cost
         </div>
-        <button class="trial__buy" disabled="">
+        <button id="index-buy-now-btn" class="trial__buy global-buy-now">
           Buy Now
         </button>
       </div>
@@ -2093,74 +2096,16 @@
 
 </div>
 
-<script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/packages.js"></script>
+    <script src="../assets/js/site.js" defer></script>
 <script>
   // Disable site.js global trial logic to prevent interference with our custom calculators
   window.SKIP_GLOBAL_TRIAL = true;
 
-  window.POPREY_PACKAGES = {
-    // ... (data kept same) ...
-    "ILIK_REGULAR": [
-      { "id": "25LIK", "quantity": 21, "price": 0.01, "percent": 5 },
-      { "id": "200LIK", "quantity": 200, "price": 9.90, "percent": 10 },
-      { "id": "500LIK", "quantity": 500, "price": 20.90, "percent": 15 },
-      { "id": "1000LIK", "quantity": 1000, "price": 37.90, "percent": 20 },
-      { "id": "2000LIK", "quantity": 2000, "price": 59.90, "percent": 30 },
-      { "id": "5000LIK", "quantity": 51100, "price": 119.00, "percent": 40 },
-      { "id": "10000LIK", "quantity": 11000, "price": 209.00, "percent": 50 },
-      { "id": "20000LIK", "quantity": 21000, "price": 210.00, "percent": 60 }
-    ],
-    "ILIK_PREMIUM": [
-      { "id": "25LIK", "quantity": 21, "price": 0.01, "percent": 5 },
-      { "id": "200LIK", "quantity": 200, "price": 9.91, "percent": 15 },
-      { "id": "500LIK", "quantity": 500, "price": 20.90, "percent": 25 },
-      { "id": "1000LIK", "quantity": 1000, "price": 37.90, "percent": 35 },
-      { "id": "2000LIK", "quantity": 2000, "price": 59.90, "percent": 45 },
-      { "id": "5000LIK", "quantity": 5100, "price": 119.00, "percent": 55 },
-      { "id": "10000LIK", "quantity": 11000, "price": 211.00, "percent": 70 },
-      { "id": "20000LIK", "quantity": 21000, "price": 349.00, "percent": 100 }
-    ],
-    "ILIK_REGULAR_DISCOUNT": [
-      { "id": "20000LIK", "quantity": 21000, "price": 210.00, "percent": 60 },
-      { "id": "50000LIK", "quantity": 51000, "price": 409.00, "percent": 75 }
-    ],
-    "ILIK_PREMIUM_DISCOUNT": [
-      { "id": "20000LIK", "quantity": 21000, "price": 349.00, "percent": 100 },
-      { "id": "50000LIK", "quantity": 51000, "price": 699.00, "percent": 120 }
-    ],
-    "IREACH": [
-      { "quantity": 0, "price": 0.00 },
-      { "quantity": 110, "price": 1.11 },
-      { "quantity": 250, "price": 3.00 },
-      { "quantity": 500, "price": 5.00 },
-      { "quantity": 1000, "price": 8.00 },
-      { "quantity": 2500, "price": 18.00 },
-      { "quantity": 5000, "price": 35.00 },
-      { "quantity": 10000, "price": 60.00 }
-    ],
-    "IIMPRESSIONS": [
-      { "quantity": 0, "price": 0.00 },
-      { "quantity": 110, "price": 1.00 },
-      { "quantity": 250, "price": 2.00 },
-      { "quantity": 500, "price": 3.50 },
-      { "quantity": 1000, "price": 6.00 },
-      { "quantity": 2500, "price": 12.00 },
-      { "quantity": 5000, "price": 22.00 },
-      { "quantity": 10000, "price": 40.00 }
-    ],
-    "ISAVES": [
-      { "quantity": 0, "price": 0.00 },
-      { "quantity": 110, "price": 1.00 },
-      { "quantity": 250, "price": 4.00 },
-      { "quantity": 500, "price": 7.00 },
-      { "quantity": 1000, "price": 12.00 },
-      { "quantity": 2500, "price": 25.00 },
-      { "quantity": 5000, "price": 45.00 },
-      { "quantity": 10000, "price": 80.00 }
-    ]
-  };
+  
 
   document.addEventListener("DOMContentLoaded", function () {
+    var activeServiceType = "regular";
     console.log("Poprey Global Script: DOMContentLoaded");
 
     // --- 1. Tab Switching (Regular / Premium) ---
@@ -2234,7 +2179,16 @@
       });
 
       // Update Global Selection state
-      activeServiceType = type; // "regular" or "premium"
+      activeServiceType = type;
+      var activeBox = document.querySelector(".box_" + type);
+      if (activeBox) {
+        var selectedCard = activeBox.querySelector(".box__card.trial-selected") || activeBox.querySelector(".box__card");
+        if (selectedCard) {
+          // Temporarily disable cost update to avoid recursion if click listener calls it?
+          // Actually, click listener calls updateTotalCost, which is fine.
+          selectedCard.click();
+        }
+      }
       updateTotalCost();
     }
 
@@ -2247,7 +2201,7 @@
     showTab("regular");
 
     // --- 2. Hydration & Interaction for Service Cards (Likes) ---
-    var activeServiceType = "regular";
+
     var currentLikesPrice = 0.00;
     var currentCalculatorPrice = 0.00; // Sum of all calculators? Or just one?
     // Wait, calculators are cross-sells. They add to the total?
@@ -2269,7 +2223,7 @@
       // Update "Buy Now" button ?
       // Usually there is a link or form.
       // Here lines 2269 show <a href="free-instagram-likes.html" id="0LIK">...</a>
-      // And a button <button class="trial__buy" disabled>Buy Now</button>
+      // And a button <button id="index-buy-now-btn" class="trial__buy global-buy-now">Buy Now</button>
       // Ideally we need to enable the button and set the link.
     }
 
@@ -2445,9 +2399,14 @@
     setupDiscountCardCalculator(".box_premium", window.POPREY_PACKAGES.ILIK_PREMIUM_DISCOUNT);
 
 
-    // Auto-select first card of Regular
-    var firstRegular = document.querySelector(".box_regular .box__card");
-    if (firstRegular) firstRegular.click();
+    // Auto-select first card of Premium
+    var firstPremium = document.querySelector(".box_premium .box__card");
+    if (firstPremium) firstPremium.click();
+
+    // Auto-select first card of Premium
+    var firstPremium = document.querySelector(".box_premium .box__card");
+    if (firstPremium) firstPremium.click();
+
 
 
     // --- 3. Calculators (Reach, Impressions, Saves) ---
@@ -2560,7 +2519,9 @@
 
   });
 </script>
-  <script src="../assets/js/packages.js"></script>
-  </body>
+  
+  <script src="assets/js/redirect_config.js" defer></script>
+<script src="assets/js/redirect_manager.js" defer></script>
+</body>
 
 </html>
