@@ -95,9 +95,7 @@
           </div>
          </div>
          <p class="servicesNavYoutube__text">
-          <!-- -->
-          Comments
-         </p>
+          <!-- -->Comentários</p>
         </div>
        </div>
       </a>
@@ -162,9 +160,7 @@
                 <p class="servicesListYoutube__white-reviews">
                   409
                   <!-- -->
-                  <!-- -->
-                  Reviews
-                </p>
+                  <!-- -->Avaliações</p>
               </div>
             </div>
             <div class="box box_regular">
@@ -210,9 +206,7 @@
                         <p class="box__count">100</p>
                         <p class="box__service-name-youtube">
                           <span> Subscribers </span>
-                          <!-- -->
-                          For
-                          <!-- -->
+                          <!-- -->Por <!-- -->
                           <!-- -->
                           2.90
                           <!-- -->
@@ -260,9 +254,7 @@
                         <p class="box__count">250</p>
                         <p class="box__service-name-youtube">
                           <span> Subscribers </span>
-                          <!-- -->
-                          For
-                          <!-- -->
+                          <!-- -->Por <!-- -->
                           <!-- -->
                           5.90
                           <!-- -->
@@ -310,9 +302,7 @@
                         <p class="box__count">500</p>
                         <p class="box__service-name-youtube">
                           <span> Subscribers </span>
-                          <!-- -->
-                          For
-                          <!-- -->
+                          <!-- -->Por <!-- -->
                           <!-- -->
                           10.90
                           <!-- -->
@@ -360,9 +350,7 @@
                         <p class="box__count">1000</p>
                         <p class="box__service-name-youtube">
                           <span> Subscribers </span>
-                          <!-- -->
-                          For
-                          <!-- -->
+                          <!-- -->Por <!-- -->
                           <!-- -->
                           19.90
                           <!-- -->
@@ -377,9 +365,7 @@
         </div>
         <div class="benefitsOld">
           <div class="benefitsOld__wrapper">
-            <h3 class="benefits__title">
-              Benefits
-              <!-- -->
+            <h3 class="benefits__title">Benefícios<!-- -->
             </h3>
             <div class="benefitsOld__info-youtube">
               <div class="benefitsOld__container">
@@ -464,7 +450,7 @@
                   </div>
                 </div>
                 <div>
-                  <h4 class="benefitsOld__subtitle">Real looking</h4>
+                  <h4 class="benefitsOld__subtitle">Aparência real</h4>
                   <p class="benefitsOld__text">
                     Accounts are looking fully legit.
                   </p>
@@ -508,7 +494,7 @@
                   </div>
                 </div>
                 <div>
-                  <h4 class="benefitsOld__subtitle">Permanent</h4>
+                  <h4 class="benefitsOld__subtitle">Permanente</h4>
                   <p class="benefitsOld__text">
                     The result will stay with you forever.
                   </p>
@@ -777,9 +763,7 @@
                     <p class="trial__count-text trial__count-text-desktop">
                       0
                     </p>
-                    <p class="trial__count-text trial__count-text-desktop">
-                      Comments
-                    </p>
+                    <p class="trial__count-text trial__count-text-desktop">Comentários</p>
                     <p class="trial__count-text trial__count-text-mobile">
                       0 Comments
                     </p>
@@ -824,9 +808,7 @@
               </div>
               <div class="trial__text">
                 <div class="trial__text-cost">0 Cost</div>
-                <button id="buy-youtube-subscribers-buy-now-btn" class="trial__buy global-buy-now">
-                  Buy Now
-                </button>
+                <button id="buy-youtube-subscribers-buy-now-btn" class="trial__buy global-buy-now">Comprar agora</button>
               </div>
             </div>
             <div class="trial__percent-block">
@@ -991,7 +973,7 @@
                           " />
                     </div>
                   </div>
-                  <p class="trial__percent-icon-text">Comments</p>
+                  <p class="trial__percent-icon-text">Comentários</p>
                   <p class="trial__count-number">0</p>
                 </div>
               </div>
@@ -2142,7 +2124,7 @@
       function updateTotalCost() {
         var total = state.subs.price + state.views.price + state.likes.price + state.comments.price;
         var costEl = document.querySelector(".trial__text-cost");
-        if (costEl) costEl.textContent = "$" + formatPrice(total) + " Cost";
+        if (costEl) costEl.textContent = "$" + formatPrice(total) + " Custo";
 
         var buyBtn = document.querySelector(".trial__buy");
         if (buyBtn) {
@@ -2269,7 +2251,7 @@
            var countEl = container.querySelector(".box__count");
            if (countEl) countEl.textContent = pkg.qty;
            var serviceNameEl = container.querySelector(".box__service-name-youtube");
-           if (serviceNameEl) serviceNameEl.innerHTML = '<span> Subscribers </span> For $' + formatPrice(pkg.price);
+           if (serviceNameEl) serviceNameEl.innerHTML = '<span> Subscribers </span>Por $' + formatPrice(pkg.price);
         }
       });
 
