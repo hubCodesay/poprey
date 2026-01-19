@@ -29,9 +29,9 @@
     },
     de: {
       account: 'Konto',
-      likes: 'Likes',
+      likes: 'Mögen',
       followers: 'Anhänger',
-      autoLikes: 'Auto-Likes',
+      autoLikes: 'Auto-Mögen',
       views: 'Ansichten',
       comments: 'Kommentare',
       us: 'Uns',
