@@ -4,7 +4,7 @@
  */
 
 (function () {
-  'use strict';
+  "use strict";
 
   // =====================================================
   // CONFIGURATION
@@ -12,133 +12,133 @@
 
   const TRANSLATIONS = {
     en: {
-      account: 'Account',
-      likes: 'Likes',
-      followers: 'Followers',
-      autoLikes: 'Auto-Likes',
-      views: 'Views',
-      comments: 'Comments',
-      us: 'Us',
-      rules: 'Rules',
-      help: 'Help',
-      termsOfService: 'Terms of service',
-      blog: 'Blog',
-      faq: 'FAQ',
-      contact: 'Contact',
-      contactInfo: 'Contact Information'
+      account: "Account",
+      likes: "Likes",
+      followers: "Followers",
+      autoLikes: "Auto-Likes",
+      views: "Views",
+      comments: "Comments",
+      us: "Us",
+      rules: "Rules",
+      help: "Help",
+      termsOfService: "Terms of service",
+      blog: "Blog",
+      faq: "FAQ",
+      contact: "Contact",
+      contactInfo: "Contact Information",
     },
     de: {
-      account: 'Konto',
-      likes: 'Mögen',
-      followers: 'Anhänger',
-      autoLikes: 'Auto-Mögen',
-      views: 'Ansichten',
-      comments: 'Kommentare',
-      us: 'Uns',
-      rules: 'Regeln',
-      help: 'Hilfe',
-      termsOfService: 'Nutzungsbedingungen',
-      blog: 'Blog',
-      faq: 'FAQ',
-      contact: 'Kontakt',
-      contactInfo: 'Kontaktinformationen'
+      account: "Konto",
+      likes: "Mögen",
+      followers: "Anhänger",
+      autoLikes: "Auto-Mögen",
+      views: "Ansichten",
+      comments: "Kommentare",
+      us: "Uns",
+      rules: "Regeln",
+      help: "Hilfe",
+      termsOfService: "Nutzungsbedingungen",
+      blog: "Blog",
+      faq: "FAQ",
+      contact: "Kontakt",
+      contactInfo: "Kontaktinformationen",
     },
     es: {
-      account: 'Cuenta',
-      likes: 'Likes',
-      followers: 'Seguidores',
-      autoLikes: 'Auto-Likes',
-      views: 'Vistas',
-      comments: 'Comentarios',
-      us: 'Nosotros',
-      rules: 'Reglas',
-      help: 'Ayuda',
-      termsOfService: 'Términos de servicio',
-      blog: 'Blog',
-      faq: 'FAQ',
-      contact: 'Contacto',
-      contactInfo: 'Información de contacto'
+      account: "Cuenta",
+      likes: "Gustos",
+      followers: "Seguidores",
+      autoLikes: "Gustos Automáticos",
+      views: "Vistas",
+      comments: "Comentarios",
+      us: "Nosotros",
+      rules: "Reglas",
+      help: "Ayuda",
+      termsOfService: "Términos de servicio",
+      blog: "Blog",
+      faq: "FAQ",
+      contact: "Contacto",
+      contactInfo: "Información de contacto",
     },
     fr: {
-      account: 'Compte',
-      likes: 'Likes',
-      followers: 'Abonnés',
-      autoLikes: 'Auto-Likes',
-      views: 'Vues',
-      comments: 'Commentaires',
-      us: 'Nous',
-      rules: 'Règles',
-      help: 'Aide',
-      termsOfService: 'Conditions d\'utilisation',
-      blog: 'Blog',
-      faq: 'FAQ',
-      contact: 'Contact',
-      contactInfo: 'Informations de contact'
+      account: "Compte",
+      likes: "Likes",
+      followers: "Abonnés",
+      autoLikes: "Auto-Likes",
+      views: "Vues",
+      comments: "Commentaires",
+      us: "Nous",
+      rules: "Règles",
+      help: "Aide",
+      termsOfService: "Conditions d'utilisation",
+      blog: "Blog",
+      faq: "FAQ",
+      contact: "Contact",
+      contactInfo: "Informations de contact",
     },
     it: {
-      account: 'Account',
-      likes: 'Likes',
-      followers: 'Seguaci',
-      autoLikes: 'Auto-Likes',
-      views: 'Visualizzazioni',
-      comments: 'Commenti',
-      us: 'Noi',
-      rules: 'Regole',
-      help: 'Aiuto',
-      termsOfService: 'Termini di servizio',
-      blog: 'Blog',
-      faq: 'FAQ',
-      contact: 'Contatto',
-      contactInfo: 'Informazioni di contatto'
+      account: "Account",
+      likes: "Likes",
+      followers: "Seguaci",
+      autoLikes: "Auto-Likes",
+      views: "Visualizzazioni",
+      comments: "Commenti",
+      us: "Noi",
+      rules: "Regole",
+      help: "Aiuto",
+      termsOfService: "Termini di servizio",
+      blog: "Blog",
+      faq: "FAQ",
+      contact: "Contatto",
+      contactInfo: "Informazioni di contatto",
     },
     pt: {
-      account: 'Conta',
-      likes: 'Likes',
-      followers: 'Seguidores',
-      autoLikes: 'Auto-Likes',
-      views: 'Visualizações',
-      comments: 'Comentários',
-      us: 'Nós',
-      rules: 'Regras',
-      help: 'Ajuda',
-      termsOfService: 'Termos de serviço',
-      blog: 'Blog',
-      faq: 'FAQ',
-      contact: 'Contato',
-      contactInfo: 'Informações de contato'
+      account: "Conta",
+      likes: "Likes",
+      followers: "Seguidores",
+      autoLikes: "Auto-Likes",
+      views: "Visualizações",
+      comments: "Comentários",
+      us: "Nós",
+      rules: "Regras",
+      help: "Ajuda",
+      termsOfService: "Termos de serviço",
+      blog: "Blog",
+      faq: "FAQ",
+      contact: "Contato",
+      contactInfo: "Informações de contato",
     },
     cs: {
-      account: 'Účet',
-      likes: 'Likes',
-      followers: 'Sledující',
-      autoLikes: 'Auto-Likes',
-      views: 'Zobrazení',
-      comments: 'Komentáře',
-      us: 'My',
-      rules: 'Pravidla',
-      help: 'Pomoc',
-      termsOfService: 'Podmínky služby',
-      blog: 'Blog',
-      faq: 'FAQ',
-      contact: 'Kontakt',
-      contactInfo: 'Kontaktní informace'
+      account: "Účet",
+      likes: "Likes",
+      followers: "Sledující",
+      autoLikes: "Auto-Likes",
+      views: "Zobrazení",
+      comments: "Komentáře",
+      us: "My",
+      rules: "Pravidla",
+      help: "Pomoc",
+      termsOfService: "Podmínky služby",
+      blog: "Blog",
+      faq: "FAQ",
+      contact: "Kontakt",
+      contactInfo: "Kontaktní informace",
     },
     ro: {
-      account: 'Cont',
-      likes: 'Likes',
-      followers: 'Urmăritori',
-      autoLikes: 'Auto-Likes',
-      views: 'Vizualizări',
-      comments: 'Comentarii',
-      us: 'Noi',
-      rules: 'Reguli',
-      help: 'Ajutor',
-      termsOfService: 'Termeni și condiții',
-      blog: 'Blog',
-      faq: 'FAQ',
-      contact: 'Contact',
-      contactInfo: 'Informații de contact'
-    }
+      account: "Cont",
+      likes: "Likes",
+      followers: "Urmăritori",
+      autoLikes: "Auto-Likes",
+      views: "Vizualizări",
+      comments: "Comentarii",
+      us: "Noi",
+      rules: "Reguli",
+      help: "Ajutor",
+      termsOfService: "Termeni și condiții",
+      blog: "Blog",
+      faq: "FAQ",
+      contact: "Contact",
+      contactInfo: "Informații de contact",
+    },
   };
 
   // =====================================================
@@ -147,46 +147,59 @@
 
   function getCurrentLang() {
     const path = window.location.pathname;
-    const langs = ['de', 'fr', 'es', 'it', 'pt', 'cs', 'ro'];
+    const langs = ["de", "fr", "es", "it", "pt", "cs", "ro"];
     for (const lang of langs) {
-      if (path.includes('/' + lang + '/')) return lang;
+      if (path.includes("/" + lang + "/")) return lang;
     }
-    return 'en';
+    return "en";
   }
 
   function getBasePath() {
     const lang = getCurrentLang();
-    return lang === 'en' ? '' : '../';
+    return lang === "en" ? "" : "../";
   }
 
   function getActivePage() {
     const path = window.location.pathname.toLowerCase();
-    if (path.includes('youtube')) return 'youtube';
-    if (path.includes('services') || path.includes('tiktok') || path.includes('facebook')) return 'services';
-    if (path.includes('monitoring') || path.includes('instamonitor')) return 'monitoring';
+    if (path.includes("youtube")) return "youtube";
+    if (
+      path.includes("services") ||
+      path.includes("tiktok") ||
+      path.includes("facebook")
+    )
+      return "services";
+    if (path.includes("monitoring") || path.includes("instamonitor"))
+      return "monitoring";
     // Default to instagram for all other pages (including index and specific ig services)
-    return 'instagram';
+    return "instagram";
   }
 
   function getActiveService() {
     const path = window.location.pathname.toLowerCase();
-    if (path.includes('index') || path === '/' || path.endsWith('/') || path.endsWith('/index.html')) return 'likes';
-    if (path.includes('followers')) return 'followers';
-    if (path.includes('automatic') || path.includes('auto-likes')) return 'auto-likes';
-    if (path.includes('views')) return 'views';
-    if (path.includes('comments')) return 'comments';
-    return 'likes';
+    if (
+      path.includes("index") ||
+      path === "/" ||
+      path.endsWith("/") ||
+      path.endsWith("/index.html")
+    )
+      return "likes";
+    if (path.includes("followers")) return "followers";
+    if (path.includes("automatic") || path.includes("auto-likes"))
+      return "auto-likes";
+    if (path.includes("views")) return "views";
+    if (path.includes("comments")) return "comments";
+    return "likes";
   }
 
   // Get current page filename (e.g., 'buy-youtube-views.html')
   function getCurrentPageFile() {
     const path = window.location.pathname;
     // Extract filename from path
-    const parts = path.split('/');
-    const filename = parts[parts.length - 1] || 'index.html';
+    const parts = path.split("/");
+    const filename = parts[parts.length - 1] || "index.html";
     // If empty or just language folder, return index.html
-    if (!filename || filename === '' || !filename.includes('.html')) {
-      return 'index.html';
+    if (!filename || filename === "" || !filename.includes(".html")) {
+      return "index.html";
     }
     return filename;
   }
@@ -205,16 +218,35 @@
     const activePage = getActivePage();
     const activeService = getActiveService();
 
-    const instaClass = activePage === 'instagram' ? 'header__active' : 'header__not-active-insta';
-    const youtubeClass = activePage === 'youtube' ? 'header__active-youtube' : 'header__not-active';
-    const servicesClass = activePage === 'services' ? 'header__active-other' : 'header__not-active-other';
-    const monitoringClass = activePage === 'monitoring' ? 'header__active-monitoring' : 'header__not-active-monitoring';
+    const instaClass =
+      activePage === "instagram"
+        ? "header__active"
+        : "header__not-active-insta";
+    const youtubeClass =
+      activePage === "youtube"
+        ? "header__active-youtube"
+        : "header__not-active";
+    const servicesClass =
+      activePage === "services"
+        ? "header__active-other"
+        : "header__not-active-other";
+    const monitoringClass =
+      activePage === "monitoring"
+        ? "header__active-monitoring"
+        : "header__not-active-monitoring";
 
-    const instaCircleClass = activePage === 'instagram' ? 'header__cirkul' : 'header__cirkul-color';
+    const instaCircleClass =
+      activePage === "instagram" ? "header__cirkul" : "header__cirkul-color";
     // YouTube circle: use header__cirkul for active white border, and header__cirkul-color for inactive gray border
-    const youtubeCircleClass = activePage === 'youtube' ? 'header__youtube header__cirkul' : 'header__youtube header__cirkul-color';
+    const youtubeCircleClass =
+      activePage === "youtube"
+        ? "header__youtube header__cirkul"
+        : "header__youtube header__cirkul-color";
     // Services group shouldn't use fixed-size header__cirkul classes as it contains two icons
-    const servicesCircleClass = activePage === 'services' ? 'header__cirkul-other' : 'header__cirkul-color-other';
+    const servicesCircleClass =
+      activePage === "services"
+        ? "header__cirkul-other"
+        : "header__cirkul-color-other";
 
     return `
     <header class="header">
@@ -229,27 +261,27 @@
                 <div class="${instaCircleClass}">
                   <div class="header__instagram-img" style="position: relative">
                     <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
-                      <img alt="Instagram" decoding="async" src="${basePath}assets/images/${activePage === 'instagram' ? 'inst_on.75d262156d28d609dbc3dabf75912486.svg' : 'inst_off.dc6a14cd8bed89058468a66d640f9a9e.svg'}" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
+                      <img alt="Instagram" decoding="async" src="${basePath}assets/images/${activePage === "instagram" ? "inst_on.75d262156d28d609dbc3dabf75912486.svg" : "inst_off.dc6a14cd8bed89058468a66d640f9a9e.svg"}" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
                     </div>
                   </div>
                 </div>
-                <div class="${activePage === 'instagram' ? '' : 'header__not-active-text'}">Instagram</div>
+                <div class="${activePage === "instagram" ? "" : "header__not-active-text"}">Instagram</div>
               </a>
               <a class="${youtubeClass}" href="${basePath}buy-youtube-views.html">
                 <div class="${youtubeCircleClass}">
                   <div class="header__color-icons-youtube" style="display: flex; justify-content: center; align-items: center;">
                     <div class="header__other-icons-youtube" style="position: relative">
                       <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
-                        <img alt="YouTube" decoding="async" src="${basePath}assets/images/${activePage === 'youtube' ? 'youtube2.97789ad92b94d8d8a663c93a77211a01.png' : 'youtube3.3c6ea823e9ee96fd0f90bdc6e215563f.png'}" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
+                        <img alt="YouTube" decoding="async" src="${basePath}assets/images/${activePage === "youtube" ? "youtube2.97789ad92b94d8d8a663c93a77211a01.png" : "youtube3.3c6ea823e9ee96fd0f90bdc6e215563f.png"}" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="${activePage === 'youtube' ? '' : 'header__not-active-text'}">YouTube</div>
+                <div class="${activePage === "youtube" ? "" : "header__not-active-text"}">YouTube</div>
               </a>
               <a class="${servicesClass}" href="${basePath}services.html">
                 <div class="${servicesCircleClass}" style="display: flex;">
-                  <div class="header__facebook" style="${activePage === 'services' ? 'border: 1px solid rgba(255, 255, 255, 0.25); background: #fff;' : ''}">
+                  <div class="header__facebook" style="${activePage === "services" ? "border: 1px solid rgba(255, 255, 255, 0.25); background: #fff;" : ""}">
                     <div class="header__other-icons" style="position: relative">
                       <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                         <img alt="Facebook" decoding="async" src="${basePath}assets/images/facebook_blue.1dad8a2a9689d720b5caa08577ab651a.png" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
@@ -267,14 +299,14 @@
               </a>
             </div>
             <button class="${monitoringClass} monitoringWrapp" id="header-instamonitor-btn" style="max-width: 238px; margin-right: 15px; width: 100%; cursor: pointer; padding: 20px; font-size: 16px; font-weight: 500; gap: 7px; height: 60px; background: none;  display: flex; align-items: center;" type="button">
-              <img alt="monitoring" src="${basePath}assets/images/${activePage === 'monitoring' ? 'monitoringActive.6d0e9803a6bc4553229b40075306915e.svg' : 'monitoringNotActive.7f049cd27e044cbb9ddd1dea9ebcf4e4.svg'}" />
+              <img alt="monitoring" src="${basePath}assets/images/${activePage === "monitoring" ? "monitoringActive.6d0e9803a6bc4553229b40075306915e.svg" : "monitoringNotActive.7f049cd27e044cbb9ddd1dea9ebcf4e4.svg"}" />
               <p class="monitoringTitle">InstaMonitor</p>
             </button>
             <button class="header_account header_flex_item" id="header-account-btn" type="button" style="background: none;  cursor: pointer;">
               <div class="header__img_block">
                 <img alt="account" src="${basePath}assets/images/login_logout.345632490b7225ebd8fa55c25f1254fd.svg" />
               </div>
-              <div class="header__account-title">${t('account')}</div>
+              <div class="header__account-title">${t("account")}</div>
             </button>
           </div>
         </div>
@@ -292,66 +324,81 @@
     const activePage = getActivePage();
 
     // Only show on Instagram pages
-    if (activePage !== 'instagram') return '';
+    if (activePage !== "instagram") return "";
 
-    const likesActive = activeService === 'likes' ? 'active servicesNav__text-active' : 'servicesNav__text';
-    const followersActive = activeService === 'followers' ? 'active servicesNav__text-active' : 'servicesNav__text';
-    const autoLikesActive = activeService === 'auto-likes' ? 'active servicesNav__text-active' : 'servicesNav__text';
-    const viewsActive = activeService === 'views' ? 'active servicesNav__text-active' : 'servicesNav__text';
-    const commentsActive = activeService === 'comments' ? 'active servicesNav__text-active' : 'servicesNav__text';
+    const likesActive =
+      activeService === "likes"
+        ? "active servicesNav__text-active"
+        : "servicesNav__text";
+    const followersActive =
+      activeService === "followers"
+        ? "active servicesNav__text-active"
+        : "servicesNav__text";
+    const autoLikesActive =
+      activeService === "auto-likes"
+        ? "active servicesNav__text-active"
+        : "servicesNav__text";
+    const viewsActive =
+      activeService === "views"
+        ? "active servicesNav__text-active"
+        : "servicesNav__text";
+    const commentsActive =
+      activeService === "comments"
+        ? "active servicesNav__text-active"
+        : "servicesNav__text";
 
     return `
     <div class="servicesNav">
       <div class="container">
         <nav class="servicesNav__nav">
           <a href="index.html">
-            <div class="servicesNav__link${activeService === 'likes' ? '' : ' servicesNav__link-active'}">
+            <div class="servicesNav__link${activeService === "likes" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon heart-icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                   <img alt="likes" decoding="async" src="${basePath}assets/images/likes.409e7b3900dc9f186c0bb168cc509a4b.svg" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
                 </div>
               </div>
-              <p class="${likesActive}">${t('likes')}</p>
+              <p class="${likesActive}">${t("likes")}</p>
             </div>
           </a>
           <a href="buy-instagram-followers.html">
-            <div class="servicesNav__link${activeService === 'followers' ? '' : ' servicesNav__link-active'}">
+            <div class="servicesNav__link${activeService === "followers" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                   <img alt="followers" decoding="async" src="${basePath}assets/images/followers.cbfb590813ad606f45dccfd78457f37d.svg" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
                 </div>
               </div>
-              <p class="${followersActive}">${t('followers')}</p>
+              <p class="${followersActive}">${t("followers")}</p>
             </div>
           </a>
           <a href="automatic-instagram-likes.html">
-            <div class="servicesNav__link${activeService === 'auto-likes' ? '' : ' servicesNav__link-active'}">
+            <div class="servicesNav__link${activeService === "auto-likes" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                   <img alt="auto_likes" decoding="async" src="${basePath}assets/images/auto-likes.762d3d9555790eb6e7cc7a7532afb9f2.svg" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
                 </div>
               </div>
-              <p class="${autoLikesActive}">${t('autoLikes')}</p>
+              <p class="${autoLikesActive}">${t("autoLikes")}</p>
             </div>
           </a>
           <a href="buy-instagram-views.html">
-            <div class="servicesNav__link${activeService === 'views' ? '' : ' servicesNav__link-active'}">
+            <div class="servicesNav__link${activeService === "views" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                   <img alt="views" decoding="async" src="${basePath}assets/images/views.24e3816604beffb48e9e1df3faf3aeba.svg" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
                 </div>
               </div>
-              <p class="${viewsActive}">${t('views')}</p>
+              <p class="${viewsActive}">${t("views")}</p>
             </div>
           </a>
           <a href="buy-instagram-comments.html">
-            <div class="servicesNav__link${activeService === 'comments' ? '' : ' servicesNav__link-active'}">
+            <div class="servicesNav__link${activeService === "comments" ? "" : " servicesNav__link-active"}">
               <div class="servicesNav__icon" style="position: relative">
                 <div style="display: block; overflow: hidden; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; margin: 0;">
                   <img alt="comments" decoding="async" src="${basePath}assets/images/comments.4d95ea3c91c21ff084eb1f0a3c882883.svg" style="visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; box-sizing: border-box; padding: 0; border: none; margin: auto; display: block; width: 0; height: 0; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" />
                 </div>
               </div>
-              <p class="${commentsActive}">${t('comments')}</p>
+              <p class="${commentsActive}">${t("comments")}</p>
             </div>
           </a>
         </nav>
@@ -368,27 +415,30 @@
     const lang = getCurrentLang();
 
     const langLinks = [
-      { code: 'en', path: '', name: 'English' },
-      { code: 'de', path: 'de/', name: 'Deutsch' },
-      { code: 'it', path: 'it/', name: 'Italiano' },
-      { code: 'fr', path: 'fr/', name: 'Français' },
-      { code: 'es', path: 'es/', name: 'Español' },
-      { code: 'pt', path: 'pt/', name: 'Português' },
-      { code: 'cs', path: 'cs/', name: 'Čeština' },
-      { code: 'ro', path: 'ro/', name: 'Română' }
+      { code: "en", path: "", name: "English" },
+      { code: "de", path: "de/", name: "Deutsch" },
+      { code: "it", path: "it/", name: "Italiano" },
+      { code: "fr", path: "fr/", name: "Français" },
+      { code: "es", path: "es/", name: "Español" },
+      { code: "pt", path: "pt/", name: "Português" },
+      { code: "cs", path: "cs/", name: "Čeština" },
+      { code: "ro", path: "ro/", name: "Română" },
     ];
 
     const currentPage = getCurrentPageFile();
     // For language links, we need to go to absolute path from root
     // If we're in a language folder, we need to go up first
-    const langBasePath = lang === 'en' ? '' : '../';
+    const langBasePath = lang === "en" ? "" : "../";
 
-    const langHTML = langLinks.map(l => {
-      const activeClass = l.code === lang ? ' class="footer__language-active"' : '';
-      // Build the correct path: langBasePath gets us to root, then l.path + currentPage
-      const href = langBasePath + l.path + currentPage;
-      return `<a href="${href}" title="${l.name}"${activeClass}><img src="${basePath}assets/images/flags/${l.code}.svg" alt="${l.name}"></a>`;
-    }).join('\n      ');
+    const langHTML = langLinks
+      .map((l) => {
+        const activeClass =
+          l.code === lang ? ' class="footer__language-active"' : "";
+        // Build the correct path: langBasePath gets us to root, then l.path + currentPage
+        const href = langBasePath + l.path + currentPage;
+        return `<a href="${href}" title="${l.name}"${activeClass}><img src="${basePath}assets/images/flags/${l.code}.svg" alt="${l.name}"></a>`;
+      })
+      .join("\n      ");
 
     return `
 <footer class="footer">
@@ -427,7 +477,7 @@
       </div>
       <div class="footer__cards">
         <ul class="footer__card us-footer">
-          <li><span class="footer__card-title"> ${t('us')} </span></li>
+          <li><span class="footer__card-title"> ${t("us")} </span></li>
           <li><a class="footer__card-text first-link-footer" href="buy-instagram-followers.html">Buy Instagram Followers</a></li>
           <li><a class="footer__card-text" href="automatic-instagram-likes.html">Buy Instagram Auto-Likes</a></li>
           <li><a class="footer__card-text" href="buy-instagram-views.html">Buy Instagram Views</a></li>
@@ -450,7 +500,7 @@
     </nav>
     <div class="footer__middle">
       <div class="footer__contact-container">
-        <span class="footer__card-title footer__card-title-contact">${t('contactInfo')}</span>
+        <span class="footer__card-title footer__card-title-contact">${t("contactInfo")}</span>
         <div class="footer__contact-information-container">
           <p class="footer__card-text footer__contact-information">Company: Qloyd OÜ</p>
           <p class="footer__card-text footer__contact-information">Registration: 16257994</p>
@@ -461,18 +511,18 @@
       <div class="footer__cards">
         <div class="footer__card">
           <div>
-            <div><span class="footer__card-title"> ${t('rules')} </span></div>
-            <div><a class="footer__card-text first-link-footer" href="rules.html">${t('termsOfService')}</a></div>
+            <div><span class="footer__card-title"> ${t("rules")} </span></div>
+            <div><a class="footer__card-text first-link-footer" href="rules.html">${t("termsOfService")}</a></div>
           </div>
         </div>
       </div>
       <div class="footer__cards">
         <ul class="footer__card help-footer">
-          <li><span class="footer__card-title"> ${t('help')} </span></li>
-          <li><a class="footer__card-text first-link-footer" href="account.html">${t('account')}</a></li>
-          <li><a class="footer__card-text" href="blog.html">${t('blog')}</a></li>
-          <li><a class="footer__card-text" href="faq.html">${t('faq')}</a></li>
-          <li><a class="footer__card-text" href="contact.html">${t('contact')}</a></li>
+          <li><span class="footer__card-title"> ${t("help")} </span></li>
+          <li><a class="footer__card-text first-link-footer" href="account.html">${t("account")}</a></li>
+          <li><a class="footer__card-text" href="blog.html">${t("blog")}</a></li>
+          <li><a class="footer__card-text" href="faq.html">${t("faq")}</a></li>
+          <li><a class="footer__card-text" href="contact.html">${t("contact")}</a></li>
         </ul>
       </div>
     </div>
@@ -488,14 +538,14 @@
   // =====================================================
 
   function loadHeader() {
-    const container = document.getElementById('header-container');
+    const container = document.getElementById("header-container");
     if (container) {
       container.innerHTML = getHeaderHTML() + getServicesNavHTML();
     }
   }
 
   function loadFooter() {
-    const container = document.getElementById('footer-container');
+    const container = document.getElementById("footer-container");
     if (container) {
       container.innerHTML = getFooterHTML();
     }
@@ -509,7 +559,7 @@
     getFooterHTML: getFooterHTML,
     getServicesNavHTML: getServicesNavHTML,
     getCurrentLang: getCurrentLang,
-    getBasePath: getBasePath
+    getBasePath: getBasePath,
   };
 
   // Auto-load: handle both DOMContentLoaded and already-loaded scenarios
@@ -518,22 +568,21 @@
     loadFooter();
 
     // Add fadeIn animation to header and footer containers
-    const headerContainer = document.getElementById('header-container');
-    const footerContainer = document.getElementById('footer-container');
+    const headerContainer = document.getElementById("header-container");
+    const footerContainer = document.getElementById("footer-container");
 
     if (headerContainer) {
-      headerContainer.classList.add('fadeIn');
+      headerContainer.classList.add("fadeIn");
     }
     if (footerContainer) {
-      footerContainer.classList.add('fadeIn');
+      footerContainer.classList.add("fadeIn");
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
   } else {
     // DOM already loaded, run immediately
     init();
   }
-
 })();
