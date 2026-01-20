@@ -1728,7 +1728,7 @@
 
             var priceEl = cardDiv.querySelector(".box__service-name");
             if (priceEl) {
-              priceEl.innerHTML = "<span> Followers </span> für " + pkg.price.toFixed(2);
+              priceEl.innerHTML = "<span> Followers </span> für $" + pkg.price.toFixed(2);
             }
 
             var cardWrapper = cardDiv.closest(".box__card");
@@ -1783,7 +1783,7 @@
 
           var priceEl = cardWrapper.querySelector(".box__service-name");
           if (priceEl) {
-            priceEl.innerHTML = "<span> Followers </span> für " + pkg.price.toFixed(2);
+            priceEl.innerHTML = "<span> Followers </span> für $" + pkg.price.toFixed(2);
           }
 
           cardWrapper.setAttribute("data-price", pkg.price);

@@ -749,9 +749,7 @@
                         </div>
                         <p class="box__service-name">
                           <span> Likes </span>
-                          für
-                          200.00
-                        </p>
+                          für $200.00</p>
                       </div>
                     </div>
                   </div>
@@ -2245,7 +2243,7 @@
           var priceEl = cardDiv.querySelector(".box__service-name");
           if (priceEl) {
             // Keep existing structure: <span> Mögen </span> für ... price
-            priceEl.innerHTML = "<span> Mögen </span> für " + pkg.price.toFixed(2);
+            priceEl.innerHTML = "<span> Mögen </span> für $" + pkg.price.toFixed(2);
           }
 
           // Hilfeer for click event
@@ -2324,7 +2322,7 @@
         // Update price display in this card
         var priceEl = cardWrapper.querySelector(".box__service-name");
         if (priceEl) {
-          priceEl.innerHTML = "<span> Mögen </span> für " + pkg.price.toFixed(2);
+          priceEl.innerHTML = "<span> Mögen </span> für $" + pkg.price.toFixed(2);
         }
 
         // Update data attributes for selection logic

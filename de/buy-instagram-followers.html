@@ -268,7 +268,7 @@
                             <p class="box__count">10</p>
                           </div>
                           <p class="box__service-name">
-                            <span> Followers </span>
+                            <span> Anhänger </span>
                           </p>
                           <p class="box__service-name box__service-name-mt">
                             für
@@ -1719,7 +1719,7 @@
                     
                     // Update Period Text
                     if (periodText) {
-                        periodText.textContent = "Within " + days + " days period we will refill any number of followers that might leave you";
+                        periodText.textContent = "Unter " + days + " Tage werden wir jede Anzahl von Anhängern, die Sie verlassen, wieder auffüllen.";
                     }
                     return true;
                 }
@@ -1791,7 +1791,7 @@
                 resetSelection();
                 
                 if (periodText) {
-                    periodText.textContent = "Please choose the guarantee to be refilled with any number of followers in case of an Instagram update.";
+                    periodText.textContent = "Bitte wählen Sie die Garantie, die im Falle eines Instagram-Updates mit einer beliebigen Anzahl von Followern aufgefüllt wird.";
                 }
                 
                 function toggleBlock(block, days) {
@@ -1918,7 +1918,7 @@
 
                      var priceEl = cardDiv.querySelector(".box__service-name");
                      if (priceEl) {
-                         priceEl.innerHTML = "<span> Followers </span> für " + pkg.price.toFixed(2);
+                         priceEl.innerHTML = "<span> Anhänger </span> für $" + pkg.price.toFixed(2);
                      }
                      
                      var cardWrapper = cardDiv.closest(".box__card");
@@ -1938,7 +1938,7 @@
                              // updateTotalCost(); // Called by updateGuaranteeAvailability
                              
                              var trialText = document.querySelector(".trial__text-likes");
-                             // if(trialText) trialText.innerHTML = "Selected " + pkg.quantity + " Followers";
+                             // if(trialText) trialText.innerHTML = "Selected " + pkg.quantity + " Anhänger";
 
                              var buyLink = document.querySelector(".trial__text a");
                              if(buyLink) buyLink.href = "/payment?id=" + pkg.id + "&type=" + (activeServiceType === "premium" ? "premium_followers" : "regular_followers"); 
@@ -1973,7 +1973,7 @@
                   
                   var priceEl = cardWrapper.querySelector(".box__service-name");
                   if (priceEl) {
-                       priceEl.innerHTML = "<span> Followers </span> für " + pkg.price.toFixed(2);
+                       priceEl.innerHTML = "<span> Anhänger </span> für $" + pkg.price.toFixed(2);
                   }
 
                   cardWrapper.setAttribute("data-price", pkg.price);

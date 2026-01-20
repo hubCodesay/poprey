@@ -2248,7 +2248,7 @@
           var priceEl = cardDiv.querySelector(".box__service-name");
           if (priceEl) {
             // Keep existing structure: <span> Gostos </span> para ... price
-            priceEl.innerHTML = "<span> Gostos </span> para " + pkg.price.toFixed(2);
+            priceEl.innerHTML = "<span> Gostos </span> para $" + pkg.price.toFixed(2);
           }
 
           // Hilfeer for click event
@@ -2327,7 +2327,7 @@
         // Update price display in this card
         var priceEl = cardWrapper.querySelector(".box__service-name");
         if (priceEl) {
-          priceEl.innerHTML = "<span> Gostos </span> para " + pkg.price.toFixed(2);
+          priceEl.innerHTML = "<span> Gostos </span> para $" + pkg.price.toFixed(2);
         }
 
         // Update data attributes for selection logic

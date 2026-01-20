@@ -1326,7 +1326,7 @@
           var price = getPlanPricepara("Comments", count, typeKey);
           var priceLine = card.querySelector(".box__service-name-mt");
           if (priceLine) {
-            priceLine.textContent = "para " + Number(price || 0).toFixed(2);
+            priceLine.textContent = "para $" + Number(price || 0).toFixed(2);
             return;
           }
           var priceEl = card.querySelector(".box__service-name");
@@ -1334,7 +1334,7 @@
           var span = priceEl.querySelector("span");
           var label = span ? span.textContent.trim() : "Comments";
           priceEl.innerHTML =
-            "<span>" + label + "</span> para " + Number(price || 0).toFixed(2);
+            "<span>" + label + "</span> para $" + Number(price || 0).toFixed(2);
         });
       }
 
