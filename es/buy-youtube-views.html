@@ -1648,7 +1648,7 @@
           var costEl = document.querySelector(".trial__text-cost");
           if (costEl) {
             const costLabel =
-              costEl.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() ||
+              costEl.textContent.replace(/[0-$9.zł,\s]+/g, "").trim() ||
               "Kosten";
             costEl.textContent = "$" + formatPrice(total) + " " + costLabel;
           }

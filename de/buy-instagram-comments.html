@@ -1677,7 +1677,7 @@
         total += getExtraItem('Impressions', currentExtrasState.Impressions).price;
         total += getExtraItem('Saves', currentExtrasState.Saves).price;
 
-        const costLabel = els.totalCost.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() || "Kosten";
+        const costLabel = els.totalCost.textContent.replace(/[0-$9.zł,\s]+/g, "").trim() || "Kosten";
         animateValue(els.totalCost, total, true, 800, "", " " + costLabel);
         els.buyBtn.disabled = false;
       }

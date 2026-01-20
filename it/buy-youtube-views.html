@@ -224,7 +224,7 @@
           <h1 class="youtubeServicesPage__title-main youtubeServicesPage__title-main-likes">Acquistare visualizzazioni su YouTube</h1>
           <div class="youtubeServicesPage__text-description">
             <div class="youtubeServicesPage__text-description-text-views-biggest">
-              Aumenta le tue visualizzazioni YouTube con i pacchetti premium di Poprey – ottieni visualizzazioni di alta qualità a meno di 5 $
+              Aumenta le tue visualizzazioni YouTube con i pacchetti premium di Poprey – ottieni visualizzazioni di alta qualità a meno di $5
             </div>
           </div>
           <div class="youtubeServicesPage__buy-block">
@@ -1410,7 +1410,7 @@
         var total = state.views.price + state.likes.price + state.subs.price + state.comments.price;
         var costEl = document.querySelector(".trial__text-cost");
         if (costEl) {
-            const costLabel = costEl.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() || "Kosten";
+            const costLabel = costEl.textContent.replace(/[0-$9.zł,\s]+/g, "").trim() || "Kosten";
             costEl.textContent = "$" + formatPrice(total) + " " + costLabel;
         }
 

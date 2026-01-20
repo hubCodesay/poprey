@@ -1729,7 +1729,7 @@
           if (total < 0) total = 0; // Safety
 
           const costLabel =
-            els.totalCost.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() ||
+            els.totalCost.textContent.replace(/[0-$9.zł,\s]+/g, "").trim() ||
             "Costo";
           animateValue(els.totalCost, total, true, 800, "", " " + costLabel);
           els.buyBtn.disabled = false;

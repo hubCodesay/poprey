@@ -1415,7 +1415,7 @@
         var total = state.views.price + state.likes.price + state.subs.price + state.comments.price;
         var costEl = document.querySelector(".trial__text-cost");
         if (costEl) {
-          const costLabel = costEl.textContent.replace(/[0-9.$zł,\s]+/g, "").trim() || "Cost";
+          const costLabel = costEl.textContent.replace(/[0-$9.zł,\s]+/g, "").trim() || "Cost";
           costEl.textContent = "$" + formatPrice(total) + " " + costLabel;
         }
 
