@@ -9,7 +9,7 @@ from pathlib import Path
 
 # Button text translations from official sites
 BUY_NOW_TRANSLATIONS = {
-    'de': 'Jetzt kaufen',      # German - poprey.de
+    'de': 'Kaufe jetzt',       # German - poprey.de (updated per user)
     'it': 'Acquista ora',      # Italian - poprey.it
     'fr': 'Acheter maintenant', # French - poprey.fr
     'es': 'Comprar ahora',     # Spanish - poprey.es
