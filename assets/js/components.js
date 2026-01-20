@@ -26,6 +26,20 @@
       faq: "FAQ",
       contact: "Contact",
       contactInfo: "Contact Information",
+      // Footer links
+      buyInstagramFollowers: "Buy Instagram Followers",
+      buyInstagramAutoLikes: "Buy Instagram Auto-Likes",
+      buyInstagramViews: "Buy Instagram Views",
+      buyInstagramComments: "Buy Instagram Comments",
+      freeTrialInstagramLikes: "Free Trial Instagram Likes",
+      freeInstagramFollowers: "Free Instagram Followers",
+      freeInstagramViews: "Free Instagram Views",
+      services: "Services",
+      instagramMonitoring: "Instagram Monitoring",
+      buyYouTubeViews: "Buy YouTube Views",
+      buyYouTubeSubscribers: "Buy YouTube Subscribers",
+      buyYouTubeLikes: "Buy YouTube Likes",
+      buyYouTubeComments: "Buy YouTube Comments",
     },
     de: {
       account: "Konto",
@@ -42,6 +56,20 @@
       faq: "FAQ",
       contact: "Kontakt",
       contactInfo: "Kontaktinformationen",
+      // Footer links from poprey.de
+      buyInstagramFollowers: "Instagram Anhänger kaufen",
+      buyInstagramAutoLikes: "Instagram Auto-Mögen kaufen",
+      buyInstagramViews: "Instagram Ansichten kaufen",
+      buyInstagramComments: "Instagram Kommentare kaufen",
+      freeTrialInstagramLikes: "Kostenlose Instagram Mögen",
+      freeInstagramFollowers: "Kostenlose Instagram Anhänger",
+      freeInstagramViews: "Kostenlose Instagram Ansichten",
+      services: "Dienstleistungen",
+      instagramMonitoring: "Instagram Überwachung",
+      buyYouTubeViews: "YouTube Aufrufe kaufen",
+      buyYouTubeSubscribers: "YouTube Abonnenten kaufen",
+      buyYouTubeLikes: "YouTube Likes kaufen",
+      buyYouTubeComments: "YouTube Kommentare kaufen",
     },
     es: {
       account: "Cuenta",
@@ -58,12 +86,26 @@
       faq: "FAQ",
       contact: "Contacto",
       contactInfo: "Información de contacto",
+      // Footer links from poprey.es
+      buyInstagramFollowers: "Comprar Seguidores de Instagram",
+      buyInstagramAutoLikes: "Comprar Gustos Automáticos de Instagram",
+      buyInstagramViews: "Comprar Vistas de Instagram",
+      buyInstagramComments: "Comprar Comentarios de Instagram",
+      freeTrialInstagramLikes: "Gustos de Instagram Gratis",
+      freeInstagramFollowers: "Seguidores de Instagram Gratis",
+      freeInstagramViews: "Vistas de Instagram Gratis",
+      services: "Servicios",
+      instagramMonitoring: "Monitoreo de Instagram",
+      buyYouTubeViews: "Comprar Vistas de YouTube",
+      buyYouTubeSubscribers: "Comprar Suscriptores de YouTube",
+      buyYouTubeLikes: "Comprar Likes de YouTube",
+      buyYouTubeComments: "Comprar Comentarios de YouTube",
     },
     fr: {
       account: "Compte",
-      likes: "Likes",
+      likes: "Les \"J'aime\"",
       followers: "Abonnés",
-      autoLikes: "Auto-Likes",
+      autoLikes: "Auto-J'aime",
       views: "Vues",
       comments: "Commentaires",
       us: "Nous",
@@ -74,12 +116,26 @@
       faq: "FAQ",
       contact: "Contact",
       contactInfo: "Informations de contact",
+      // Footer links from poprey.fr
+      buyInstagramFollowers: "Acheter des Abonnés Instagram",
+      buyInstagramAutoLikes: "Acheter des Auto-J'aime Instagram",
+      buyInstagramViews: "Acheter des Vues Instagram",
+      buyInstagramComments: "Acheter des Commentaires Instagram",
+      freeTrialInstagramLikes: "J'aime Instagram Gratuits",
+      freeInstagramFollowers: "Abonnés Instagram Gratuits",
+      freeInstagramViews: "Vues Instagram Gratuites",
+      services: "Services",
+      instagramMonitoring: "Surveillance Instagram",
+      buyYouTubeViews: "Acheter des Vues YouTube",
+      buyYouTubeSubscribers: "Acheter des Abonnés YouTube",
+      buyYouTubeLikes: "Acheter des J'aime YouTube",
+      buyYouTubeComments: "Acheter des Commentaires YouTube",
     },
     it: {
       account: "Account",
-      likes: "Likes",
-      followers: "Seguaci",
-      autoLikes: "Auto-Likes",
+      likes: "Like",
+      followers: "Follower",
+      autoLikes: "Auto Like",
       views: "Visualizzazioni",
       comments: "Commenti",
       us: "Noi",
@@ -90,12 +146,26 @@
       faq: "FAQ",
       contact: "Contatto",
       contactInfo: "Informazioni di contatto",
+      // Footer links from poprey.it
+      buyInstagramFollowers: "Acquista Follower Instagram",
+      buyInstagramAutoLikes: "Acquista Auto Like Instagram",
+      buyInstagramViews: "Acquista Visualizzazioni Instagram",
+      buyInstagramComments: "Acquista Commenti Instagram",
+      freeTrialInstagramLikes: "Like Instagram Gratuiti",
+      freeInstagramFollowers: "Follower Instagram Gratuiti",
+      freeInstagramViews: "Visualizzazioni Instagram Gratuite",
+      services: "Servizi",
+      instagramMonitoring: "Monitoraggio Instagram",
+      buyYouTubeViews: "Acquista Visualizzazioni YouTube",
+      buyYouTubeSubscribers: "Acquista Iscritti YouTube",
+      buyYouTubeLikes: "Acquista Like YouTube",
+      buyYouTubeComments: "Acquista Commenti YouTube",
     },
     pt: {
       account: "Conta",
-      likes: "Likes",
+      likes: "Gostos",
       followers: "Seguidores",
-      autoLikes: "Auto-Likes",
+      autoLikes: "Gostos automáticos",
       views: "Visualizações",
       comments: "Comentários",
       us: "Nós",
@@ -106,13 +176,27 @@
       faq: "FAQ",
       contact: "Contato",
       contactInfo: "Informações de contato",
+      // Footer links from poprey.pt
+      buyInstagramFollowers: "Comprar Seguidores do Instagram",
+      buyInstagramAutoLikes: "Comprar Gostos Automáticos do Instagram",
+      buyInstagramViews: "Comprar Visualizações do Instagram",
+      buyInstagramComments: "Comprar Comentários do Instagram",
+      freeTrialInstagramLikes: "Gostos do Instagram Grátis",
+      freeInstagramFollowers: "Seguidores do Instagram Grátis",
+      freeInstagramViews: "Visualizações do Instagram Grátis",
+      services: "Serviços",
+      instagramMonitoring: "Monitoramento do Instagram",
+      buyYouTubeViews: "Comprar Visualizações do YouTube",
+      buyYouTubeSubscribers: "Comprar Inscritos do YouTube",
+      buyYouTubeLikes: "Comprar Gostos do YouTube",
+      buyYouTubeComments: "Comprar Comentários do YouTube",
     },
     cs: {
       account: "Účet",
-      likes: "Likes",
-      followers: "Sledující",
-      autoLikes: "Auto-Likes",
-      views: "Zobrazení",
+      likes: "Líbí",
+      followers: "Následovníci",
+      autoLikes: "Auto-Líbí",
+      views: "Pohledy",
       comments: "Komentáře",
       us: "My",
       rules: "Pravidla",
@@ -122,12 +206,26 @@
       faq: "FAQ",
       contact: "Kontakt",
       contactInfo: "Kontaktní informace",
+      // Footer links from poprey.cz
+      buyInstagramFollowers: "Koupit Instagram Následovníky",
+      buyInstagramAutoLikes: "Koupit Instagram Auto-Líbí",
+      buyInstagramViews: "Koupit Instagram Pohledy",
+      buyInstagramComments: "Koupit Instagram Komentáře",
+      freeTrialInstagramLikes: "Zdarma Instagram Líbí",
+      freeInstagramFollowers: "Zdarma Instagram Následovníci",
+      freeInstagramViews: "Zdarma Instagram Pohledy",
+      services: "Služby",
+      instagramMonitoring: "Instagram Monitoring",
+      buyYouTubeViews: "Koupit YouTube Zobrazení",
+      buyYouTubeSubscribers: "Koupit YouTube Odběratele",
+      buyYouTubeLikes: "Koupit YouTube Líbí",
+      buyYouTubeComments: "Koupit YouTube Komentáře",
     },
     ro: {
       account: "Cont",
-      likes: "Likes",
-      followers: "Urmăritori",
-      autoLikes: "Auto-Likes",
+      likes: "Like-uri",
+      followers: "Followeri",
+      autoLikes: "Auto-Like-uri",
       views: "Vizualizări",
       comments: "Comentarii",
       us: "Noi",
@@ -138,6 +236,20 @@
       faq: "FAQ",
       contact: "Contact",
       contactInfo: "Informații de contact",
+      // Footer links from poprey.ro
+      buyInstagramFollowers: "Cumpărați Followeri Instagram",
+      buyInstagramAutoLikes: "Cumpărați Auto-Like-uri Instagram",
+      buyInstagramViews: "Cumpărați Vizualizări Instagram",
+      buyInstagramComments: "Cumpărați Comentarii Instagram",
+      freeTrialInstagramLikes: "Like-uri Instagram Gratuite",
+      freeInstagramFollowers: "Followeri Instagram Gratuiți",
+      freeInstagramViews: "Vizualizări Instagram Gratuite",
+      services: "Servicii",
+      instagramMonitoring: "Monitorizare Instagram",
+      buyYouTubeViews: "Cumpărați Vizualizări YouTube",
+      buyYouTubeSubscribers: "Cumpărați Abonați YouTube",
+      buyYouTubeLikes: "Cumpărați Like-uri YouTube",
+      buyYouTubeComments: "Cumpărați Comentarii YouTube",
     },
   };
 
@@ -467,23 +579,21 @@
       <div class="footer__cards">
         <ul class="footer__card us-footer">
           <li><span class="footer__card-title"> ${t("us")} </span></li>
-          <li><a class="footer__card-text first-link-footer" href="${linkPrefix}buy-instagram-followers.html">Buy Instagram Followers</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}automatic-instagram-likes.html">Buy Instagram Auto-Likes</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}buy-instagram-views.html">Buy Instagram Views</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}buy-instagram-comments.html">Buy Instagram Comments</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}free-instagram-likes.html">Free Trial Instagram Likes</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}free-ig-followers.html">Free Instagram Followers</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}free-trial-instagram-views.html">Free Instagram Views</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}services.html">Services</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}monitoring.html">Instagram Monitoring</a></li>
+          <li><a class="footer__card-text first-link-footer" href="${linkPrefix}buy-instagram-followers.html">${t("buyInstagramFollowers")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}automatic-instagram-likes.html">${t("buyInstagramAutoLikes")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-instagram-views.html">${t("buyInstagramViews")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-instagram-comments.html">${t("buyInstagramComments")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}free-instagram-likes.html">${t("freeTrialInstagramLikes")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}free-ig-followers.html">${t("freeInstagramFollowers")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}free-trial-instagram-views.html">${t("freeInstagramViews")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}services.html">${t("services")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}monitoring.html">${t("instagramMonitoring")}</a></li>
         </ul>
       </div>
       <div class="footer__cards">
         <ul class="footer__card us-footer us-second-footer">
-         
-    
-          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-likes.html">Buy YouTube Likes</a></li>
-          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-comments.html">Buy YouTube Comments</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-views.html">${t("buyYouTubeViews")}</a></li>
+          <li><a class="footer__card-text" href="${linkPrefix}buy-youtube-likes.html">${t("buyYouTubeLikes")}</a></li>
         </ul>
       </div>
     </nav>
